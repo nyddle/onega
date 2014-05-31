@@ -1,0 +1,10 @@
+[
+{
+    "pk": 1,
+    "model": "chips.sitesettings",
+    "fields": {
+        "key": "gallery",
+        "value": "1"
+    }
+}
+]

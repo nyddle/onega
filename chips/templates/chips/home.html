@@ -1,18 +1,29 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% block content %}
 
     {% if forms %}
-        <form method="POST" action="">
-            {{ forms.registration }}
+        <h1>Registration</h1>
+        <form method="POST" action="{% url 'post_form_home' 'registration' %}">
+            {% csrf_token %}
+            {% for field in forms.registration %}
+                {{ field.label }}
+                {% if field.field.required %}<span class="special_class">*</span>{% endif %}
+                {{ field }}<br/>
+            {% endfor %}
             <input type="submit" value="Submit">
         </form>
-        <form method="POST" action="">
-            {{ forms.login }}
+        <h1>Login</h1>
+        <form method="POST" action="{% url 'post_form_home' 'login' %}">
+            {% csrf_token %}
+            {{ forms.login.as_p }}
             <input type="submit" value="Submit">
         </form>
-
     {% endif %}
     {% if photos %}
-        {{ photos }}
+        {% for photo in photos %}
+{#            <img src="{% thumbnail photo.photo '100x100' %}"/></a>#}
+            <img src="{{ photo.photo|thumbnail_url:'gallery' }}" alt="" />
+        {% endfor %}
     {% endif %}
 {% endblock %}

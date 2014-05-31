@@ -54,3 +54,4 @@ docs/_build/
 
 .idea/
 *.sqlite3
+media/

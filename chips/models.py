@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.mail import send_mail
 
+from easy_thumbnails.fields import ThumbnailerImageField
+
 
 class CustomerManager(BaseUserManager):
     """
@@ -95,7 +97,7 @@ class ValidCode(models.Model):
 
 
 class ImageGallery(models.Model):
-    photo = models.ImageField(upload_to='images')
+    photo = ThumbnailerImageField(upload_to='images')
 
 
 class VideoGallery(models.Model):

@@ -27,6 +27,10 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -37,9 +41,21 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'south',
+    'easy_thumbnails',
+    'captcha',
+    # 'south',
     'chips',
 )
+
+SOUTH_MIGRATION_MODULES = {
+    'easy_thumbnails': 'easy_thumbnails.south_migrations',
+}
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'gallery': {'size': (50, 50)},
+    },
+}
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'), )
 
@@ -88,3 +104,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'chips.Customer'
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }

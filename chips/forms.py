@@ -1,34 +1,57 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from captcha.fields import CaptchaField
 
-from .models import Customer
+from .models import Customer, PromoCode
+from .utils import validate_code
 
 
 class RegistrationForm(forms.ModelForm):
-    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput,
-                                help_text="Enter the same password as above, for verification.")
+    promo = forms.CharField(label='')
+    password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Повторите пароль", widget=forms.PasswordInput)
+    captcha = CaptchaField(label="Код на картинке")
+    rules_confirmation = forms.BooleanField(label='')
 
     class Meta:
         model = Customer
-        exclude = ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions')
+        exclude = ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions', 'password', 'last_login')
+        labels = {
+            "first_name": "Имя",
+            "last_name": "Отчество",
+            "surname": "Фамилия",
+            "post_index": "Почтовый индекс",
+            "region": "Область",
+            "district": "Район",
+            "city": "Город",
+            "street": "Улица",
+            "building": "Дом",
+            "corpus": "Корпус",
+            "apartment": "Квартира",
+            "phone": "Телефон",
+            "email": "Адрес электронной почты",
+        }
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(
-                self.error_messages['password_mismatch'],
-                code='password_mismatch',
-            )
+            raise forms.ValidationError("Пароли не совпадают!")
         return password2
 
+    def clean_promo(self):
+        promo = self.cleaned_data.get('promo')
+        if validate_code(promo):
+            return promo
+        raise forms.ValidationError("Пароли не совпадают!")
+
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
+        customer = super().save(commit=False)
+        customer.set_password(self.cleaned_data["password1"])
         if commit:
-            user.save()
-        return user
+            customer.save()
+            PromoCode.objects.create(customer=customer, code=self.cleaned_data['promo'])
+        return customer
 
     def clean_email(self):
         # Since User.username is unique, this check is redundant,
@@ -38,7 +61,4 @@ class RegistrationForm(forms.ModelForm):
             Customer.objects.get(email=email)
         except Customer.DoesNotExist:
             return email
-        raise forms.ValidationError(
-            self.error_messages['duplicate_username'],
-            code='duplicate_username',
-        )
+        raise forms.ValidationError("Email already exists")
