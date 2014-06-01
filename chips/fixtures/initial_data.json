@@ -4,7 +4,7 @@
     "model": "chips.sitesettings",
     "fields": {
         "key": "gallery",
-        "value": true,
+        "enabled": true,
         "additional_data": ""
     }
 }

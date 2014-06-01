@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout, get_user_model, \
     authenticate
 
-from .models import ImageGallery, VideoGallery
+from .models import ImageGallery
 from .forms import RegistrationForm, CodeForm
 
 
@@ -22,7 +22,7 @@ class HomeView(View):
             template_data['photos'] = ImageGallery.objects.all()
 
         if request.settings.get('video'):
-            template_data['videos'] = ImageGallery.objects.all().first()
+            template_data['video'] = request.settings['video']
         if not request.user.is_authenticated():
             template_data['forms'] = {'registration': RegistrationForm(), 'login': AuthenticationForm()}
         return render(request, 'chips/home.html', template_data)
@@ -49,7 +49,7 @@ class HomeView(View):
             template_data['photos'] = ImageGallery.objects.all()
 
         if request.settings.get('video'):
-            template_data['videos'] = ImageGallery.objects.all().first()
+            template_data['video'] = request.settings['video']
         if not request.user.is_authenticated():
             template_data['forms'] = {'registration': RegistrationForm(request.POST),
                                       'login': AuthenticationForm(request.POST)}

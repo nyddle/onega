@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
+{% block title %}Личная страница{% endblock %}
 {% block content %}
 
     {% if forms %}
@@ -29,6 +30,10 @@
             {% endfor %}
             <input type="submit" value="Submit">
         </form>
+    {% endif %}
+
+    {% if video %}
+        {{ video|safe }}
     {% endif %}
 
     {% if photos %}

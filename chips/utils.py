@@ -7,7 +7,11 @@ def get_site_settings():
     Convert setting to dict
     """
     site_settings = SiteSettings.objects.all()
-    return {settings.key: settings.value for settings in site_settings}
+    result = {}
+    for settings in site_settings:
+        if settings.enabled:
+            result[settings.key] = settings.additional_data
+    return result
 
 
 def validate_code(code):

@@ -84,7 +84,7 @@ class SiteSettings(models.Model):
     Keep site settings as pairs
     """
     key = models.CharField(max_length=255)
-    value = models.BooleanField(default=False)
+    enabled = models.BooleanField(default=False)
     additional_data = models.TextField(blank=True)
 
 
@@ -101,7 +101,3 @@ class ValidCode(models.Model):
 
 class ImageGallery(models.Model):
     photo = ThumbnailerImageField(upload_to='images')
-
-
-class VideoGallery(models.Model):
-    video = models.FileField(upload_to='videos')
