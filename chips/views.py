@@ -50,7 +50,8 @@ class HomeView(View):
         if request.settings.get('video'):
             template_data['videos'] = ImageGallery.objects.all().first()
         if not request.user.is_authenticated():
-            template_data['forms'] = {'registration': RegistrationForm(), 'login': AuthenticationForm()}
+            template_data['forms'] = {'registration': RegistrationForm(request.POST),
+                                      'login': AuthenticationForm(request.POST)}
         return render(request, 'chips/home.html', template_data)
 
 

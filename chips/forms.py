@@ -65,4 +65,4 @@ class RegistrationForm(forms.ModelForm):
             Customer.objects.get(email=email)
         except Customer.DoesNotExist:
             return email
-        raise forms.ValidationError("Email already exists")
+        raise forms.ValidationError("Этот адрес уже занят")
