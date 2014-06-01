@@ -13,7 +13,7 @@ class CodeForm(forms.ModelForm):
         super().__init__(data, *args, **kwargs)
 
     class Meta:
-        exclude = ('customer', 'added')
+        exclude = ('customer', 'added', 'winner')
         model = PromoCode
 
     def clean_code(self):

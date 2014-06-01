@@ -3,7 +3,7 @@
 {% block title %}Личная страница{% endblock %}
 {% block content %}
 
-    {% if forms %}
+    {% if forms and request.phase < 3 %}
         <h1>Registration</h1>
         <form method="POST" action="{% url 'post_form_home' 'registration' %}">
             {% csrf_token %}
@@ -41,4 +41,9 @@
             <img src="{{ photo.photo|thumbnail_url:'gallery' }}" alt="" />
         {% endfor %}
     {% endif %}
+
+    {% if request.phase > 1 %}
+        {# todo: table #}
+    {% endif %}
+
 {% endblock %}

@@ -27,7 +27,10 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('email', )
+    list_display = ('pk', 'email', 'first_name', 'last_name', 'post_index', 'region', 'district', 'city', 'street',
+                    'building', 'corpus', 'apartment', 'phone', 'banks', 'is_active')
+    list_editable = ('is_active', 'banks')
+    readonly_fields = ('codes_amount', )
 
 admin.site.register(ImageGallery, ImageGalleryAdmin)
 admin.site.register(SiteSettings, SiteSettingsAdmin)
