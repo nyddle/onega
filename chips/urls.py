@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 
-from .views import HomeView
+from .views import HomeView, ProfileView
 
 
 urlpatterns = patterns('',
@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^home/$', HomeView.as_view()),
     url(r'^home/(?P<method>\w+)/$', HomeView.as_view(), name='post_form_home'),
-    # url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^profile/$', ProfileView.as_view(), name='profile'),
 
     # url(r'^blog/', include('blog.urls')),
 

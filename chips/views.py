@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseNotFound, HttpResponse
-from django.views.generic import View
+from django.views.generic import View, FormView
 from django.contrib.auth.forms import AuthenticationForm
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout, get_user_model, \
     authenticate
 
 from .models import ImageGallery, VideoGallery
-from .forms import RegistrationForm
+from .forms import RegistrationForm, CodeForm
 
 
 class HomeView(View):
@@ -55,12 +56,27 @@ class HomeView(View):
         return render(request, 'chips/home.html', template_data)
 
 
-class ProfileView(View):
+class ProfileView(FormView):
+    template_name = 'chips/profile.html'
+    form_class = CodeForm
 
-    @login_required
+    def get_success_url(self):
+        return reverse('profile')
+
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def get(self, request):
-        return render(request, 'chips/profile.html', {})
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['customer'] = self.request.user
+        return kwargs
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['codes'] = self.request.user.promocode_set.all()
+        return data
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)

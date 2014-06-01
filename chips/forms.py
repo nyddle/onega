@@ -7,6 +7,29 @@ from .models import Customer, PromoCode
 from .utils import validate_code
 
 
+class CodeForm(forms.ModelForm):
+    def __init__(self, customer, data=None, *args, **kwargs):
+        self.customer = customer
+        super().__init__(data, *args, **kwargs)
+
+    class Meta:
+        exclude = ('customer', 'added')
+        model = PromoCode
+
+    def clean_code(self):
+        promo = self.cleaned_data.get('code')
+        if validate_code(promo):
+            return promo
+        raise forms.ValidationError("Неправильный промокод!")
+
+    def save(self, commit=True):
+        code = super().save(commit=False)
+        code.customer = self.customer
+        if commit:
+            code.save()
+        return code
+
+
 class RegistrationForm(forms.ModelForm):
     promo = forms.CharField(label='Введите промокод')
     password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput)

@@ -92,6 +92,7 @@ class PromoCode(models.Model):
     customer = models.ForeignKey(Customer)
     # todo: what is maxlength here?
     code = models.CharField(max_length=255, unique=True)
+    added = models.DateTimeField(auto_now=True)
 
 
 class ValidCode(models.Model):

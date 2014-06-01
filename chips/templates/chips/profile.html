@@ -1,5 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    Profile
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.code }}
+        {{ form.code.errors }}
+        <input type="submit" value="Добавить">
+    </form>
+    <table>
+    {% for code in codes %}
+        <tr>
+            <td>{{ code.code }}</td><td>{{ code.added }}</td>
+        </tr>
+    {% endfor %}
+    </table>
 {% endblock %}

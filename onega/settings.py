@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'easy_thumbnails',
     'captcha',
-    # 'south',
+    'south',
     'chips',
 )
 
@@ -73,6 +73,7 @@ ROOT_URLCONF = 'onega.urls'
 
 WSGI_APPLICATION = 'onega.wsgi.application'
 
+LOGIN_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
