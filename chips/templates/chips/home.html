@@ -4,6 +4,9 @@
 
     {% if forms %}
         <h1>Registration</h1>
+        {% if forms.registration.errors %}
+            {{ form.errors }}
+        {% endif %}
         <form method="POST" action="{% url 'post_form_home' 'registration' %}">
             {% csrf_token %}
             {% for field in forms.registration %}
@@ -14,15 +17,20 @@
             <input type="submit" value="Submit">
         </form>
         <h1>Login</h1>
+        {% if forms.login.errors %}
+            {% for e in forms.login.errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
         <form method="POST" action="{% url 'post_form_home' 'login' %}">
             {% csrf_token %}
             {{ forms.login.as_p }}
             <input type="submit" value="Submit">
         </form>
     {% endif %}
+
     {% if photos %}
         {% for photo in photos %}
-{#            <img src="{% thumbnail photo.photo '100x100' %}"/></a>#}
             <img src="{{ photo.photo|thumbnail_url:'gallery' }}" alt="" />
         {% endfor %}
     {% endif %}

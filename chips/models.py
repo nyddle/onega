@@ -48,6 +48,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     apartment = models.IntegerField(max_length=255, blank=True, null=True)
     phone = models.CharField(max_length=255, blank=True)
     email = models.EmailField(unique=True)
+    blocked_at = models.DateTimeField(null=True, blank=True)
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -83,17 +84,18 @@ class SiteSettings(models.Model):
     Keep site settings as pairs
     """
     key = models.CharField(max_length=255)
-    value = models.CharField(max_length=255)
+    value = models.BooleanField(default=False)
+    additional_data = models.TextField(blank=True)
 
 
 class PromoCode(models.Model):
     customer = models.ForeignKey(Customer)
     # todo: what is maxlength here?
-    code = models.CharField(max_length=255)
+    code = models.CharField(max_length=255, unique=True)
 
 
 class ValidCode(models.Model):
-    code = models.CharField(max_length=255)
+    code = models.CharField(max_length=255, unique=True)
 
 
 class ImageGallery(models.Model):

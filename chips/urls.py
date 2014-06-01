@@ -7,6 +7,7 @@ from .views import HomeView
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^home/$', HomeView.as_view()),
     url(r'^home/(?P<method>\w+)/$', HomeView.as_view(), name='post_form_home'),
     # url(r'^login/$', LoginView.as_view(), name='login'),
 

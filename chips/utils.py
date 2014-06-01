@@ -14,5 +14,5 @@ def validate_code(code):
     try:
         ValidCode.objects.get(code=code)
     except ValidCode.DoesNotExist:
-        return True
-    return False
+        return False
+    return True

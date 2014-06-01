@@ -27,7 +27,7 @@ class ValidCodeAdmin(admin.ModelAdmin):
 
 
 class SiteSettingsAdmin(admin.ModelAdmin):
-    list_display = ('key', 'value')
+    list_display = ('key', 'value', 'additional_data')
 
 admin.site.register(ImageGallery, ImageGalleryAdmin)
 admin.site.register(VideoGallery, VideoGalleryAdmin)
