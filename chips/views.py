@@ -17,15 +17,8 @@ class HomeView(View):
     Home page
     """
     def get(self, request, method='registration'):
-        template_data = {'method': method}
-        if request.settings.get('gallery'):
-            template_data['photos'] = ImageGallery.objects.all()
+        return self._render_stuff(method)
 
-        if request.settings.get('video'):
-            template_data['video'] = request.settings['video']
-        if not request.user.is_authenticated():
-            template_data['forms'] = {'registration': RegistrationForm(), 'login': AuthenticationForm()}
-        return render(request, 'chips/home.html', template_data)
 
     def post(self, request, method):
         if method == 'login':
@@ -42,18 +35,19 @@ class HomeView(View):
                 return redirect(reverse('home'))
         else:
             return HttpResponseNotFound
+        return self._render_stuff(method)
 
-        # todo: refactor and fix code duplication
+    def _render_stuff(self, method):
         template_data = {}
-        if request.settings.get('gallery'):
+        if self.request.settings.get('gallery'):
             template_data['photos'] = ImageGallery.objects.all()
 
-        if request.settings.get('video'):
+        if self.request.settings.get('video'):
             template_data['video'] = request.settings['video']
-        if not request.user.is_authenticated():
-            template_data['forms'] = {'registration': RegistrationForm(request.POST),
-                                      'login': AuthenticationForm(request.POST)}
-        return render(request, 'chips/home.html', template_data)
+        if not self.request.user.is_authenticated():
+            template_data['forms'] = {'reg': RegistrationForm(self.request.POST or None),
+                                      'login': AuthenticationForm(self.request.POST or None)}
+        return render(self.request, 'chips/home.html', template_data)
 
 
 class ProfileView(FormView):

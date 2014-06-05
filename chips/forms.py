@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
+
 from captcha.fields import CaptchaField, CaptchaTextInput
 
 from .models import Customer, PromoCode
@@ -8,6 +10,8 @@ from .utils import validate_code
 
 
 class CodeForm(forms.ModelForm):
+    error_css_class = 'red'
+
     def __init__(self, customer, data=None, *args, **kwargs):
         self.customer = customer
         super().__init__(data, *args, **kwargs)
@@ -29,9 +33,15 @@ class CodeForm(forms.ModelForm):
             code.save()
         return code
 
+#
+# class LoginForm(AuthenticationForm):
+#     pass
+
 
 class RegistrationForm(forms.ModelForm):
-    promo = forms.CharField(label='Введите промокод')
+    error_css_class = 'red'
+
+    promo = forms.CharField(label='Введите промокод', required=False)
     captcha = CaptchaField(label="Код на картинке",
                            widget=CaptchaTextInput(
                                attrs={'class': 'fill-field fill-field--w209 '
@@ -62,82 +72,38 @@ class RegistrationForm(forms.ModelForm):
             "email": "Адрес электронной почты",
         }
         widgets = {
-            "first_name": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w261 '
-                             'fill-field--w261--type1'}),
+            "first_name": forms.TextInput(attrs={'class': 'fill-field'}),
 
-            "last_name": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w261 '
-                             'fill-field--w261--type2'}),
+            "last_name": forms.TextInput(attrs={'class': 'fill-field'}),
 
-            "surname": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w261 '
-                             'fill-field--w261--type'}),
+            "surname": forms.TextInput(attrs={'class': 'fill-field'}),
 
-            "post_index": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w159 '
-                             'fill-field--w159--type'}),
-            "region": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w221 fill-field-'
-                             '-w221--type drop-panel__button select'}),
+            "post_index": forms.TextInput(attrs={'class': 'fill-field'}),
 
-            "district": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w210 '
-                             'fill-field--w210--type'}),
+            "region": forms.TextInput(attrs={'class': 'fill-field'}),
 
-            "city": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w180 '
-                             'fill-field--w180--type'}),
-            "street": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w562 '
-                             'fill-field--w562--type'}),
-            "building": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w71 '
-                             'fill-field--w71--type'}),
-            "corpus": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w71 '
-                             'fill-field--w71--type'}),
-            "apartment": forms.TextInput(
-                attrs={
-                    'class': 'fill-field fill-field--w71 '
-                             'fill-field--w71--type'}),
-            "phone": forms.TextInput(
-                attrs={
-                'class': 'fill-field fill-field--w562 '
-                         'fill-field--w562--type'}),
-            "email": forms.EmailInput(
-                attrs={
-                    'class': 'fill-field fill-field--w562 '
-                             'fill-field--w562--type'}),
+            "district": forms.TextInput(attrs={'class': 'fill-field'}),
+
+            "city": forms.TextInput(attrs={'class': 'fill-field'}),
+            "street": forms.TextInput(attrs={'class': 'fill-field'}),
+            "building": forms.TextInput(attrs={'class': 'fill-field'}),
+            "corpus": forms.TextInput(attrs={'class': 'fill-field'}),
+            "apartment": forms.TextInput(attrs={'class': 'fill-field'}),
+            "phone": forms.TextInput(attrs={'class': 'fill-field'}),
+            "email": forms.EmailInput(attrs={'class': 'fill-field'}),
         }
 
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Пароли не совпадают!")
-        return password2
-
     def clean_promo(self):
-        promo = self.cleaned_data.get('promo')
-        if validate_code(promo):
+        promo = self.cleaned_data.get('promo', '')
+        if len(promo) > 0 and validate_code(promo):
             return promo
         raise forms.ValidationError("Неправильный промокод!")
 
     def save(self, commit=True):
         customer = super().save(commit=False)
-        customer.set_password(self.cleaned_data["password1"])
+        password = Customer.objects.make_random_password()
+        # todo: send mail
+        customer.set_password(password)
         if commit:
             customer.save()
             customer = authenticate(username=self.cleaned_data['email'], password=self.cleaned_data['password1'])

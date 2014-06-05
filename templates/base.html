@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
@@ -396,7 +396,7 @@
             </div>
         </div>
         <div class="img-popup">
-            <img src="img/big-img.jpg"/>
+            <img src="{% static 'img/big-img.jpg' %}"/>
             <div class="popup-paging">
                 <div class="popup-paging__left">
                     <a class="nav__arrow nav__arrow--left nav__arrow--left--dark" href="#"><!----></a>
