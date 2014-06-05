@@ -44,8 +44,7 @@ class RegistrationForm(forms.ModelForm):
     promo = forms.CharField(label='Введите промокод', required=False)
     captcha = CaptchaField(label="Код на картинке",
                            widget=CaptchaTextInput(
-                               attrs={'class': 'fill-field fill-field--w209 '
-                                               'fill-field--w209--type'}))
+                               attrs={'class': 'fill-field'}))
 
     rules_confirmation = forms.BooleanField(
         label='С условиями игры ознакомлен',
