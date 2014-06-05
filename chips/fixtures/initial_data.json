@@ -4,8 +4,25 @@
     "model": "chips.sitesettings",
     "fields": {
         "key": "gallery",
-        "enabled": true,
+        "enabled": false,
         "additional_data": ""
+    }
+},
+{
+    "pk": 2,
+    "model": "chips.sitesettings",
+    "fields": {
+        "key": "video",
+        "enabled": false,
+        "additional_data": ""
+    }
+},
+{
+    "pk": 1,
+    "model": "chips.phase",
+    "fields": {
+        "current_phase": 1,
+        "date": "2014-06-01"
     }
 }
 ]

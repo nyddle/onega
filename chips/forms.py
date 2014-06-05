@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth import authenticate
-from captcha.fields import CaptchaField
+from django.contrib.auth.forms import AuthenticationForm
+
+from captcha.fields import CaptchaField, CaptchaTextInput
 
 from .models import Customer, PromoCode
 from .utils import validate_code
 
 
 class CodeForm(forms.ModelForm):
+    error_css_class = 'red'
+
     def __init__(self, customer, data=None, *args, **kwargs):
         self.customer = customer
         super().__init__(data, *args, **kwargs)
 
     class Meta:
-        exclude = ('customer', 'added')
+        exclude = ('customer', 'added', 'winner')
         model = PromoCode
 
     def clean_code(self):
@@ -29,13 +33,24 @@ class CodeForm(forms.ModelForm):
             code.save()
         return code
 
+#
+# class LoginForm(AuthenticationForm):
+#     pass
+
 
 class RegistrationForm(forms.ModelForm):
-    promo = forms.CharField(label='Введите промокод')
-    password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Повторите пароль", widget=forms.PasswordInput)
-    captcha = CaptchaField(label="Код на картинке")
-    rules_confirmation = forms.BooleanField(label='С правилами ознакомлен')
+    error_css_class = 'red'
+
+    promo = forms.CharField(label='Введите промокод', required=False)
+    captcha = CaptchaField(label="Код на картинке",
+                           widget=CaptchaTextInput(
+                               attrs={'class': 'fill-field fill-field--w209 '
+                                               'fill-field--w209--type'}))
+
+    rules_confirmation = forms.BooleanField(
+        label='С условиями игры ознакомлен',
+        widget=forms.CheckboxInput(attrs={'id': 'agreeCheck',
+                                          'class': 'check-block__check'}))
 
     class Meta:
         model = Customer
@@ -56,24 +71,39 @@ class RegistrationForm(forms.ModelForm):
             "phone": "Телефон",
             "email": "Адрес электронной почты",
         }
+        widgets = {
+            "first_name": forms.TextInput(attrs={'class': 'fill-field'}),
 
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
+            "last_name": forms.TextInput(attrs={'class': 'fill-field'}),
 
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Пароли не совпадают!")
-        return password2
+            "surname": forms.TextInput(attrs={'class': 'fill-field'}),
+
+            "post_index": forms.TextInput(attrs={'class': 'fill-field'}),
+
+            "region": forms.TextInput(attrs={'class': 'fill-field'}),
+
+            "district": forms.TextInput(attrs={'class': 'fill-field'}),
+
+            "city": forms.TextInput(attrs={'class': 'fill-field'}),
+            "street": forms.TextInput(attrs={'class': 'fill-field'}),
+            "building": forms.TextInput(attrs={'class': 'fill-field'}),
+            "corpus": forms.TextInput(attrs={'class': 'fill-field'}),
+            "apartment": forms.TextInput(attrs={'class': 'fill-field'}),
+            "phone": forms.TextInput(attrs={'class': 'fill-field'}),
+            "email": forms.EmailInput(attrs={'class': 'fill-field'}),
+        }
 
     def clean_promo(self):
-        promo = self.cleaned_data.get('promo')
-        if validate_code(promo):
+        promo = self.cleaned_data.get('promo', '')
+        if len(promo) > 0 and validate_code(promo):
             return promo
         raise forms.ValidationError("Неправильный промокод!")
 
     def save(self, commit=True):
         customer = super().save(commit=False)
-        customer.set_password(self.cleaned_data["password1"])
+        password = Customer.objects.make_random_password()
+        # todo: send mail
+        customer.set_password(password)
         if commit:
             customer.save()
             customer = authenticate(username=self.cleaned_data['email'], password=self.cleaned_data['password1'])
