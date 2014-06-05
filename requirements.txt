@@ -4,3 +4,4 @@ South==0.8.4
 django-simple-captcha==0.4.2
 easy-thumbnails==2.0.1
 six==1.6.1
+dj_static
