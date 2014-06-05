@@ -3,5 +3,4 @@ Pillow==2.4.0
 South==0.8.4
 django-simple-captcha==0.4.2
 easy-thumbnails==2.0.1
-python3-memcached==1.51
 six==1.6.1
