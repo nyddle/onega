@@ -79,7 +79,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-DATABASES = {'default': dj_database_url.config()}
+DATABASES = {'default': dj_database_url.config(default='postgres://uqvjzjpvptwgsq:Ho_B9vrBuDdgk3Nk19qmM4v8Ei@ec2-107-20-224-35.compute-1.amazonaws.com:5432/d5bto9e6scivbr')}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -124,6 +124,12 @@ AUTH_USER_MODEL = 'chips.Customer'
 #         'LOCATION': '127.0.0.1:11211',
 #     }
 # }
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_HOST_USER = 'postmaster@app26061228.mailgun.org'
+EMAIL_HOST_PASSWORD = '0j8v3jioz5n4'
+EMAIL_PORT = 587
 
 try:
     from .local_settings import *
