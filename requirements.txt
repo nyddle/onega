@@ -2,6 +2,8 @@ Django==1.6.5
 Pillow==2.4.0
 South==0.8.4
 dj-database-url==0.3.0
+django-mailgun==0.2.2
 django-simple-captcha==0.4.2
 easy-thumbnails==2.0.1
+requests==2.3.0
 six==1.6.1
