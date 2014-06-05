@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'easy_thumbnails',
     'captcha',
-    'south',
+    #'south',
     'chips',
 )
 
