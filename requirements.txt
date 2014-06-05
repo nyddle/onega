@@ -8,3 +8,4 @@ easy-thumbnails==2.0.1
 requests==2.3.0
 six==1.6.1
 dj_static
+psycopg2
