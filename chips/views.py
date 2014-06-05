@@ -16,7 +16,7 @@ class HomeView(View):
     """
     Home page
     """
-    def get(self, request, method='registration'):
+    def get(self, request, method='reg'):
         return self._render_stuff(method)
 
 
@@ -25,20 +25,22 @@ class HomeView(View):
             # todo: check is user blocked and ig yes check block date
             form = AuthenticationForm(request, request.POST)
             if form.is_valid():
+
                 auth_login(request, form.get_user())
                 return redirect(reverse('home'))
-        elif method == 'registration':
+        elif method == 'reg':
             form = RegistrationForm(request.POST)
+            print(form.errors)
             if form.is_valid():
                 user = form.save()
-                auth_login(request, user)
+                print('VALID')
                 return redirect(reverse('home'))
         else:
             return HttpResponseNotFound
         return self._render_stuff(method)
 
     def _render_stuff(self, method):
-        template_data = {}
+        template_data = {'method': method}
         if self.request.settings.get('gallery'):
             template_data['photos'] = ImageGallery.objects.all()
 
