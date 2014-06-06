@@ -38,7 +38,7 @@ class CodeForm(forms.ModelForm):
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(LoginForm, self).__init__(*args, **kwargs)
         if self.errors:
             for f_name in self.fields:
                 if f_name in self.errors:
@@ -62,7 +62,7 @@ class LoginForm(AuthenticationForm):
 
 class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(RegistrationForm, self).__init__(*args, **kwargs)
         if self.errors:
             for f_name in self.fields:
                 if f_name in self.errors:
