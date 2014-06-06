@@ -38,7 +38,7 @@
                 <ul class="header-menu">
                     <li class="header-menu__item"><a class="header-menu__link read-more-rules-button" href="#" contId="rules">Правила игры</a></li>
                     <li class="header-menu__item">
-                        {% if user.is_autneticated %}
+                        {% if user.is_authenticated %}
                             <a class="header-menu__link" href="#" contId="reg-code">Регистрация кода</a>
                         {% else %}
                             <a class="header-menu__link" href="{% url 'profile' %}"
