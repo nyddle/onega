@@ -210,8 +210,7 @@
                         Логин
                     </dt>
                     <dd class="field-col__field">
-                        <input class="fill-field fill-field--w261 fill-field--w261--type fill-field--w261--type--red-field"
-                               type="text"/>
+                        {{ forms.login.username }}
                     </dd>
                 </dl>
                 <dl class="field-col">
@@ -219,7 +218,7 @@
                         Пароль
                     </dt>
                     <dd class="field-col__field">
-                        <input class="fill-field fill-field--w261 fill-field--w261--type1" type="text"/>
+                        {{ forms.login.password }}
                     </dd>
                 </dl>
                 <dl class="field-col">
@@ -231,6 +230,7 @@
                     </dd>
                 </dl>
             </div>
+            {# todo: forgot password #}
             <a class="forgot-password link-blue" href="#">Забыли пароль?</a>
 
 

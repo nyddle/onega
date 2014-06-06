@@ -35,9 +35,29 @@ class CodeForm(forms.ModelForm):
             code.save()
         return code
 
-#
-# class LoginForm(AuthenticationForm):
-#     pass
+
+class LoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.errors:
+            for f_name in self.fields:
+                if f_name in self.errors:
+                    classes = self.fields[f_name].widget.attrs.get('class', '')
+                    classes += ' fill-field--w261--type--red-field'
+                    self.fields[f_name].widget.attrs['class'] = classes
+
+    username = forms.CharField(max_length=254, widget=forms.TextInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type',
+                                               'style': 'width: 630px;'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type1',
+                                                   'style': 'width: 630px;'}))
+
+    class Meta:
+        widgets = {
+            "username": forms.TextInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type',
+                                               'style': 'width: 630px;'}),
+            "password": forms.PasswordInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type1',
+                                                   'style': 'width: 630px;'})
+        }
 
 
 class RegistrationForm(forms.ModelForm):
