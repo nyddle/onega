@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 
 from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer
@@ -20,8 +21,15 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'email', 'first_name', 'last_name', 'post_index', 'region', 'district', 'city', 'street',
+    list_display = ('pk', 'email', 'first_name', 'last_name', 'surname',
+                    'post_index', 'region', 'district', 'city', 'street',
                     'building', 'corpus', 'apartment', 'phone', 'banks', 'is_active')
+
+    search_fields = ['email', 'first_name', 'last_name', 'surname',
+                    'post_index', 'region', 'district', 'city', 'street',
+                    'building', 'corpus', 'apartment']
+
+    list_filter = ('is_active', 'banks')
     list_editable = ('is_active', 'banks')
     readonly_fields = ('codes_amount', )
 

@@ -33,27 +33,27 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     """
     User model
     """
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    surname = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, verbose_name='Имя')
+    last_name = models.CharField(max_length=100, verbose_name='Отчество')
+    surname = models.CharField(max_length=100, verbose_name='Фамилия')
     # todo: what is maxlength here?
-    post_index = models.CharField(max_length=6, blank=True)
+    post_index = models.CharField(max_length=6, blank=True, verbose_name='Индекс')
     # todo: what is maxlength here?
-    region = models.CharField(max_length=255, blank=True)
-    district = models.CharField(max_length=255, blank=True)
+    region = models.CharField(max_length=255, blank=True, verbose_name='Область')
+    district = models.CharField(max_length=255, blank=True, verbose_name='Район')
     # todo: what is maxlength here?
-    city = models.CharField(max_length=255)
-    street = models.CharField(max_length=255)
-    building = models.CharField(max_length=255)
-    corpus = models.CharField(max_length=255, blank=True)
-    apartment = models.IntegerField(max_length=255, blank=True, null=True)
-    phone = models.CharField(max_length=255, blank=True)
-    email = models.EmailField(unique=True)
-    blocked_at = models.DateTimeField(null=True, blank=True)
-    banks = models.IntegerField(default=0)
+    city = models.CharField(max_length=255, verbose_name='Город')
+    street = models.CharField(max_length=255, verbose_name='Ул.')
+    building = models.CharField(max_length=255, verbose_name='Дом')
+    corpus = models.CharField(max_length=255, blank=True, verbose_name='Корп.')
+    apartment = models.IntegerField(max_length=255, blank=True, null=True, verbose_name='Кв.')
+    phone = models.CharField(max_length=255, blank=True, verbose_name='Тел.')
+    email = models.EmailField(unique=True, verbose_name='Почта')
+    blocked_at = models.DateTimeField(null=True, blank=True, verbose_name='')
+    banks = models.IntegerField(default=0, verbose_name='Упаковок')
 
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False, verbose_name='Админ')
+    is_active = models.BooleanField(default=True, verbose_name='Разблокирован')
 
     objects = CustomerManager()
 
@@ -106,16 +106,16 @@ class ValidCode(models.Model):
     code = models.CharField(max_length=255, unique=True)
 
     class Meta:
-        verbose_name = 'настройки'
-        verbose_name_plural = 'настройки'
+        verbose_name = 'уникальный код'
+        verbose_name_plural = 'уникальные коды'
 
 
 class ImageGallery(models.Model):
     photo = ThumbnailerImageField(upload_to='images')
 
     class Meta:
-        verbose_name = 'настройки'
-        verbose_name_plural = 'настройки'
+        verbose_name = 'изображение'
+        verbose_name_plural = 'изображения'
 
 
 class Phase(models.Model):
@@ -124,16 +124,16 @@ class Phase(models.Model):
     date = models.DateField()
 
     class Meta:
-        verbose_name = 'настройки'
-        verbose_name_plural = 'настройки'
+        verbose_name = 'фаза'
+        verbose_name_plural = 'фазы'
 
 
 class PriseType(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
-        verbose_name = 'настройки'
-        verbose_name_plural = 'настройки'
+        verbose_name = 'приз'
+        verbose_name_plural = 'призы'
 
 
 class PromoCode(models.Model):
@@ -146,5 +146,5 @@ class PromoCode(models.Model):
     prise_name = models.ForeignKey(PriseType, null=True)
 
     class Meta:
-        verbose_name = 'настройки'
-        verbose_name_plural = 'настройки'
+        verbose_name = 'пользовательский код'
+        verbose_name_plural = 'пользовательские коды'
