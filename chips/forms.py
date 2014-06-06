@@ -120,7 +120,7 @@ class RegistrationForm(forms.ModelForm):
         return promo
 
     def save(self, commit=True):
-        customer = super().save(commit=False)
+        customer = super(RegistrationForm, self).save(commit=False)
         password = Customer.objects.make_random_password()
         customer.set_password(password)
         if commit:
