@@ -10,7 +10,7 @@ from .utils import validate_code
 class CodeForm(forms.ModelForm):
     def __init__(self, customer, data=None, *args, **kwargs):
         self.customer = customer
-        super().__init__(data, *args, **kwargs)
+        super(CodeForm, self).__init__(data, *args, **kwargs)
 
     class Meta:
         exclude = ('customer', 'added')
