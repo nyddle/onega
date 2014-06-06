@@ -1,17 +1,10 @@
 from django.contrib import admin
 
-# from easy_thumbnails.widgets import ImageClearableFileInput
-from easy_thumbnails.fields import ThumbnailerImageField
-
 from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer
 
 
 class ImageGalleryAdmin(admin.ModelAdmin):
     list_display = ('photo', )
-
-    # formfield_overrides = {
-    #     ThumbnailerImageField: {'widget': ImageClearableFileInput}
-    # }
 
 
 class PromoCodeAdmin(admin.ModelAdmin):

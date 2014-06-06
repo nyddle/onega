@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^', include('chips.urls')),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^logout/$', 'django.contrib.auth.views.logout', name="auth_logout"),
 )
 

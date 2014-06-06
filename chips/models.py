@@ -83,6 +83,10 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         """
         send_mail(subject, message, from_email, [self.email])
 
+    class Meta:
+        verbose_name = 'пользователь'
+        verbose_name_plural = 'пользователи'
+
 
 # todo: add initial data for settings
 class SiteSettings(models.Model):
@@ -93,13 +97,25 @@ class SiteSettings(models.Model):
     enabled = models.BooleanField(default=False)
     additional_data = models.TextField(blank=True)
 
+    class Meta:
+        verbose_name = 'настройки'
+        verbose_name_plural = 'настройки'
+
 
 class ValidCode(models.Model):
     code = models.CharField(max_length=255, unique=True)
 
+    class Meta:
+        verbose_name = 'настройки'
+        verbose_name_plural = 'настройки'
+
 
 class ImageGallery(models.Model):
     photo = ThumbnailerImageField(upload_to='images')
+
+    class Meta:
+        verbose_name = 'настройки'
+        verbose_name_plural = 'настройки'
 
 
 class Phase(models.Model):
@@ -107,9 +123,17 @@ class Phase(models.Model):
     current_phase = models.IntegerField(choices=PHASES)
     date = models.DateField()
 
+    class Meta:
+        verbose_name = 'настройки'
+        verbose_name_plural = 'настройки'
+
 
 class PriseType(models.Model):
     name = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name = 'настройки'
+        verbose_name_plural = 'настройки'
 
 
 class PromoCode(models.Model):
@@ -120,3 +144,7 @@ class PromoCode(models.Model):
     winner = models.BooleanField(default=False)
     on_phase = models.ForeignKey(Phase, null=True)
     prise_name = models.ForeignKey(PriseType, null=True)
+
+    class Meta:
+        verbose_name = 'настройки'
+        verbose_name_plural = 'настройки'
