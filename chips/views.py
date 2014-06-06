@@ -32,11 +32,13 @@ class HomeView(View):
             form = RegistrationForm(request.POST)
             if form.is_valid():
                 user = form.save()
+                request.session['registered'] = True
                 return redirect(reverse('home'))
         else:
             return HttpResponseNotFound
         return self._render_stuff(method)
 
+    # todo: hide registration if phase > 3
     def _render_stuff(self, method):
         template_data = {'method': method}
         if self.request.settings.get('gallery'):
@@ -54,6 +56,8 @@ class HomeView(View):
                                               'login': AuthenticationForm()}
             else:
                 template_data['forms'] = {'reg': RegistrationForm(), 'login': AuthenticationForm()}
+            if self.request.session.get('registered'):
+                template_data['forms'].pop('reg')
         return render(self.request, 'chips/home.html', template_data)
 
 
