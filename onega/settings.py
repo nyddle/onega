@@ -49,6 +49,8 @@ INSTALLED_APPS = (
     'chips',
 )
 
+CAPTCHA_FONT_SIZE = 30
+
 SOUTH_MIGRATION_MODULES = {
     'easy_thumbnails': 'easy_thumbnails.south_migrations',
 }
@@ -130,6 +132,7 @@ EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_HOST_USER = 'postmaster@app26061228.mailgun.org'
 EMAIL_HOST_PASSWORD = '0j8v3jioz5n4'
 EMAIL_PORT = 587
+EMAIL_FROM = 'chips@omega.by'
 
 try:
     from .local_settings import *

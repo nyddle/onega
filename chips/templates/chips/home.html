@@ -76,9 +76,11 @@
     <a href="#" class="promo-imgs promo-imgs--ball"><!----></a>
 
 </div>
-
+{% if not user.is_authenticated %}
 {% include 'chips/home.auth.html' %}
+    {% endif %}
 
+{% if video %}
 <div class="video-block" id="video">
     <h3 class="block-title">Посмотреть видео-ролик</h3>
 
@@ -89,6 +91,7 @@
     <a class="link-blue link-blue--yt" href="#">НАШ КАНАЛ НА YOUTUBE.COM</a>
 </div>
 </div>
+    {% endif %}
 <div class="dark-bg-block">
     {% if photos %}
     <div class="c-align">

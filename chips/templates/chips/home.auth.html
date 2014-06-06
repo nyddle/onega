@@ -27,15 +27,14 @@
 {#        </form>#}
 {#    {% endif %}#}
 {% load staticfiles %}
-<form method="post">
+<form method="post" action="{% url 'post_form_home' method %}" id="auth-form">
 {% csrf_token %}
     <div class="enter-promo-block" id="reg-code">
         <h3 class="block-title">Введите найденный вами промо-код</h3>
 
         <div class="enter-promo">
-            <form>
                 <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
-                    <input class="fill-field fill-field--w630" type="text"/>
+                    {{ forms.reg.promo }}
                     <!--- for setting red background add class "fill-field--w630--red-field"-->
                 </div>
                 {% if user.is_authenticated %}
@@ -43,14 +42,16 @@
                 {% else %}
                     <a class="button enter-promo__button" href="#authorization">Добавить промо-код</a>
                 {% endif %}
-            </form>
         </div>
     </div>
 
     <div class="user-actions" id="authorization">
         <div class="user-actions__header">
-            <span class="user-actions__tab-title user-actions__tab-title--current" tab-button="tab1">Регистрация нового участника</span>
-            <span href="#" class="user-actions__tab-title" tab-button="tab2">Войти под своим логином</span>
+            <span class="user-actions__tab-title user-actions__tab-title--current"
+                  tab-button="tab1" data-url="{% url 'post_form_home' 'reg' %}">Регистрация нового участника</span>
+            <span href="#" class="user-actions__tab-title"
+                  data-url="{% url 'post_form_home' 'login' %}"
+                  tab-button="tab2">Войти под своим логином</span>
         </div>
         <div class="user-actions__content user-actions__content--registration" id="tab1">
             <div class="fields-row">
@@ -170,7 +171,6 @@
                         <!---->
                     </dt>
                     <dd class="field-col__field field-col__field--capcha">
-                        <img src="{% static 'img/capcha.gif' %}"/>
                     </dd>
                 </dl>
             </div>
@@ -184,21 +184,21 @@
                     </dd>
                 </dl>
                 <dl class="field-col">
-                    <dt class="field-col__title">
+                    <dt class="field-col__title captcha_title">
                         Код на картинке
                     </dt>
                     <dd class="field-col__field">
                         {{ forms.reg.captcha }}
                     </dd>
                 </dl>
+
             </div>
             <div class="registration-buttons-panel">
                 <input class="button registration-buttons-panel__button" value="Зарегистрироваться" type="submit">
                                 <span class="check-block registration-buttons-panel__check">
-                                    <input type="checkbox" class="check-block__check" id="agreeCheck">
+                                    {{ forms.reg.rules_confirmation }}
                                     <label class="check-block__label" for="agreeCheck">
                                         <span class="chech-block__helper"></span>
-                                        {# todo: check in on server #}
                                         <span class="read-more-rules-button">С условиями игры ознакомлен</span></label>
                                     </span>
             </div>
@@ -210,8 +210,7 @@
                         Логин
                     </dt>
                     <dd class="field-col__field">
-                        <input class="fill-field fill-field--w261 fill-field--w261--type fill-field--w261--type--red-field"
-                               type="text"/>
+                        {{ forms.login.username }}
                     </dd>
                 </dl>
                 <dl class="field-col">
@@ -219,7 +218,7 @@
                         Пароль
                     </dt>
                     <dd class="field-col__field">
-                        <input class="fill-field fill-field--w261 fill-field--w261--type1" type="text"/>
+                        {{ forms.login.password }}
                     </dd>
                 </dl>
                 <dl class="field-col">
@@ -231,6 +230,7 @@
                     </dd>
                 </dl>
             </div>
+            {# todo: forgot password #}
             <a class="forgot-password link-blue" href="#">Забыли пароль?</a>
 
 
