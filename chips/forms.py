@@ -124,7 +124,8 @@ class RegistrationForm(forms.ModelForm):
         password = Customer.objects.make_random_password()
         customer.set_password(password)
         if commit:
-            send_mail('Регистрация завершена', "Вы успешно зарегистрировались! Ваш пароль %s" % password,
+            send_mail(u'Регистрация завершена',
+                      u"Вы успешно зарегистрировались! Ваш пароль %s" % password,
                       settings.EMAIL_FROM, [self.cleaned_data['email']])
             customer.save()
             # todo: add to user

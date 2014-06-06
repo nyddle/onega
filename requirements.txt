@@ -10,3 +10,4 @@ six==1.6.1
 dj_static
 psycopg2
 django-import-export 
+https://bitbucket.org/izi/django-admin-tools/downloads/django-admin-tools-0.5.1.tar.gz
