@@ -52,7 +52,8 @@ class HomeView(View):
                 else:
                     template_data['forms'] = {'reg': RegistrationForm(self.request.POST or None),
                                               'login': AuthenticationForm()}
-
+            else:
+                template_data['forms'] = {'reg': RegistrationForm(), 'login': AuthenticationForm()}
         return render(self.request, 'chips/home.html', template_data)
 
 
