@@ -3,6 +3,15 @@ from django.contrib import admin
 
 from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer
 
+from import_export import resources
+
+
+class CustomerResource(resources.ModelResource):
+
+    class Meta:
+        model = Customer
+
+
 
 class ImageGalleryAdmin(admin.ModelAdmin):
     list_display = ('photo', )
