@@ -30,7 +30,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     list_display = ('key', 'enabled', 'additional_data')
 
 
-class CustomerAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+class CustomerAdmin(ImportExportModelAdmin):
     list_display = ('pk', 'email', 'first_name', 'last_name', 'surname',
                     'post_index', 'region', 'district', 'city', 'street',
                     'building', 'corpus', 'apartment', 'phone', 'banks', 'is_active')
