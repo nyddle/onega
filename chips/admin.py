@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from easy_thumbnails.widgets import ImageClearableFileInput
+# from easy_thumbnails.widgets import ImageClearableFileInput
 from easy_thumbnails.fields import ThumbnailerImageField
 
 from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer
@@ -9,9 +9,9 @@ from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer
 class ImageGalleryAdmin(admin.ModelAdmin):
     list_display = ('photo', )
 
-    formfield_overrides = {
-        ThumbnailerImageField: {'widget': ImageClearableFileInput}
-    }
+    # formfield_overrides = {
+    #     ThumbnailerImageField: {'widget': ImageClearableFileInput}
+    # }
 
 
 class PromoCodeAdmin(admin.ModelAdmin):
@@ -27,7 +27,10 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('email', )
+    list_display = ('pk', 'email', 'first_name', 'last_name', 'post_index', 'region', 'district', 'city', 'street',
+                    'building', 'corpus', 'apartment', 'phone', 'banks', 'is_active')
+    list_editable = ('is_active', 'banks')
+    readonly_fields = ('codes_amount', )
 
 admin.site.register(ImageGallery, ImageGalleryAdmin)
 admin.site.register(SiteSettings, SiteSettingsAdmin)

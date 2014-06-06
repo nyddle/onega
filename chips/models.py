@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.mail import send_mail
@@ -49,6 +50,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=255, blank=True)
     email = models.EmailField(unique=True)
     blocked_at = models.DateTimeField(null=True, blank=True)
+    banks = models.IntegerField(default=0)
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -57,6 +59,10 @@ class Customer(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    @property
+    def codes_amount(self):
+        return self.promocode_set.count()
 
     def get_full_name(self):
         """
@@ -81,18 +87,11 @@ class Customer(AbstractBaseUser, PermissionsMixin):
 # todo: add initial data for settings
 class SiteSettings(models.Model):
     """
-    Keep site settings as pairs
+    Keep site settings like photo gallery enabling/disabling
     """
     key = models.CharField(max_length=255)
     enabled = models.BooleanField(default=False)
     additional_data = models.TextField(blank=True)
-
-
-class PromoCode(models.Model):
-    customer = models.ForeignKey(Customer)
-    # todo: what is maxlength here?
-    code = models.CharField(max_length=255, unique=True)
-    added = models.DateTimeField(auto_now=True)
 
 
 class ValidCode(models.Model):
@@ -101,3 +100,23 @@ class ValidCode(models.Model):
 
 class ImageGallery(models.Model):
     photo = ThumbnailerImageField(upload_to='images')
+
+
+class Phase(models.Model):
+    PHASES = ((0, '1'), (1, '2'), (2, '3'), (3, 'Игра окончена'))
+    current_phase = models.IntegerField(choices=PHASES)
+    date = models.DateField()
+
+
+class PriseType(models.Model):
+    name = models.CharField(max_length=255)
+
+
+class PromoCode(models.Model):
+    customer = models.ForeignKey(Customer)
+    # todo: what is maxlength here?
+    code = models.CharField(max_length=255, unique=True)
+    added = models.DateTimeField(auto_now=True)
+    winner = models.BooleanField(default=False)
+    on_phase = models.ForeignKey(Phase, null=True)
+    prise_name = models.ForeignKey(PriseType, null=True)

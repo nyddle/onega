@@ -1,0 +1,245 @@
+{#{% if forms and request.phase < 3 %}#}
+{#        <h1>Registration</h1>#}
+{#        <form method="POST" action="{% url 'post_form_home' 'registration' %}">#}
+{#            {% csrf_token %}#}
+{#            {% for field in forms.registration %}#}
+{#                {{ field.label }}#}
+{#                {% if field.field.required %}<span class="special_class">*</span>{% endif %}#}
+{#                {{ field }}<br/>#}
+{#                {{ field.errors }}<br/>#}
+{#            {% endfor %}#}
+{#            <input type="submit" value="Submit">#}
+{#        </form>#}
+{#        <h1>Login</h1>#}
+{#        {% if forms.login.errors %}#}
+{#            {% for e in forms.login.errors %}#}
+{#                {{ error }}#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{#        <form method="POST" action="{% url 'post_form_home' 'login' %}">#}
+{#            {% csrf_token %}#}
+{#            {% for field in forms.login %}#}
+{#                {{ field.label }}#}
+{#                {{ field }}<br/>#}
+{#                {{ field.errors }}<br/>#}
+{#            {% endfor %}#}
+{#            <input type="submit" value="Submit">#}
+{#        </form>#}
+{#    {% endif %}#}
+{% load staticfiles %}
+<form method="post" action="{% if forms.reg %}{% url 'post_form_home' method %}{% else %}{% url 'post_form_home' 'login' %}{% endif %}" id="auth-form">
+{% csrf_token %}
+{% if forms.reg %}
+    <div class="enter-promo-block" id="reg-code">
+        <h3 class="block-title">Введите найденный вами промо-код</h3>
+
+        <div class="enter-promo">
+                <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
+                    {{ forms.reg.promo }}
+                    <!--- for setting red background add class "fill-field--w630--red-field"-->
+                </div>
+                {% if user.is_authenticated %}
+                    <a class="button enter-promo__button" href="{% url 'profile' %}">Добавить промо-код</a>
+                {% else %}
+                    <a class="button enter-promo__button" href="#authorization">Добавить промо-код</a>
+                {% endif %}
+        </div>
+    </div>
+{% endif %}
+    <div class="user-actions {% if not forms.reg %}user-actions--small-border{% endif %}" id="authorization">
+        <div class="user-actions__header">
+            {% if forms.reg %}
+            <span class="user-actions__tab-title {% if method == 'reg' %}user-actions__tab-title--current" {% endif %}
+                  tab-button="tab1" data-url="{% url 'post_form_home' 'reg' %}">Регистрация нового участника</span>
+            {% endif %}
+            <span href="#" class="user-actions__tab-title
+            {% if not forms.reg or method == 'login' %}user-actions__tab-title--current{% endif %}"
+                  data-url="{% url 'post_form_home' 'login' %}"
+                  tab-button="tab2">Войти под своим логином</span>
+        </div>
+    {% if forms.reg %}
+        <div id="tab1" class="user-actions__content user-actions__content--registration"
+             id="tab1">
+            <div class="fields-row">
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Фамилия
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.surname }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Имя
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.first_name }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Отчество
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.last_name }}
+                    </dd>
+                </dl>
+            </div>
+            <div class="fields-row">
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Индекс
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.post_index }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Область
+                    </dt>
+                    <dd class="field-col__field drop-panel">
+                        <span class="drop-arrow"><!----></span>
+                        {{ forms.reg.region }}
+                        <ul class="drop-panel__panel select-list">
+                            <li>Минская</li>
+                            <li>Брестская</li>
+                            <li>Витебская</li>
+                            <li>Гомельская</li>
+                            <li>Гродненская</li>
+                            <li>Могилёвская</li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Район
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.district }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Город
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.city }}
+                    </dd>
+                </dl>
+            </div>
+            <div class="fields-row">
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Улица
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.street }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Дом
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.building }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Корп.
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.corpus }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Кв.
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.apartment }}
+                    </dd>
+                </dl>
+            </div>
+            <div class="fields-row">
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Адрес электронной почты
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.email }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title field-col__title--capcha">
+                        <!---->
+                    </dt>
+                    <dd class="field-col__field field-col__field--capcha">
+                    </dd>
+                </dl>
+            </div>
+            <div class="fields-row">
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Телефон
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.phone }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title captcha_title">
+                        Код на картинке
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.captcha }}
+                    </dd>
+                </dl>
+
+            </div>
+            <div class="registration-buttons-panel">
+                <input class="button registration-buttons-panel__button" value="Зарегистрироваться" type="submit">
+                                <span class="check-block registration-buttons-panel__check">
+                                    {{ forms.reg.rules_confirmation }}
+                                    <label class="check-block__label" for="agreeCheck">
+                                        <span class="chech-block__helper"></span>
+                                        <span class="read-more-rules-button">С условиями игры ознакомлен</span></label>
+                                    </span>
+            </div>
+        </div>
+    {% endif %}
+        <div class="user-actions__content user-actions__content--login" id="tab2"
+                {% if not forms.reg %}style="display: block;"{% endif %}>
+            <div class="fields-row">
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Логин
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.login.username }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Пароль
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.login.password }}
+                    </dd>
+                </dl>
+                <dl class="field-col">
+                    <dt class="field-col__title field-col__title--login-title">
+                        <!---->
+                    </dt>
+                    <dd class="field-col__field field-col__field--login-button">
+                        <input class="button" value="Войти в аккаунт" type="submit">
+                    </dd>
+                </dl>
+            </div>
+            {# todo: forgot password #}
+            <a class="forgot-password link-blue" href="#">Забыли пароль?</a>
+        </div>
+    </div>
+</form>

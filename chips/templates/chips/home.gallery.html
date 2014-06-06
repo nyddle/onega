@@ -1,0 +1,21 @@
+{% load thumbnail %}
+<div class="gallery" id="photo">
+    <h3 class="block-title">Фотогалерея</h3>
+    <ul class="photo-list">
+        {% for thumb in thumbs %}
+            <li class="photo-list__item">
+                <img src="{{ thumbs.photo|thumbnail_url:'gallery' }}" alt="" />
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="nav">
+        <a class="nav__arrow nav__arrow--left" href="#"><!----></a>
+        <a class="nav__buttons nav__buttons--prev" href="#">Предыдущая</a>
+        {% for page in pages %}
+{#            <a class="nav__numbers nav__numbers--current" href="#">1</a>#}
+            <a class="nav__numbers" href="#">{{ page }}</a>
+        {% endfor %}
+        <a class="nav__buttons nav__buttons--next" href="#">Следующая</a>
+        <a class="nav__arrow nav__arrow--right" href="#"><!----></a>
+    </div>
+</div>
