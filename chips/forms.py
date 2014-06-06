@@ -29,7 +29,7 @@ class CodeForm(forms.ModelForm):
         raise forms.ValidationError("Неправильный промокод!")
 
     def save(self, commit=True):
-        code = super().save(commit=False)
+        code = super(CodeForm, self).save(commit=False)
         code.customer = self.customer
         if commit:
             code.save()
