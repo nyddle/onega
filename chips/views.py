@@ -92,7 +92,6 @@ class ProfileView(FormView):
         return super(ProfileView, self).form_valid(form)
 
     def form_invalid(self, form):
-        print form.errors
         return super(ProfileView, self).form_invalid(form)
 
 
