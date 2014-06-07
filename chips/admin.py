@@ -17,7 +17,7 @@ class CustomerResource(resources.ModelResource):
 
 class ValidCodeResource(resources.ModelResource):
 
-    id = fields.Field(column_name='id', primary_key=True)
+    id = fields.Field(column_name='id')
 
     class Meta:
         model = ValidCode
