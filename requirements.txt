@@ -1,3 +1,4 @@
+django-import-export
 Django==1.6.5
 Pillow==2.4.0
 South==0.8.4
@@ -10,4 +11,3 @@ six==1.6.1
 dj_static
 psycopg2
 django-admin-tools
-django-import-export
