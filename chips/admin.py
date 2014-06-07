@@ -12,6 +12,16 @@ class CustomerResource(resources.ModelResource):
     class Meta:
         model = Customer
 
+class ValidCodeResource(resources.ModelResource):
+
+    class Meta:
+        model = ValidCode
+
+class PromoCodeResource(resources.ModelResource):
+
+    class Meta:
+        model = PromoCode
+
 
 
 class ImageGalleryAdmin(admin.ModelAdmin):
