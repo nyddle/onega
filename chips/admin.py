@@ -25,9 +25,6 @@ class ValidCodeResource(resources.ModelResource):
 
     class Meta:
         model = ValidCode
-        exclude = ('id', )
-        fields = ('code', )
-        import_id_fields = ('code', )
 
 
 class PromoCodeResource(resources.ModelResource):
