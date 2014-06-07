@@ -28,11 +28,11 @@ class ImageGalleryAdmin(admin.ModelAdmin):
     list_display = ('photo', )
 
 
-class PromoCodeAdmin(admin.ModelAdmin):
+class PromoCodeAdmin(ImportExportModelAdmin):
     list_display = ('code', 'customer', 'added')
 
 
-class ValidCodeAdmin(admin.ModelAdmin):
+class ValidCodeAdmin(ImportExportModelAdmin):
     list_display = ('code', )
 
 
