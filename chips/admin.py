@@ -19,10 +19,6 @@ class ValidCodeResource(resources.ModelResource):
 
     id = fields.Field(column_name='id')
 
-    def before_import(dataset, dry_run):
-        for x in dataset:
-            print x
-
     class Meta:
         model = ValidCode
 
