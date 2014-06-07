@@ -6,7 +6,9 @@
 <head>
     <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{% block title %}{% endblock %}</title>
+        <title>
+            Онега | Вкусно перекуси - с удовольствием отдохни
+        </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, user-scalable=yes">
         <link rel="stylesheet" href="{% static 'css/custom-scroll.css' %}">
@@ -50,10 +52,16 @@
                             <a class="header-menu__link" href="{% url 'home' %}#video" contId="video">Видео-ролик</a>
                         </li>
                     {% endif %}
-
-                    <li class="header-menu__item"><a class="header-menu__link" href="#" contId="photo">Фотоотчёты с мероприятий</a></li>
-                    <li class="header-menu__item header-menu__item--current"><a class="header-menu__link" href="#" contId="winners">Розыгрыши и победители</a></li>
-
+                    {% if is_gallery_enabled %}
+                        <li class="header-menu__item">
+                            <a class="header-menu__link" href="{% url 'home' %}#photo" contId="photo">
+                            Фотоотчёты с мероприятий
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if request.phase > 1 %}
+                        <li class="header-menu__item header-menu__item--current"><a class="header-menu__link" href="#" contId="winners">Розыгрыши и победители</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
