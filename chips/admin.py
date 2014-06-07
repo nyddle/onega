@@ -4,6 +4,8 @@ from django.contrib import admin
 from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer
 
 from import_export import resources
+from import_export import fields
+
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -11,13 +13,22 @@ class CustomerResource(resources.ModelResource):
 
     class Meta:
         model = Customer
-        exclude = ('password', )
+        exclude = ('password', 'id')
 
 class ValidCodeResource(resources.ModelResource):
 
+    id = fields.Field(column_name='id')
+
+    def before_import(dataset, dry_run):
+        for x in dataset:
+            print x
+
     class Meta:
         model = ValidCode
-        fields = ('code',)
+        exclude = ('id', )
+        fields = ('code', )
+        import_id_fields = ('code', )
+
 
 class PromoCodeResource(resources.ModelResource):
 

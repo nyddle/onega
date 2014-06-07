@@ -19,13 +19,17 @@
             <h3 class="block-title">Введите найденный вами промо-код</h3>
 
             <div class="enter-promo">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
-                        {{ form.code }}
-                    </div>
-                    <input class="button enter-promo__button" value="Добавить промо-код" type="submit"/>
-                </form>
+                {% if request.user.is_user_blocked %}
+                    Вы ввели три неверных кода за последние сутки и пока что не можете указывать новые.
+                {% else %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
+                            {{ form.code }}
+                        </div>
+                        <input class="button enter-promo__button" value="Добавить промо-код" type="submit"/>
+                    </form>
+                {% endif %}
             </div>
         </div>
 
