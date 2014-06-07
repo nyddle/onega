@@ -9,4 +9,5 @@ requests==2.3.0
 six==1.6.1
 dj_static
 psycopg2
-django-admin-tools==0.5.1
+django-admin-tools
+django-import-export 
