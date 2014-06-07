@@ -10,4 +10,4 @@ six==1.6.1
 dj_static
 psycopg2
 django-admin-tools
-django-import-export 
+https://github.com/nyddle/django-import-export.git
