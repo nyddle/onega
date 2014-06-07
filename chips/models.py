@@ -60,15 +60,16 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    @property
     def codes_amount(self):
         return self.promocode_set.count()
+
+    codes_amount.short_description = u'Количество кодов'
 
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.
         """
-        full_name = '%s %s' % (self.first_name, self.last_name)
+        full_name = '%s %s' % (self.surname, self.first_name)
         return full_name.strip()
 
     def get_short_name(self):

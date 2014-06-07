@@ -12,15 +12,25 @@ from .utils import validate_code
 
 
 class CodeForm(forms.ModelForm):
-    error_css_class = 'red'
 
     def __init__(self, customer, data=None, *args, **kwargs):
         self.customer = customer
         super(CodeForm, self).__init__(data, *args, **kwargs)
+        if self.errors:
+            for f_name in self.fields:
+                if f_name in self.errors:
+                    classes = self.fields[f_name].widget.attrs.get('class', '')
+                    classes += ' red'
+                    self.fields[f_name].widget.attrs['class'] = classes
 
     class Meta:
-        exclude = ('customer', 'added', 'winner')
+        exclude = ('customer', 'added', 'winner', 'prise_name', 'on_phase')
         model = PromoCode
+        widgets = {
+            'code': forms.TextInput(
+                attrs={'style': 'width: 630px;', 'class': 'fill-field'}
+            )
+        }
 
     def clean_code(self):
         promo = self.cleaned_data.get('code')

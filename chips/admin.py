@@ -22,7 +22,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('pk', 'email', 'first_name', 'last_name', 'surname',
-                    'post_index', 'region', 'district', 'city', 'street',
+                    'post_index', 'region', 'district', 'city', 'street', 'codes_amount',
                     'building', 'corpus', 'apartment', 'phone', 'banks', 'is_active')
 
     search_fields = ['email', 'first_name', 'last_name', 'surname',

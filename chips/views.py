@@ -19,7 +19,6 @@ class HomeView(View):
     def get(self, request, method='reg'):
         return self._render_stuff(method)
 
-
     def post(self, request, method):
         if method == 'login':
             # todo: check is user blocked and if yes check block date
@@ -45,7 +44,7 @@ class HomeView(View):
             template_data['photos'] = ImageGallery.objects.all()
 
         if self.request.settings.get('video'):
-            template_data['video'] = request.settings['video']
+            template_data['video'] = self.request.settings['video']
         if not self.request.user.is_authenticated():
             if self.request.POST:
                 if method == 'login':
@@ -70,18 +69,25 @@ class ProfileView(FormView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        return super(ProfileView, self).dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
+        kwargs = super(ProfileView, self).get_form_kwargs()
         kwargs['customer'] = self.request.user
         return kwargs
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
+        data = super(ProfileView, self).get_context_data(**kwargs)
         data['codes'] = self.request.user.promocode_set.all()
         return data
 
     def form_valid(self, form):
         form.save()
-        return super().form_valid(form)
+        return super(ProfileView, self).form_valid(form)
+
+
+class LogoutView(View):
+    def get(self, request):
+        auth_logout(request)
+        request.session.flush()
+        return redirect('home')

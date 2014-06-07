@@ -9,4 +9,4 @@ requests==2.3.0
 six==1.6.1
 dj_static
 psycopg2
-https://bitbucket.org/izi/django-admin-tools/downloads/django-admin-tools-0.5.1.tar.gz
+django-admin-tools==0.5.1

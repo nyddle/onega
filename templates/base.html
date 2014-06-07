@@ -45,9 +45,12 @@
                                contId="reg-code">Регистрация кода</a>
                         {% endif %}
                     </li>
-                    {#  todo: if photos #}
-                    <li class="header-menu__item"><a class="header-menu__link" href="#" contId="video">Видео-ролик</a></li>
-                    {# todo: if videos #}
+                    {% if is_video_enabled %}
+                        <li class="header-menu__item">
+                            <a class="header-menu__link" href="{% url 'home' %}#video" contId="video">Видео-ролик</a>
+                        </li>
+                    {% endif %}
+
                     <li class="header-menu__item"><a class="header-menu__link" href="#" contId="photo">Фотоотчёты с мероприятий</a></li>
                     <li class="header-menu__item header-menu__item--current"><a class="header-menu__link" href="#" contId="winners">Розыгрыши и победители</a></li>
 

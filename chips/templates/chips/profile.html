@@ -29,8 +29,8 @@
             </div>
             <div class="inner-head__user-status">
                 <span class="inner-head__user-status__title">Вы вошли на сайт как:</span>
-                <span class="inner-head__user-status__name">Добронравов Алексей</span>
-                <a href="#" class="inner-head__user-status__logout">ВЫЙТИ</a>
+                <span class="inner-head__user-status__name">{{ request.user.get_full_name }}</span>
+                <a href="{% url 'logout' %}" class="inner-head__user-status__logout">ВЫЙТИ</a>
             </div>
         </div>
 
@@ -38,10 +38,10 @@
             <h3 class="block-title">Введите найденный вами промо-код</h3>
 
             <div class="enter-promo">
-                <form>
+                <form method="post">
+                    {% csrf_token %}
                     <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
-                        <input class="fill-field fill-field--w630" type="text"/>
-                        <!--- for setting red background add class "fill-field--w630--red-field"-->
+                        {{ form.code }}
                     </div>
                     <input class="button enter-promo__button" value="Добавить промо-код" type="submit"/>
                 </form>
@@ -50,24 +50,17 @@
 
         <div class="your-promo">
             <h3 class="block-title">Ваши промо-коды</h3>
-
             <div class="your-list">
-                <div class="your-list__row">
-                    <div class="your-list__code">123MN345MK</div>
-                    <div class="your-list__date">11 Июнь 23:25</div>
-                </div>
-                <div class="your-list__row">
-                    <div class="your-list__code">123MN345MK</div>
-                    <div class="your-list__date">11 Июнь 23:25</div>
-                </div>
-                <div class="your-list__row">
-                    <div class="your-list__code">123MN345MK</div>
-                    <div class="your-list__date">11 Июнь 23:25</div>
-                </div>
-                <div class="your-list__row">
-                    <div class="your-list__code">123MN345MK</div>
-                    <div class="your-list__date">11 Июнь 23:25</div>
-                </div>
+                {% for code in codes %}
+                    <div class="your-list__row">
+                        <div class="your-list__code">{{ code.code }}</div>
+                        <div class="your-list__date">{{ code.added }}</div>
+                    </div>
+                {% empty %}
+                    <div class="your-list__row">
+                        Вы пока не добавили ни одного кода
+                    </div>
+                {% endfor %}
             </div>
         </div>
 
