@@ -11,13 +11,13 @@ class CustomerResource(resources.ModelResource):
 
     class Meta:
         model = Customer
-        exclude = ('password', )
+        exclude = ('password', 'id')
 
 class ValidCodeResource(resources.ModelResource):
 
     class Meta:
         model = ValidCode
-        fields = ('code',)
+        exclude = ('id', )
 
 class PromoCodeResource(resources.ModelResource):
 
