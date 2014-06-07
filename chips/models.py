@@ -88,9 +88,9 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     def is_user_blocked(self):
         if not self.is_active:
             return True
-        codes = self.wrongcode_set.all()[5:]
+        codes = self.wrongcode_set.all().values_list('date', flat=True)[5:]
 
-        if len(codes) and (codes[-1] - codes[0]).days < 1:
+        if len(codes) and (codes[len(codes)-1] - codes[0]).days < 1:
             return True
         return False
 
