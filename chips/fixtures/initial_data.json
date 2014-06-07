@@ -13,7 +13,7 @@
     "model": "chips.sitesettings",
     "fields": {
         "key": "video",
-        "enabled": false,
+        "enabled": true,
         "additional_data": ""
     }
 },

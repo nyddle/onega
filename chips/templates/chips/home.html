@@ -28,9 +28,11 @@
                 <a href="{% url 'logout' %}" class="inner-head__user-status__logout">ВЫЙТИ</a>
 
             {% else %}
-                <a class="authorization-button"><strong>ВОЙТИ</strong></a><span
+                <a class="authorization-button" href="#authorization"><strong>ВОЙТИ</strong></a><span
                     class="user-actions-panel__small-text"> или</span>
-                <a class="authorization-button"><strong>ЗАРЕГИСТРИРОВАТЬСЯ</strong></a>
+                <a class="authorization-button" href="#authorization">
+                    <strong>ЗАРЕГИСТРИРОВАТЬСЯ</strong>
+                </a>
             {% endif %}
         </div>
         <div class="feedback-block">
@@ -94,9 +96,8 @@
     <a href="#" class="promo-imgs promo-imgs--ball"><!----></a>
 
 </div>
-{% if not user.is_authenticated %}
-    {% include 'chips/home.auth.html' %}
-{% endif %}
+
+{% include 'chips/home.auth.html' %}
 
 {% if is_video_enabled %}
 <div class="video-block" id="video">

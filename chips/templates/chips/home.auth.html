@@ -1,23 +1,29 @@
 {% load staticfiles %}
+{% if not user.is_authenticated %}
 <form method="post" action="{% if forms.reg %}{% url 'post_form_home' method %}{% else %}{% url 'post_form_home' 'login' %}{% endif %}" id="auth-form">
+{% else %}
+<form method="post" action="{% url 'profile' %}" id="auth-form">
+{% endif %}
 {% csrf_token %}
-{% if forms.reg %}
     <div class="enter-promo-block" id="reg-code">
         <h3 class="block-title">Введите найденный вами промо-код</h3>
-
         <div class="enter-promo">
                 <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
-                    {{ forms.reg.promo }}
+                    {% if not user.is_authenticated %}
+                        {{ forms.reg.promo }}
+                    {% else %}
+                        {{ form.code }}
+                    {% endif %}
                     <!--- for setting red background add class "fill-field--w630--red-field"-->
                 </div>
                 {% if user.is_authenticated %}
-                    <a class="button enter-promo__button" href="{% url 'profile' %}">Добавить промо-код</a>
+                    <button class="button enter-promo__button" type="submit">Добавить промо-код</button>
                 {% else %}
                     <a class="button enter-promo__button" href="#authorization">Добавить промо-код</a>
                 {% endif %}
         </div>
     </div>
-{% endif %}
+{% if not user.is_authenticated %}
     <div class="user-actions {% if not forms.reg %}user-actions--small-border{% endif %}" id="authorization">
         <div class="user-actions__header">
             {% if forms.reg %}
@@ -30,8 +36,7 @@
                   tab-button="tab2">Войти под своим логином</span>
         </div>
     {% if forms.reg %}
-        <div id="tab1" class="user-actions__content user-actions__content--registration"
-             id="tab1">
+        <div id="tab1" class="user-actions__content user-actions__content--registration" id="tab1">
             <div class="fields-row">
                 <dl class="field-col">
                     <dt class="field-col__title">
@@ -214,4 +219,5 @@
             <a class="forgot-password link-blue" href="#">Забыли пароль?</a>
         </div>
     </div>
+{% endif %}
 </form>

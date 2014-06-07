@@ -49,8 +49,9 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     apartment = models.IntegerField(max_length=255, blank=True, null=True, verbose_name='Кв.')
     phone = models.CharField(max_length=255, blank=True, verbose_name='Тел.')
     email = models.EmailField(unique=True, verbose_name='Почта')
-    blocked_at = models.DateTimeField(null=True, blank=True, verbose_name='')
     banks = models.IntegerField(default=0, verbose_name='Упаковок')
+
+    blocks_count = models.IntegerField(default=0, verbose_name='Блокирован раз')
 
     is_staff = models.BooleanField(default=False, verbose_name='Админ')
     is_active = models.BooleanField(default=True, verbose_name='Разблокирован')
@@ -84,6 +85,25 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         """
         send_mail(subject, message, from_email, [self.email])
 
+    def is_user_blocked(self):
+        if not self.is_active:
+            return True
+        codes = self.wrongcode_set.all()[5:]
+
+        if len(codes) and (codes[-1] - codes[0]).days < 1:
+            return True
+        return False
+
+    def add_wrong_code(self):
+        WrongCode.objects.create(customer=self)
+
+    def block_user(self):
+        if self.is_user_blocked():
+            self.blocks_count = self.blocks_count + 1
+            if self.blocks_count > 2:
+                self.is_active = False
+            self.save()
+
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
@@ -104,7 +124,7 @@ class SiteSettings(models.Model):
 
 
 class ValidCode(models.Model):
-    code = models.CharField(max_length=255, unique=True)
+    code = models.CharField(max_length=255, unique=True, primary_key=True)
 
     class Meta:
         verbose_name = 'уникальный код'
@@ -149,3 +169,8 @@ class PromoCode(models.Model):
     class Meta:
         verbose_name = 'пользовательский код'
         verbose_name_plural = 'пользовательские коды'
+
+
+class WrongCode(models.Model):
+    customer = models.ForeignKey(Customer)
+    date = models.DateTimeField(auto_now=True)

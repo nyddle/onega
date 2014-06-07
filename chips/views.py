@@ -20,13 +20,16 @@ class HomeView(View):
         return self._render_stuff(method)
 
     def post(self, request, method):
+
         if method == 'login':
             # todo: check is user blocked and if yes check block date
             form = AuthenticationForm(request, request.POST)
-            print(form.errors)
             if form.is_valid():
-                auth_login(request, form.get_user())
-                return redirect(reverse('home'))
+                user = form.get_user()
+                if not user.is_user_blocked():
+                    auth_login(request, form.get_user())
+                    return redirect(reverse('home'))
+                return self._render_stuff(method, True)
         elif method == 'reg':
             form = RegistrationForm(request.POST)
             if form.is_valid():
@@ -38,8 +41,8 @@ class HomeView(View):
         return self._render_stuff(method)
 
     # todo: hide registration if phase > 3
-    def _render_stuff(self, method):
-        template_data = {'method': method}
+    def _render_stuff(self, method, blocked=False):
+        template_data = {'method': method, 'blocked': blocked}
         if self.request.settings.get('gallery'):
             template_data['photos'] = ImageGallery.objects.all()
 
@@ -57,6 +60,9 @@ class HomeView(View):
                 template_data['forms'] = {'reg': RegistrationForm(), 'login': AuthenticationForm()}
             if self.request.session.get('registered'):
                 template_data['forms'].pop('reg')
+        else:
+            template_data['form'] = CodeForm(customer=self.request.user)
+
         return render(self.request, 'chips/home.html', template_data)
 
 
@@ -84,6 +90,10 @@ class ProfileView(FormView):
     def form_valid(self, form):
         form.save()
         return super(ProfileView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print form.errors
+        return super(ProfileView, self).form_invalid(form)
 
 
 class LogoutView(View):

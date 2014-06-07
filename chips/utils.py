@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .models import SiteSettings, ValidCode
+from .models import SiteSettings, ValidCode, PromoCode
 
 
 def get_site_settings():
@@ -19,4 +19,8 @@ def validate_code(code):
         ValidCode.objects.get(code=code)
     except ValidCode.DoesNotExist:
         return False
+
+    if PromoCode.objects.filter(code=code).first():
+        return False
+
     return True

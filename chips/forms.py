@@ -36,6 +36,8 @@ class CodeForm(forms.ModelForm):
         promo = self.cleaned_data.get('code')
         if validate_code(promo):
             return promo
+        self.customer.add_wrong_code()
+        self.customer.block_user()
         raise forms.ValidationError("Неправильный промокод!")
 
     def save(self, commit=True):
@@ -56,7 +58,7 @@ class LoginForm(AuthenticationForm):
                     classes += ' fill-field--w261--type--red-field'
                     self.fields[f_name].widget.attrs['class'] = classes
 
-    username = forms.CharField(max_length=254, widget=forms.TextInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type'}))
+    username = forms.CharField(max_length=254, widget=forms.EmailInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type1'}))
 
 
@@ -82,7 +84,7 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = Customer
         exclude = ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions', 'password', 'last_login',
-                   'blocked_at', 'banks')
+                   'banks', 'blocks_count')
         labels = {
             "first_name": "Имя",
             "last_name": "Отчество",

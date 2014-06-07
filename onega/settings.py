@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'south',
     'easy_thumbnails',
     'captcha',
     'chips',
@@ -82,7 +83,8 @@ ROOT_URLCONF = 'onega.urls'
 
 WSGI_APPLICATION = 'onega.wsgi.application'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/home/login'
+REDIRECT_LOGIN_URL = 'profile'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -100,7 +102,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 
 # Static files (CSS, JavaScript, Images)
