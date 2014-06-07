@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'captcha',
     'chips',
+    'south',
 )
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
@@ -142,3 +143,5 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+
