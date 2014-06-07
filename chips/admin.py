@@ -15,6 +15,8 @@ class CustomerResource(resources.ModelResource):
 
 class ValidCodeResource(resources.ModelResource):
 
+    id = fields.Field(column_name='id', primary_key=True)
+
     class Meta:
         model = ValidCode
         exclude = ('id', )
