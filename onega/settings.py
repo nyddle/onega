@@ -39,18 +39,18 @@ AUTH_USER_MODEL = 'chips.Customer'
 INSTALLED_APPS = (
     # 'admin_tools.menu',
     'admin_tools.dashboard',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'import_export',
     'django.contrib.admin',
+    'chips',
     'south',
     'easy_thumbnails',
     'captcha',
-    'chips',
-    'south',
 )
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'

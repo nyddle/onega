@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.mail import send_mail
+from django.contrib.contenttypes.models import ContentType
+from django.core import urlresolvers
 
 from easy_thumbnails.fields import ThumbnailerImageField
 
@@ -85,6 +87,15 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         """
         send_mail(subject, message, from_email, [self.email])
 
+    def get_codes(self):
+        codes = ''
+        for code in self.promocode_set.all():
+            codes += '<a href="{}">{}</a>\n'.format(code.get_admin_url(), code.code)
+        return codes
+
+    get_codes.short_description = u'Промокоды'
+    get_codes.allow_tags = True
+
     def is_user_blocked(self):
         if not self.is_active:
             return True
@@ -141,8 +152,8 @@ class ImageGallery(models.Model):
 
 class Phase(models.Model):
     PHASES = ((0, '1'), (1, '2'), (2, '3'), (3, 'Игра окончена'))
-    current_phase = models.IntegerField(choices=PHASES)
-    date = models.DateField()
+    current_phase = models.IntegerField(choices=PHASES, verbose_name='Фаза')
+    date = models.DateField(null=True, blank=True, auto_now=True)
 
     class Meta:
         verbose_name = 'фаза'
@@ -150,7 +161,7 @@ class Phase(models.Model):
 
 
 class PriseType(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name='Наименование')
 
     class Meta:
         verbose_name = 'приз'
@@ -158,13 +169,17 @@ class PriseType(models.Model):
 
 
 class PromoCode(models.Model):
-    customer = models.ForeignKey(Customer)
+    customer = models.ForeignKey(Customer, verbose_name='Пользователь')
     # todo: what is maxlength here?
-    code = models.CharField(max_length=255, unique=True)
-    added = models.DateTimeField(auto_now=True)
-    winner = models.BooleanField(default=False)
-    on_phase = models.ForeignKey(Phase, null=True)
-    prise_name = models.ForeignKey(PriseType, null=True)
+    code = models.CharField(max_length=255, unique=True, verbose_name='Код')
+    added = models.DateTimeField(auto_now=True, verbose_name='Добавлен')
+    winner = models.BooleanField(default=False, blank=True, verbose_name='Выигрышный код')
+    on_phase = models.ForeignKey(Phase, null=True, blank=True, verbose_name='Фаза')
+    prise_name = models.ForeignKey(PriseType, null=True, blank=True, verbose_name='Приз')
+
+    def get_admin_url(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return urlresolvers.reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
 
     class Meta:
         verbose_name = 'пользовательский код'
