@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.template.loader import render_to_string
+
 from .models import SiteSettings, ValidCode, PromoCode
 
 
@@ -22,5 +24,8 @@ def validate_code(code):
 
     if PromoCode.objects.filter(code=code).first():
         return False
-
     return True
+
+#
+# def load_template_data(template, text):
+#     rendered = render_to_string('my_template.html', {'foo': 'bar'})

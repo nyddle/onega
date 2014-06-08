@@ -1,14 +1,25 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.conf import settings
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 
 from captcha.fields import CaptchaField, CaptchaTextInput
 
 from .models import Customer, PromoCode
 from .utils import validate_code
+
+
+class ThemedPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(label="Email", max_length=254,
+                             widget=forms.EmailInput(attrs={'class': 'fill-field'}))
+
+
+class ThemedSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(label="Новый пароль",
+                                    widget=forms.PasswordInput(attrs={'class': 'fill-field'}))
+    new_password2 = forms.CharField(label="Повторите пароль",
+                                    widget=forms.PasswordInput(attrs={'class': 'fill-field'}))
 
 
 class CodeForm(forms.ModelForm):
