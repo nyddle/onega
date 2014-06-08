@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.mail import send_mail
+from django.contrib.contenttypes.models import ContentType
+from django.core import urlresolvers
 
 from easy_thumbnails.fields import ThumbnailerImageField
 
@@ -85,12 +87,21 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         """
         send_mail(subject, message, from_email, [self.email])
 
+    def get_codes(self):
+        codes = ''
+        for code in self.promocode_set.all():
+            codes += '<a href="{}">{}</a>\n'.format(code.get_admin_url(), code.code)
+        return codes
+
+    get_codes.short_description = u'Промокоды'
+    get_codes.allow_tags = True
+
     def is_user_blocked(self):
         if not self.is_active:
             return True
         codes = self.wrongcode_set.all().values_list('date', flat=True)[5:]
 
-        if len(codes) and (codes[len(codes)-1] - codes[0]).days < 1:
+        if len(codes) > 4 and (codes[len(codes)-1] - codes[0]).days < 1:
             return True
         return False
 
@@ -141,30 +152,40 @@ class ImageGallery(models.Model):
 
 class Phase(models.Model):
     PHASES = ((0, '1'), (1, '2'), (2, '3'), (3, 'Игра окончена'))
-    current_phase = models.IntegerField(choices=PHASES)
-    date = models.DateField()
+    current_phase = models.IntegerField(choices=PHASES, verbose_name='Фаза')
+    date = models.DateField(null=True, blank=True, verbose_name='Дата окончания фазы')
 
     class Meta:
         verbose_name = 'фаза'
         verbose_name_plural = 'фазы'
 
+    def __str__(self):
+        return str(self.get_current_phase_display())
+
 
 class PriseType(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name='Наименование')
 
     class Meta:
         verbose_name = 'приз'
         verbose_name_plural = 'призы'
 
+    def __str__(self):
+        return str(self.name)
+
 
 class PromoCode(models.Model):
-    customer = models.ForeignKey(Customer)
+    customer = models.ForeignKey(Customer, verbose_name='Пользователь')
     # todo: what is maxlength here?
-    code = models.CharField(max_length=255, unique=True)
-    added = models.DateTimeField(auto_now=True)
-    winner = models.BooleanField(default=False)
-    on_phase = models.ForeignKey(Phase, null=True)
-    prise_name = models.ForeignKey(PriseType, null=True)
+    code = models.CharField(max_length=255, unique=True, verbose_name='Код')
+    added = models.DateTimeField(auto_now=True, verbose_name='Добавлен')
+    winner = models.BooleanField(default=False, blank=True, verbose_name='Выигрышный код')
+    on_phase = models.ForeignKey(Phase, null=True, blank=True, verbose_name='Фаза')
+    prise_name = models.ForeignKey(PriseType, null=True, blank=True, verbose_name='Приз')
+
+    def get_admin_url(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return urlresolvers.reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
 
     class Meta:
         verbose_name = 'пользовательский код'
@@ -172,5 +193,24 @@ class PromoCode(models.Model):
 
 
 class WrongCode(models.Model):
-    customer = models.ForeignKey(Customer)
+    customer = models.ForeignKey(Customer, verbose_name='Пользователь')
+    date = models.DateTimeField(auto_now=True, verbose_name='Дата логина')
+
+    class Meta:
+        verbose_name = 'ввод неверного кода'
+        verbose_name_plural = 'вводы неверного кода'
+
+
+class DiscreditedIP(models.Model):
+    ip = models.CharField(max_length=100, unique=True)
+    failed = models.IntegerField(default=0, verbose_name='Количество ошибок')
+    blocked = models.IntegerField(default=0, verbose_name='Количество блокировок')
+
+    class Meta:
+        verbose_name = 'дискредетированный IP'
+        verbose_name_plural = 'дискредетированные IP'
+
+
+class WrongIPByCode(models.Model):
     date = models.DateTimeField(auto_now=True)
+    ip = models.ForeignKey(DiscreditedIP)

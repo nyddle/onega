@@ -97,7 +97,16 @@
 
 </div>
 
-{% include 'chips/home.auth.html' %}
+{% if request.session.ip_blocked %}
+    <div class="enter-promo-block" id="reg-code">
+        <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
+            Вы пытались указать неправильный код слишком много раз. Попытки ввода кода временно заблокированы.
+        </div>
+    </div>
+
+{% else %}
+    {% include 'chips/home.auth.html' %}
+{% endif %}
 
 {% if is_video_enabled %}
 <div class="video-block" id="video">

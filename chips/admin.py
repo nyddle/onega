@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer
+from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer, PriseType, Phase, WrongCode, \
+    DiscreditedIP
 
 from import_export import resources
 from import_export import fields
@@ -9,11 +10,29 @@ from import_export import fields
 from import_export.admin import ImportExportModelAdmin
 
 
+class WrongCodeAdmin(admin.ModelAdmin):
+    list_display = ('customer', 'date')
+
+
+class DiscreditedIPAdmin(admin.ModelAdmin):
+    list_display = ('ip', 'failed', 'blocked')
+
+
+class PriseTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+    exclude = ('date', )
+
+
+class PhaseAdmin(admin.ModelAdmin):
+    list_display = ('current_phase', )
+
+
 class CustomerResource(resources.ModelResource):
 
     class Meta:
         model = Customer
         exclude = ('password', 'id')
+
 
 class ValidCodeResource(resources.ModelResource):
 
@@ -27,13 +46,14 @@ class PromoCodeResource(resources.ModelResource):
         model = PromoCode
 
 
-
 class ImageGalleryAdmin(admin.ModelAdmin):
     list_display = ('photo', )
 
 
 class PromoCodeAdmin(ImportExportModelAdmin):
-    list_display = ('code', 'customer', 'added')
+    list_display = ('code', 'customer', 'added', 'winner', 'on_phase', 'prise_name')
+    list_editable = ('winner', 'on_phase', 'prise_name')
+    list_filter = ('winner', 'on_phase', 'prise_name')
 
 
 class ValidCodeAdmin(ImportExportModelAdmin):
@@ -47,7 +67,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 class CustomerAdmin(ImportExportModelAdmin):
     list_display = ('pk', 'email', 'first_name', 'last_name', 'surname',
                     'post_index', 'region', 'district', 'city', 'street', 'codes_amount',
-                    'building', 'corpus', 'apartment', 'phone', 'banks', 'is_active')
+                    'building', 'corpus', 'apartment', 'phone', 'get_codes', 'banks', 'is_active')
 
     search_fields = ['email', 'first_name', 'last_name', 'surname',
                     'post_index', 'region', 'district', 'city', 'street',
@@ -55,12 +75,17 @@ class CustomerAdmin(ImportExportModelAdmin):
 
     list_filter = ('is_active', 'banks')
     list_editable = ('is_active', 'banks')
-    readonly_fields = ('codes_amount', )
+    readonly_fields = ('codes_amount', 'get_codes')
     resource_class = CustomerResource
+    ordering = ('-id', )
 
 
 admin.site.register(ImageGallery, ImageGalleryAdmin)
 admin.site.register(SiteSettings, SiteSettingsAdmin)
 admin.site.register(PromoCode, PromoCodeAdmin)
 admin.site.register(ValidCode, ValidCodeAdmin)
+admin.site.register(PriseType, PriseTypeAdmin)
+admin.site.register(Phase, PhaseAdmin)
 admin.site.register(Customer, CustomerAdmin)
+admin.site.register(WrongCode, WrongCodeAdmin)
+admin.site.register(DiscreditedIP, DiscreditedIPAdmin)

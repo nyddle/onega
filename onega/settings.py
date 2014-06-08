@@ -22,7 +22,7 @@ SECRET_KEY = 'oy%)bah1r)xx7a2@m*bacn+^q42rt$p=fle%$kpdf6okcr1$+n'
 
 # todo: switch in to False on production
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -39,18 +39,18 @@ AUTH_USER_MODEL = 'chips.Customer'
 INSTALLED_APPS = (
     # 'admin_tools.menu',
     'admin_tools.dashboard',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'import_export',
     'django.contrib.admin',
+    'chips',
     'south',
     'easy_thumbnails',
     'captcha',
-    'chips',
-    'south',
 )
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'

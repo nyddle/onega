@@ -1,14 +1,30 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.conf import settings
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 
 from captcha.fields import CaptchaField, CaptchaTextInput
 
 from .models import Customer, PromoCode
 from .utils import validate_code
+from .utils import load_template_data
+
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template import Context
+from django.template.loader import get_template
+
+
+class ThemedPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(label="Email", max_length=254,
+                             widget=forms.EmailInput(attrs={'class': 'fill-field'}))
+
+
+class ThemedSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(label="Новый пароль",
+                                    widget=forms.PasswordInput(attrs={'class': 'fill-field'}))
+    new_password2 = forms.CharField(label="Повторите пароль",
+                                    widget=forms.PasswordInput(attrs={'class': 'fill-field'}))
 
 
 class CodeForm(forms.ModelForm):
@@ -81,6 +97,8 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.CheckboxInput(attrs={'id': 'agreeCheck',
                                           'class': 'check-block__check'}))
 
+    promocode_failed = False
+
     class Meta:
         model = Customer
         exclude = ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions', 'password', 'last_login',
@@ -128,18 +146,29 @@ class RegistrationForm(forms.ModelForm):
             if validate_code(promo):
                 return promo
             else:
+                self.promocode_failed = True
                 raise forms.ValidationError("Неправильный промокод!")
         return promo
+
+    def is_promo_failed(self):
+        return self.promocode_failed
 
     def save(self, commit=True):
         customer = super(RegistrationForm, self).save(commit=False)
         password = Customer.objects.make_random_password()
         customer.set_password(password)
         if commit:
-            send_mail(u'Регистрация завершена',
-                      u"Вы успешно зарегистрировались! Ваш пароль %s" % password,
-                      settings.EMAIL_FROM, [self.cleaned_data['email']])
             customer.save()
+            tmpl = load_template_data('mails/reg_confirm.html',
+                                      {'password': password,
+                                       'email': customer.email,
+                                       'first_name': customer.first_name,
+                                       'id': customer.pk})
+
+            msg = EmailMultiAlternatives(u'Регистрация завершена', tmpl, settings.EMAIL_FROM, to=[self.cleaned_data['email']])
+            msg.attach_alternative(tmpl, "text/html")
+            msg.send()
+
             # todo: add to user
             if len(self.cleaned_data.get('promo', '')) > 0:
                 PromoCode.objects.create(customer=customer, code=self.cleaned_data['promo'])

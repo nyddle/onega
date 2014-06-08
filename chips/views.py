@@ -1,20 +1,36 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseNotFound, HttpResponse
+from django.http.response import HttpResponseNotFound
 from django.views.generic import View, FormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout, get_user_model, \
-    authenticate
+from django.contrib.auth import login as auth_login, logout as auth_logout
 
-from .models import ImageGallery
+from .models import ImageGallery, DiscreditedIP, WrongIPByCode
 from .forms import RegistrationForm, CodeForm, LoginForm as AuthenticationForm
+from .utils import get_client_ip
 
 
 class HomeView(View):
     """
     Home page
     """
+
+    def dispatch(self, request, *args, **kwargs):
+        ip_addr = get_client_ip(request)
+
+        ip, created = DiscreditedIP.objects.get_or_create(ip=ip_addr)
+
+        if ip.blocked > 3:
+            request.session['ip_blocked'] = True
+
+        attempts = ip.wrongipbycode_set.all()[5:]
+        if len(attempts) > 4 and (attempts[len(attempts)-1].date - attempts[0].date).days < 1:
+            request.session['ip_blocked'] = True
+        else:
+            request.session['ip_blocked'] = False
+        return super(HomeView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, method='reg'):
         return self._render_stuff(method)
@@ -33,9 +49,23 @@ class HomeView(View):
         elif method == 'reg':
             form = RegistrationForm(request.POST)
             if form.is_valid():
-                user = form.save()
+                form.save()
                 request.session['registered'] = True
                 return redirect(reverse('home'))
+            else:
+                if form.is_promo_failed():
+                    ip_addr = get_client_ip(request)
+                    ip, created = DiscreditedIP.objects.get_or_create(ip=ip_addr)
+                    WrongIPByCode.objects.create(ip=ip)
+                    ip.failed += 1
+                    ip.save()
+
+                    attempts = ip.wrongipbycode_set.all()[5:]
+                    if len(attempts) > 4 and (attempts[len(attempts)-1].date - attempts[0].date).days < 1:
+                        request.session['ip_blocked'] = True
+                        ip.blocked += 1
+                        ip.save()
+
         else:
             return HttpResponseNotFound
         return self._render_stuff(method)
