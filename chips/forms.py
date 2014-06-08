@@ -154,10 +154,14 @@ class RegistrationForm(forms.ModelForm):
         password = Customer.objects.make_random_password()
         customer.set_password(password)
         if commit:
-            send_mail(u'Регистрация завершена',
-                      u"Вы успешно зарегистрировались! Ваш пароль %s" % password,
-                      settings.EMAIL_FROM, [self.cleaned_data['email']])
             customer.save()
+            tmpl = load_template_data('mails/reg_confirm.html',
+                                      {'password': password,
+                                       'email': customer.email,
+                                       'first_name': customer.first_name,
+                                       'id': customer.pk})
+            send_mail(u'Регистрация завершена', tmpl, settings.EMAIL_FROM, [self.cleaned_data['email']])
+
             # todo: add to user
             if len(self.cleaned_data.get('promo', '')) > 0:
                 PromoCode.objects.create(customer=customer, code=self.cleaned_data['promo'])

@@ -193,14 +193,22 @@ class PromoCode(models.Model):
 
 
 class WrongCode(models.Model):
-    customer = models.ForeignKey(Customer)
-    date = models.DateTimeField(auto_now=True)
+    customer = models.ForeignKey(Customer, verbose_name='Пользователь')
+    date = models.DateTimeField(auto_now=True, verbose_name='Дата логина')
+
+    class Meta:
+        verbose_name = 'ввод неверного кода'
+        verbose_name_plural = 'вводы неверного кода'
 
 
 class DiscreditedIP(models.Model):
     ip = models.CharField(max_length=100, unique=True)
-    failed = models.IntegerField(default=0)
-    blocked = models.IntegerField(default=0)
+    failed = models.IntegerField(default=0, verbose_name='Количество ошибок')
+    blocked = models.IntegerField(default=0, verbose_name='Количество блокировок')
+
+    class Meta:
+        verbose_name = 'дискредетированный IP'
+        verbose_name_plural = 'дискредетированные IP'
 
 
 class WrongIPByCode(models.Model):
