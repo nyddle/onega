@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseNotFound, HttpResponse
+from django.http.response import HttpResponseNotFound
 from django.views.generic import View, FormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout, get_user_model, \
-    authenticate
+from django.contrib.auth import login as auth_login, logout as auth_logout
 
 from .models import ImageGallery
 from .forms import RegistrationForm, CodeForm, LoginForm as AuthenticationForm

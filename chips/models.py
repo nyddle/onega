@@ -153,11 +153,14 @@ class ImageGallery(models.Model):
 class Phase(models.Model):
     PHASES = ((0, '1'), (1, '2'), (2, '3'), (3, 'Игра окончена'))
     current_phase = models.IntegerField(choices=PHASES, verbose_name='Фаза')
-    date = models.DateField(null=True, blank=True, auto_now=True)
+    date = models.DateField(null=True, blank=True, verbose_name='Дата окончания фазы')
 
     class Meta:
         verbose_name = 'фаза'
         verbose_name_plural = 'фазы'
+
+    def __str__(self):
+        return str(self.get_current_phase_display())
 
 
 class PriseType(models.Model):
@@ -166,6 +169,9 @@ class PriseType(models.Model):
     class Meta:
         verbose_name = 'приз'
         verbose_name_plural = 'призы'
+
+    def __str__(self):
+        return str(self.name)
 
 
 class PromoCode(models.Model):

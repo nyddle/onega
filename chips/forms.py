@@ -8,6 +8,7 @@ from captcha.fields import CaptchaField, CaptchaTextInput
 
 from .models import Customer, PromoCode
 from .utils import validate_code
+from .utils import load_template_data
 
 
 class ThemedPasswordResetForm(PasswordResetForm):

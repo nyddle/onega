@@ -6,7 +6,7 @@ from .models import SiteSettings, ValidCode, PromoCode
 
 def get_site_settings():
     """
-    Convert setting to dict
+    Convert settings to dict
     """
     site_settings = SiteSettings.objects.all()
     result = {}
@@ -17,6 +17,9 @@ def get_site_settings():
 
 
 def validate_code(code):
+    """
+    Check is promo code valid
+    """
     try:
         ValidCode.objects.get(code=code)
     except ValidCode.DoesNotExist:
@@ -26,6 +29,6 @@ def validate_code(code):
         return False
     return True
 
-#
-# def load_template_data(template, text):
-#     rendered = render_to_string('my_template.html', {'foo': 'bar'})
+
+def load_template_data(template, context):
+    return render_to_string(template, context)
