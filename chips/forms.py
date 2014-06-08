@@ -10,6 +10,10 @@ from .models import Customer, PromoCode
 from .utils import validate_code
 from .utils import load_template_data
 
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template import Context
+from django.template.loader import get_template
+
 
 class ThemedPasswordResetForm(PasswordResetForm):
     email = forms.EmailField(label="Email", max_length=254,
@@ -160,7 +164,10 @@ class RegistrationForm(forms.ModelForm):
                                        'email': customer.email,
                                        'first_name': customer.first_name,
                                        'id': customer.pk})
-            send_mail(u'Регистрация завершена', tmpl, settings.EMAIL_FROM, [self.cleaned_data['email']])
+
+            msg = EmailMultiAlternatives(u'Регистрация завершена', tmpl, settings.EMAIL_FROM, to=[self.cleaned_data['email']])
+            msg.attach_alternative(tmpl, "text/html")
+            msg.send()
 
             # todo: add to user
             if len(self.cleaned_data.get('promo', '')) > 0:

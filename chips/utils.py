@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.template.loader import render_to_string
+from django.template import loader, Context
 
 from .models import SiteSettings, ValidCode, PromoCode
 
@@ -40,4 +40,7 @@ def validate_code(code):
 
 
 def load_template_data(template, context):
-    return render_to_string(template, context)
+    t = loader.get_template(template)
+    c = Context(context)
+    rendered = t.render(c)
+    return rendered
