@@ -26,7 +26,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['onega.herokuapp.com']
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
