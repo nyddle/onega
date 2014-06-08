@@ -48,7 +48,6 @@ INSTALLED_APPS = (
     'import_export',
     'django.contrib.admin',
     'chips',
-    'south',
     'easy_thumbnails',
     'captcha',
 )
