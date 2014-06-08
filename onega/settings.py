@@ -22,7 +22,7 @@ SECRET_KEY = 'oy%)bah1r)xx7a2@m*bacn+^q42rt$p=fle%$kpdf6okcr1$+n'
 
 # todo: switch in to False on production
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
