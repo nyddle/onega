@@ -93,6 +93,8 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.CheckboxInput(attrs={'id': 'agreeCheck',
                                           'class': 'check-block__check'}))
 
+    promocode_failed = False
+
     class Meta:
         model = Customer
         exclude = ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions', 'password', 'last_login',
@@ -140,8 +142,12 @@ class RegistrationForm(forms.ModelForm):
             if validate_code(promo):
                 return promo
             else:
+                self.promocode_failed = True
                 raise forms.ValidationError("Неправильный промокод!")
         return promo
+
+    def is_promo_failed(self):
+        return self.promocode_failed
 
     def save(self, commit=True):
         customer = super(RegistrationForm, self).save(commit=False)

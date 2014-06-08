@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer, PriseType, Phase
+from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer, PriseType, Phase, WrongCode, \
+    DiscreditedIP
 
 from import_export import resources
 from import_export import fields
 
 from import_export.admin import ImportExportModelAdmin
+
+
+class WrongCodeAdmin(admin.ModelAdmin):
+    list_display = ('customer', 'date')
+
+
+class DiscreditedIPAdmin(admin.ModelAdmin):
+    list_display = ('ip', 'failed', 'blocked')
 
 
 class PriseTypeAdmin(admin.ModelAdmin):
@@ -77,6 +86,7 @@ class CustomerAdmin(ImportExportModelAdmin):
     list_editable = ('is_active', 'banks')
     readonly_fields = ('codes_amount', 'get_codes')
     resource_class = CustomerResource
+    ordering = ('-id', )
 
 
 admin.site.register(ImageGallery, ImageGalleryAdmin)
@@ -86,3 +96,5 @@ admin.site.register(ValidCode, ValidCodeAdmin)
 admin.site.register(PriseType, PriseTypeAdmin)
 admin.site.register(Phase, PhaseAdmin)
 admin.site.register(Customer, CustomerAdmin)
+admin.site.register(WrongCode, WrongCodeAdmin)
+admin.site.register(DiscreditedIP, DiscreditedIPAdmin)

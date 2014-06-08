@@ -101,7 +101,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
             return True
         codes = self.wrongcode_set.all().values_list('date', flat=True)[5:]
 
-        if len(codes) and (codes[len(codes)-1] - codes[0]).days < 1:
+        if len(codes) > 4 and (codes[len(codes)-1] - codes[0]).days < 1:
             return True
         return False
 
@@ -195,3 +195,14 @@ class PromoCode(models.Model):
 class WrongCode(models.Model):
     customer = models.ForeignKey(Customer)
     date = models.DateTimeField(auto_now=True)
+
+
+class DiscreditedIP(models.Model):
+    ip = models.CharField(max_length=100, unique=True)
+    failed = models.IntegerField(default=0)
+    blocked = models.IntegerField(default=0)
+
+
+class WrongIPByCode(models.Model):
+    date = models.DateTimeField(auto_now=True)
+    ip = models.ForeignKey(DiscreditedIP)
