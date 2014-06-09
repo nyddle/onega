@@ -68,6 +68,9 @@ class Customer(AbstractBaseUser, PermissionsMixin):
 
     codes_amount.short_description = u'Количество кодов'
 
+    def __unicode__(self):
+        return u'№{}({})'.format(self.pk, self.email)
+
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.

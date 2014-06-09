@@ -95,7 +95,7 @@ DATABASES = {'default': dj_database_url.config(default=os.getenv('HEROKU_POSTGRE
 
 LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Minsk'
 
 USE_I18N = True
 
@@ -134,8 +134,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_HOST_USER = 'postmaster@app26061228.mailgun.org'
-EMAIL_HOST_PASSWORD = '0j8v3jioz5n4'
+EMAIL_HOST_USER = 'postmaster@app26163268.mailgun.org'
+EMAIL_HOST_PASSWORD = '0r61dc961en3'
 EMAIL_PORT = 587
 EMAIL_FROM = 'igra@onega.by'
 
