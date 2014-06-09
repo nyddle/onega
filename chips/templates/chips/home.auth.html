@@ -33,10 +33,10 @@
     <div class="user-actions {% if not forms.reg %}user-actions--small-border{% endif %}" id="authorization">
         <div class="user-actions__header">
 
-            <span class="user-actions__tab-title {% if method == 'reg' %}user-actions__tab-title--current" {% endif %}
+            <span id="span-tab-title-reg" class="user-actions__tab-title {% if method == 'reg' %}user-actions__tab-title--current" {% endif %}
                   tab-button="tab1" data-url="{% url 'post_form_home' 'reg' %}">Регистрация нового участника</span>
 
-            <span href="#" class="user-actions__tab-title
+            <span href="#" id="span-tab-title-login" class="user-actions__tab-title
             {% if not forms.reg or method == 'login' %}user-actions__tab-title--current{% endif %}"
                   data-url="{% url 'post_form_home' 'login' %}" tab-button="tab2">Войти под своим логином</span>
         </div>

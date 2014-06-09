@@ -4,6 +4,14 @@ $(document).ready(function(){
         $(this).parents('.drop-panel').find('.drop-panel__panel').show();
     });
 
+    $(document).on('click', '#login-auth-button', function(){
+        $('#span-tab-title-login').click();
+    });
+
+    $(document).on('click', '#reg-auth-button', function(){
+        $('#span-tab-title-reg').click();
+    });
+
     $('html').click(function(){
         $('.drop-panel__panel').hide();
     });
