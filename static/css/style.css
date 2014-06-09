@@ -939,7 +939,6 @@ a:active {
 
 /* line 234, ../sass/style.scss */
 .promo-imgs {
-  background: url("../img/prizes-sprite.png") no-repeat;
   display: block;
 }
 /* line 10, ../sass/_mixins.scss */
@@ -999,42 +998,29 @@ a:active {
 }
 /* line 10, ../sass/_mixins.scss */
 .promo-imgs--gamak {
-  width: 252px;
-  height: 113px;
-  margin-left: 30px;
-  margin-bottom: 107px;
-  background-position: -434px 0;
-}
-/* line 300, ../sass/style.scss */
-.promo-imgs--gamak:hover {
-  background-position: -435px -137px;
-  margin-top: -3px;
   width: 256px;
   height: 116px;
+  margin-left: 30px;
+  margin-bottom: 107px;
 }
+/* line 300, ../sass/style.scss */
 /* line 10, ../sass/_mixins.scss */
 .promo-imgs--bag {
   position: absolute;
   right: -47px;
   top: 144px;
-  width: 84px;
-  height: 96px;
-  background-position: 0 -471px;
-}
-/* line 316, ../sass/style.scss */
-.promo-imgs--bag:hover {
-  background-position: -93px -468px;
-  margin-top: -3px;
   width: 88px;
   height: 99px;
 }
+/* line 316, ../sass/style.scss */
 /* line 10, ../sass/_mixins.scss */
 .promo-imgs--arrow-one {
   width: 330px;
   height: 62px;
   top: 351px;
   left: 301px;
-  position: absolute;
+  position: absolute;  
+  background: url("../img/prizes-sprite.png") no-repeat;
   background-position: -329px -431px;
 }
 /* line 10, ../sass/_mixins.scss */
@@ -1044,6 +1030,7 @@ a:active {
   position: absolute;
   right: -23px;
   top: 439px;
+  background: url("../img/prizes-sprite.png") no-repeat;
   background-position: -640px -270px;
 }
 
