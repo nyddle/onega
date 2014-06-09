@@ -101,7 +101,7 @@
 <div class="video-block" id="video">
     <h3 class="block-title">Посмотреть видео-ролик</h3>
     {% if video %}
-        <div class="player">
+        <div class="player" {% if video %}style="height: 370px;"{% endif %}>
             {{ video|safe }}
         </div>
     {% else %}
