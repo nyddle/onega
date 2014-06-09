@@ -40,9 +40,10 @@ def get_remaining_time(request):
 def _get_pronounce(val):
     str_v = str(val)
     last = str_v[-1]
-    if last == u'1':
-        return u'день'
-    elif last in (u'2', u'3', u'4'):
-        return u'дня'
+    if len(str_v) == 1:
+        if last == u'1':
+            return u'день'
+        elif last in (u'2', u'3', u'4'):
+            return u'дня'
     else:
         return u'дней'
