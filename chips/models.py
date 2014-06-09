@@ -35,28 +35,28 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     """
     User model
     """
-    first_name = models.CharField(max_length=100, verbose_name='Имя')
-    last_name = models.CharField(max_length=100, verbose_name='Отчество')
-    surname = models.CharField(max_length=100, verbose_name='Фамилия')
+    first_name = models.CharField(max_length=100, verbose_name=u'Имя')
+    last_name = models.CharField(max_length=100, verbose_name=u'Отчество')
+    surname = models.CharField(max_length=100, verbose_name=u'Фамилия')
     # todo: what is maxlength here?
-    post_index = models.CharField(max_length=6, blank=True, verbose_name='Индекс')
+    post_index = models.CharField(max_length=6, blank=True, verbose_name=u'Индекс')
     # todo: what is maxlength here?
-    region = models.CharField(max_length=255, blank=True, verbose_name='Область')
-    district = models.CharField(max_length=255, blank=True, verbose_name='Район')
+    region = models.CharField(max_length=255, blank=True, verbose_name=u'Область')
+    district = models.CharField(max_length=255, blank=True, verbose_name=u'Район')
     # todo: what is maxlength here?
-    city = models.CharField(max_length=255, verbose_name='Город')
-    street = models.CharField(max_length=255, verbose_name='Ул.')
-    building = models.CharField(max_length=255, verbose_name='Дом')
-    corpus = models.CharField(max_length=255, blank=True, verbose_name='Корп.')
-    apartment = models.IntegerField(max_length=255, blank=True, null=True, verbose_name='Кв.')
-    phone = models.CharField(max_length=255, blank=True, verbose_name='Тел.')
-    email = models.EmailField(unique=True, verbose_name='Почта')
-    banks = models.IntegerField(default=0, verbose_name='Упаковок')
+    city = models.CharField(max_length=255, verbose_name=u'Город')
+    street = models.CharField(max_length=255, verbose_name=u'Ул.')
+    building = models.CharField(max_length=255, verbose_name=u'Дом')
+    corpus = models.CharField(max_length=255, blank=True, verbose_name=u'Корп.')
+    apartment = models.IntegerField(max_length=255, blank=True, null=True, verbose_name=u'Кв.')
+    phone = models.CharField(max_length=255, blank=True, verbose_name=u'Тел.')
+    email = models.EmailField(unique=True, verbose_name=u'Почта')
+    banks = models.IntegerField(default=0, verbose_name=u'Упаковок')
 
-    blocks_count = models.IntegerField(default=0, verbose_name='Блокирован раз')
+    blocks_count = models.IntegerField(default=0, verbose_name=u'Блокирован раз')
 
-    is_staff = models.BooleanField(default=False, verbose_name='Админ')
-    is_active = models.BooleanField(default=True, verbose_name='Разблокирован')
+    is_staff = models.BooleanField(default=False, verbose_name=u'Админ')
+    is_active = models.BooleanField(default=True, verbose_name=u'Разблокирован')
 
     objects = CustomerManager()
 
@@ -90,7 +90,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     def get_codes(self):
         codes = ''
         for code in self.promocode_set.all():
-            codes += '<a href="{}">{}</a>\n'.format(code.get_admin_url(), code.code)
+            codes += u'<a href="{}">{}</a>\n'.format(code.get_admin_url(), code.code)
         return codes
 
     get_codes.short_description = u'Промокоды'
@@ -99,7 +99,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     def is_user_blocked(self):
         if not self.is_active:
             return True
-        codes = self.wrongcode_set.all().values_list('date', flat=True)[5:]
+        codes = self.wrongcode_set.all().values_list(u'date', flat=True)[5:]
 
         if len(codes) > 4 and (codes[len(codes)-1] - codes[0]).days < 1:
             return True
@@ -116,8 +116,8 @@ class Customer(AbstractBaseUser, PermissionsMixin):
             self.save()
 
     class Meta:
-        verbose_name = 'пользователь'
-        verbose_name_plural = 'пользователи'
+        verbose_name = u'пользователь'
+        verbose_name_plural = u'пользователи'
 
 
 # todo: add initial data for settings
@@ -130,85 +130,85 @@ class SiteSettings(models.Model):
     additional_data = models.TextField(blank=True)
 
     class Meta:
-        verbose_name = 'настройки'
-        verbose_name_plural = 'настройки'
+        verbose_name = u'настройки'
+        verbose_name_plural = u'настройки'
 
 
 class ValidCode(models.Model):
     code = models.CharField(max_length=255, unique=True, primary_key=True)
 
     class Meta:
-        verbose_name = 'уникальный код'
-        verbose_name_plural = 'уникальные коды'
+        verbose_name = u'уникальный код'
+        verbose_name_plural = u'уникальные коды'
 
 
 class ImageGallery(models.Model):
-    photo = ThumbnailerImageField(upload_to='images')
+    photo = ThumbnailerImageField(upload_to=u'images')
 
     class Meta:
-        verbose_name = 'изображение'
-        verbose_name_plural = 'изображения'
+        verbose_name = u'изображение'
+        verbose_name_plural = u'изображения'
 
 
 class Phase(models.Model):
-    PHASES = ((0, '1'), (1, '2'), (2, '3'), (3, 'Игра окончена'))
-    current_phase = models.IntegerField(choices=PHASES, verbose_name='Фаза')
-    date = models.DateField(null=True, blank=True, verbose_name='Дата окончания фазы')
+    PHASES = ((0, u'1'), (1, u'2'), (2, u'3'), (3, u'Игра окончена'))
+    current_phase = models.IntegerField(choices=PHASES, verbose_name=u'Фаза')
+    date = models.DateField(null=True, blank=True, verbose_name=u'Дата окончания фазы')
 
     class Meta:
-        verbose_name = 'фаза'
-        verbose_name_plural = 'фазы'
+        verbose_name = u'фаза'
+        verbose_name_plural = u'фазы'
 
     def __str__(self):
         return str(self.get_current_phase_display())
 
 
 class PriseType(models.Model):
-    name = models.CharField(max_length=255, verbose_name='Наименование')
+    name = models.CharField(max_length=255, verbose_name=u'Наименование')
 
     class Meta:
-        verbose_name = 'приз'
-        verbose_name_plural = 'призы'
+        verbose_name = u'приз'
+        verbose_name_plural = u'призы'
 
     def __str__(self):
         return str(self.name)
 
 
 class PromoCode(models.Model):
-    customer = models.ForeignKey(Customer, verbose_name='Пользователь')
+    customer = models.ForeignKey(Customer, verbose_name=u'Пользователь')
     # todo: what is maxlength here?
-    code = models.CharField(max_length=255, unique=True, verbose_name='Код')
-    added = models.DateTimeField(auto_now=True, verbose_name='Добавлен')
-    winner = models.BooleanField(default=False, blank=True, verbose_name='Выигрышный код')
-    on_phase = models.ForeignKey(Phase, null=True, blank=True, verbose_name='Фаза')
-    prise_name = models.ForeignKey(PriseType, null=True, blank=True, verbose_name='Приз')
+    code = models.CharField(max_length=255, unique=True, verbose_name=u'Код')
+    added = models.DateTimeField(auto_now=True, verbose_name=u'Добавлен')
+    winner = models.BooleanField(default=False, blank=True, verbose_name=u'Выигрышный код')
+    on_phase = models.ForeignKey(Phase, null=True, blank=True, verbose_name=u'Фаза')
+    prise_name = models.ForeignKey(PriseType, null=True, blank=True, verbose_name=u'Приз')
 
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
-        return urlresolvers.reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
+        return urlresolvers.reverse(u"admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
 
     class Meta:
-        verbose_name = 'пользовательский код'
-        verbose_name_plural = 'пользовательские коды'
+        verbose_name = u'пользовательский код'
+        verbose_name_plural = u'пользовательские коды'
 
 
 class WrongCode(models.Model):
-    customer = models.ForeignKey(Customer, verbose_name='Пользователь')
-    date = models.DateTimeField(auto_now=True, verbose_name='Дата логина')
+    customer = models.ForeignKey(Customer, verbose_name=u'Пользователь')
+    date = models.DateTimeField(auto_now=True, verbose_name=u'Дата логина')
 
     class Meta:
-        verbose_name = 'ввод неверного кода'
-        verbose_name_plural = 'вводы неверного кода'
+        verbose_name = u'ввод неверного кода'
+        verbose_name_plural = u'вводы неверного кода'
 
 
 class DiscreditedIP(models.Model):
     ip = models.CharField(max_length=100, unique=True)
-    failed = models.IntegerField(default=0, verbose_name='Количество ошибок')
-    blocked = models.IntegerField(default=0, verbose_name='Количество блокировок')
+    failed = models.IntegerField(default=0, verbose_name=u'Количество ошибок')
+    blocked = models.IntegerField(default=0, verbose_name=u'Количество блокировок')
 
     class Meta:
-        verbose_name = 'дискредетированный IP'
-        verbose_name_plural = 'дискредетированные IP'
+        verbose_name = u'дискредетированный IP'
+        verbose_name_plural = u'дискредетированные IP'
 
 
 class WrongIPByCode(models.Model):

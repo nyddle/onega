@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.core.mail import send_mail
+from django.contrib.auth import authenticate
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 
@@ -21,9 +22,9 @@ class ThemedPasswordResetForm(PasswordResetForm):
 
 
 class ThemedSetPasswordForm(SetPasswordForm):
-    new_password1 = forms.CharField(label="Новый пароль",
+    new_password1 = forms.CharField(label=u"Новый пароль",
                                     widget=forms.PasswordInput(attrs={'class': 'fill-field'}))
-    new_password2 = forms.CharField(label="Повторите пароль",
+    new_password2 = forms.CharField(label=u"Повторите пароль",
                                     widget=forms.PasswordInput(attrs={'class': 'fill-field'}))
 
 
@@ -65,8 +66,15 @@ class CodeForm(forms.ModelForm):
 
 
 class LoginForm(AuthenticationForm):
+    error_messages = {
+        'invalid_login': "Please enter a correct %(username)s and password. "
+                           "Note that both fields may be case-sensitive.",
+        'inactive': "This account is inactive.",
+    }
+
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
+        print(self.errors)
         if self.errors:
             for f_name in self.fields:
                 if f_name in self.errors:
@@ -74,8 +82,10 @@ class LoginForm(AuthenticationForm):
                     classes += ' fill-field--w261--type--red-field'
                     self.fields[f_name].widget.attrs['class'] = classes
 
-    username = forms.CharField(max_length=254, widget=forms.EmailInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'fill-field fill-field--w261 fill-field--w261--type1'}))
+    username = forms.CharField(max_length=254, widget=forms.EmailInput(attrs={'class':
+                                                                                  'fill-field fill-field--w261 fill-field--w261--type'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':
+                                                                     'fill-field fill-field--w261 fill-field--w261--type1'}))
 
 
 class RegistrationForm(forms.ModelForm):
@@ -88,12 +98,12 @@ class RegistrationForm(forms.ModelForm):
                     classes += ' red'
                     self.fields[f_name].widget.attrs['class'] = classes
 
-    promo = forms.CharField(label='Введите промокод', required=False,
+    promo = forms.CharField(label=u'Введите промокод', required=False,
                             widget=forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 630px;'}))
-    captcha = CaptchaField(label="Код на картинке", widget=CaptchaTextInput(attrs={'class': 'fill-field'}))
+    captcha = CaptchaField(label=u"Код на картинке", widget=CaptchaTextInput(attrs={'class': 'fill-field'}))
 
     rules_confirmation = forms.BooleanField(
-        label='С условиями игры ознакомлен',
+        label=u'С условиями игры ознакомлен',
         widget=forms.CheckboxInput(attrs={'id': 'agreeCheck',
                                           'class': 'check-block__check'}))
 
@@ -104,19 +114,19 @@ class RegistrationForm(forms.ModelForm):
         exclude = ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions', 'password', 'last_login',
                    'banks', 'blocks_count')
         labels = {
-            "first_name": "Имя",
-            "last_name": "Отчество",
-            "surname": "Фамилия",
-            "post_index": "Почтовый индекс",
-            "region": "Область",
-            "district": "Район",
-            "city": "Город",
-            "street": "Улица",
-            "building": "Дом",
-            "corpus": "Корпус",
-            "apartment": "Квартира",
-            "phone": "Телефон",
-            "email": "Адрес электронной почты",
+            "first_name": u"Имя",
+            "last_name": u"Отчество",
+            "surname": u"Фамилия",
+            "post_index": u"Почтовый индекс",
+            "region": u"Область",
+            "district": u"Район",
+            "city": u"Город",
+            "street": u"Улица",
+            "building": u"Дом",
+            "corpus": u"Корпус",
+            "apartment": u"Квартира",
+            "phone": u"Телефон",
+            "email": u"Адрес электронной почты",
         }
         widgets = {
             "first_name": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 261px;'}),
@@ -147,7 +157,7 @@ class RegistrationForm(forms.ModelForm):
                 return promo
             else:
                 self.promocode_failed = True
-                raise forms.ValidationError("Неправильный промокод!")
+                raise forms.ValidationError(u"Неправильный промокод!")
         return promo
 
     def is_promo_failed(self):
@@ -159,14 +169,20 @@ class RegistrationForm(forms.ModelForm):
         customer.set_password(password)
         if commit:
             customer.save()
-            tmpl = load_template_data('mails/reg_confirm.html',
+            tmpl = load_template_data('mails/reg_confirm_text.html',
+                                      {'password': password,
+                                       'email': customer.email,
+                                       'first_name': customer.first_name,
+                                       'id': customer.pk})
+
+            tmpl_html = load_template_data('mails/reg_confirm.html',
                                       {'password': password,
                                        'email': customer.email,
                                        'first_name': customer.first_name,
                                        'id': customer.pk})
 
             msg = EmailMultiAlternatives(u'Регистрация завершена', tmpl, settings.EMAIL_FROM, to=[self.cleaned_data['email']])
-            msg.attach_alternative(tmpl, "text/html")
+            msg.attach_alternative(tmpl_html, "text/html")
             msg.send()
 
             # todo: add to user
@@ -182,4 +198,4 @@ class RegistrationForm(forms.ModelForm):
             Customer.objects.get(email=email)
         except Customer.DoesNotExist:
             return email
-        raise forms.ValidationError("Этот адрес уже занят")
+        raise forms.ValidationError(u"Этот адрес уже занят")
