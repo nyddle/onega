@@ -3,11 +3,12 @@
     <div class="c-align">
         <div class="inner-head">
             <a href="{% url 'home' %}" class="logo logo--inner-page"><!----></a>
-
+            {% if to_the_end_of_phase != None %}
             <div class="inner-head__steps-info">
                 <span class="inner-head__steps-info__title">До конца 1-ого этапа:</span>
-                <span class="inner-head__steps-info__days">12 дней</span>
+                <span class="inner-head__steps-info__days">{{ to_the_end_of_phase }} {{ days }}</span>
             </div>
+            {% endif %}
             <div class="inner-head__user-status">
                 <span class="inner-head__user-status__title">Вы вошли на сайт как:</span>
                 <span class="inner-head__user-status__name">{{ request.user.get_full_name }}</span>
@@ -70,16 +71,6 @@
                     600124575. Свидетельство о государственной регистрации рекламной игры №2364 от 15 мая 2014 г. Выдано
                     Министерством торговли Республики Беларусь. Срок рекламной игры: 09.06.2014 –01.08.2014
                 </p>
-                <ul class="footer__social social">
-                    <li class="social__item"><a target="_blank" href="https://www.facebook.com/onega.by"
-                                                class="social__link social__link--fb"><!----></a></li>
-                    <li class="social__item"><a target="_blank" href="http://vk.com/onega_by"
-                                                class="social__link social__link--vk"><!----></a></li>
-                    <li class="social__item"><a target="_blank" href="https://twitter.com/by_onega"
-                                                class="social__link social__link--tw"><!----></a></li>
-                    <li class="social__item"><a target="_blank" href="https://www.youtube.com/Onega2012"
-                                                class="social__link social__link--yt"><!----></a></li>
-                </ul>
             </div>
         </div>
     </div>
