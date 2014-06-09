@@ -3,11 +3,12 @@
     <div class="c-align">
         <div class="inner-head">
             <a href="{% url 'home' %}" class="logo logo--inner-page"><!----></a>
-
+            {% if to_the_end_of_phase != None %}
             <div class="inner-head__steps-info">
                 <span class="inner-head__steps-info__title">До конца 1-ого этапа:</span>
-                <span class="inner-head__steps-info__days">12 дней</span>
+                <span class="inner-head__steps-info__days">{{ to_the_end_of_phase }} {{ days }}</span>
             </div>
+            {% endif %}
             <div class="inner-head__user-status">
                 <span class="inner-head__user-status__title">Вы вошли на сайт как:</span>
                 <span class="inner-head__user-status__name">{{ request.user.get_full_name }}</span>
