@@ -5,7 +5,7 @@
 
 <div class="c-align">
 <div class="header-actions-panel">
-    <a class="logo logo--main-page" href="#"><!----></a>
+    <a class="logo logo--main-page" href="{% url 'home' %}"><!----></a>
     <span class="slogan"><!----></span>
 
     <div class="user-actions-panel">
@@ -101,7 +101,9 @@
 <div class="video-block" id="video">
     <h3 class="block-title">Посмотреть видео-ролик</h3>
     {% if video %}
-        {{ video.additional_data|safe }}
+        <div class="player">
+            {{ video|safe }}
+        </div>
     {% else %}
         <div class="player">
             <img class="player__button" src="{% static 'img/player-button.png' %}"/>
