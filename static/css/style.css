@@ -677,6 +677,7 @@ a:active {
 .c-align {
   width: 951px;
   margin: 0 auto;
+  position: relative;
 }
 .footer .c-align {
   padding: 0 7px;
@@ -1984,6 +1985,7 @@ input:-moz-placeholder {
   /* line 1337, ../sass/style.scss */
   .c-align {
     overflow-x: hidden;
+
 
   }
 }
