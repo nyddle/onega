@@ -58,6 +58,7 @@ class PromoCodeAdmin(ImportExportModelAdmin):
 
 class ValidCodeAdmin(ImportExportModelAdmin):
     list_display = ('code', )
+    search_fields = ('code', )
 
 
 class SiteSettingsAdmin(admin.ModelAdmin):
