@@ -5,7 +5,7 @@
 <form method="post" action="{% url 'profile' %}" id="auth-form" novalidate>
 {% endif %}
 {% csrf_token %}
-    {% if request.user.is_authenticated %}
+
     <div class="enter-promo-block" id="reg-code">
         <h3 class="block-title">Введите найденный вами промо-код</h3>
         <div class="enter-promo">
@@ -28,7 +28,7 @@
                 {% endif %}
         </div>
     </div>
-    {% endif %}
+
 {% if not user.is_authenticated %}
     <div class="user-actions {% if not forms.reg %}user-actions--small-border{% endif %}" id="authorization">
         <div class="user-actions__header">
@@ -220,7 +220,6 @@
                     </dd>
                 </dl>
             </div>
-            {# todo: forgot password #}
             <a class="forgot-password link-blue" href="{% url 'password_reset' %}">Забыли пароль?</a>
         </div>
     </div>

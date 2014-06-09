@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.core.mail import send_mail
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.models import get_current_site
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 
@@ -18,7 +22,49 @@ from django.template.loader import get_template
 
 class ThemedPasswordResetForm(PasswordResetForm):
     email = forms.EmailField(label="Email", max_length=254,
-                             widget=forms.EmailInput(attrs={'class': 'fill-field'}))
+                             widget=forms.EmailInput(attrs={'class': 'fill-field', 'style': 'width: 630px;'}))
+
+    def save(self, domain_override=None,
+             subject_template_name='registration/password_reset_subject.txt',
+             email_template_name='registration/password_reset_email.html',
+             use_https=False, token_generator=default_token_generator,
+             from_email=None, request=None):
+        """
+        Generates a one-use only link for resetting password and sends to the
+        user.
+        """
+        from django.core.mail import send_mail
+        UserModel = get_user_model()
+        email = self.cleaned_data["email"]
+        active_users = UserModel._default_manager.filter(
+            email__iexact=email, is_active=True)
+        for user in active_users:
+            # Make sure that no email is sent to a user that actually has
+            # a password marked as unusable
+            if not user.has_usable_password():
+                continue
+            if not domain_override:
+                current_site = get_current_site(request)
+                site_name = current_site.name
+                domain = current_site.domain
+            else:
+                site_name = domain = domain_override
+            c = {
+                'email': user.email,
+                'domain': domain,
+                'site_name': site_name,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'user': user,
+                'token': token_generator.make_token(user),
+                'protocol': 'https' if use_https else 'http',
+            }
+
+            tmpl_html = load_template_data('registration/password_reset_email.html', c)
+            msg = EmailMultiAlternatives(u'Сброс пароля', tmpl_html,
+                                         settings.EMAIL_FROM,
+                                         to=[self.cleaned_data['email']])
+            msg.attach_alternative(tmpl_html, "text/html")
+            msg.send()
 
 
 class ThemedSetPasswordForm(SetPasswordForm):
