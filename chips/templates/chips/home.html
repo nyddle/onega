@@ -20,13 +20,6 @@
 
                 <a href="{% url 'logout' %}" class="inner-head__user-status__logout">ВЫЙТИ</a>
 
-            {% elif request.session.registered %}
-                <span class="inner-head__user-status__title">
-                    Вам было отправлено письмо с паролем.
-                </span>
-
-                <a href="{% url 'logout' %}" class="inner-head__user-status__logout">ВЫЙТИ</a>
-
             {% else %}
                 <a class="authorization-button" href="#authorization"><strong>ВОЙТИ</strong></a><span
                     class="user-actions-panel__small-text"> или</span>

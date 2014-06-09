@@ -5,7 +5,7 @@
 <form method="post" action="{% url 'profile' %}" id="auth-form" novalidate>
 {% endif %}
 {% csrf_token %}
-    {% if request.user.is_authenticated or not request.session.registered %}
+    {% if request.user.is_authenticated %}
     <div class="enter-promo-block" id="reg-code">
         <h3 class="block-title">Введите найденный вами промо-код</h3>
         <div class="enter-promo">
@@ -32,10 +32,10 @@
 {% if not user.is_authenticated %}
     <div class="user-actions {% if not forms.reg %}user-actions--small-border{% endif %}" id="authorization">
         <div class="user-actions__header">
-            {% if not request.session.registered %}
+
             <span class="user-actions__tab-title {% if method == 'reg' %}user-actions__tab-title--current" {% endif %}
                   tab-button="tab1" data-url="{% url 'post_form_home' 'reg' %}">Регистрация нового участника</span>
-            {% endif %}
+
             <span href="#" class="user-actions__tab-title
             {% if not forms.reg or method == 'login' %}user-actions__tab-title--current{% endif %}"
                   data-url="{% url 'post_form_home' 'login' %}" tab-button="tab2">Войти под своим логином</span>

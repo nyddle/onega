@@ -88,8 +88,7 @@ class HomeView(View):
                                               'login': AuthenticationForm()}
             else:
                 template_data['forms'] = {'reg': RegistrationForm(), 'login': AuthenticationForm()}
-            if self.request.session.get('registered'):
-                template_data['forms'].pop('reg')
+
         else:
             template_data['form'] = CodeForm(customer=self.request.user)
 
