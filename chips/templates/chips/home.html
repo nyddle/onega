@@ -190,3 +190,12 @@
 </div>
 
 {% endblock %}
+{% block js %}
+    {% if method == 'login' %}
+    <script>
+    $(window).load(function() {
+        $('#span-tab-title-login').click();
+    });
+    </script>
+    {% endif %}
+{% endblock %}

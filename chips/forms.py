@@ -125,13 +125,15 @@ class LoginForm(AuthenticationForm):
             for f_name in self.fields:
                 if f_name in self.errors:
                     classes = self.fields[f_name].widget.attrs.get('class', '')
-                    classes += ' fill-field--w261--type--red-field'
+                    classes += ' red'
                     self.fields[f_name].widget.attrs['class'] = classes
 
-    username = forms.CharField(max_length=254, widget=forms.EmailInput(attrs={'class':
-                                                                                  'fill-field fill-field--w261 fill-field--w261--type'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':
-                                                                     'fill-field fill-field--w261 fill-field--w261--type1'}))
+    username = forms.CharField(
+        max_length=254, widget=forms.EmailInput(attrs={'class':
+                                                           'fill-field fill-field--w261 fill-field--w261--type'}))
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class':
+                                              'fill-field fill-field--w261 fill-field--w261--type1'}))
 
 
 class RegistrationForm(forms.ModelForm):

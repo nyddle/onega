@@ -33,15 +33,14 @@
     <div class="user-actions {% if not forms.reg %}user-actions--small-border{% endif %}" id="authorization">
         <div class="user-actions__header">
 
-            <span id="span-tab-title-reg" class="user-actions__tab-title {% if method == 'reg' %}user-actions__tab-title--current" {% endif %}
+            <span id="span-tab-title-reg" class="user-actions__tab-title user-actions__tab-title--current"
                   tab-button="tab1" data-url="{% url 'post_form_home' 'reg' %}">Регистрация нового участника</span>
 
-            <span href="#" id="span-tab-title-login" class="user-actions__tab-title
-            {% if not forms.reg or method == 'login' %}user-actions__tab-title--current{% endif %}"
+            <span href="#" id="span-tab-title-login" class="user-actions__tab-title"
                   data-url="{% url 'post_form_home' 'login' %}" tab-button="tab2">Войти под своим логином</span>
         </div>
-    {% if forms.reg %}
-        <div id="tab1" class="user-actions__content user-actions__content--registration" id="tab1">
+
+        <div id="tab1" class="user-actions__content user-actions__content--registration" >
             <div class="fields-row">
                 <dl class="field-col">
                     <dt class="field-col__title">
@@ -191,9 +190,8 @@
                                     </span>
             </div>
         </div>
-    {% endif %}
-        <div class="user-actions__content user-actions__content--login" id="tab2"
-                {% if not forms.reg %}style="display: block;"{% endif %}>
+
+        <div class="user-actions__content user-actions__content--login" id="tab2">
             <div class="fields-row">
                 <dl class="field-col">
                     <dt class="field-col__title">
