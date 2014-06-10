@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+    if (window.location.hash && window.location.hash == '#rules') {
+        $('.rules-popup').show();
+    }
+
     $(document).on('click', '.drop-panel__button, .drop-arrow', function(){
         $(this).parents('.drop-panel').find('.drop-panel__panel').show();
     });
