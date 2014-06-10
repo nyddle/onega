@@ -35,7 +35,7 @@ def get_remaining_time(request):
     else:
         days = None
     return {'to_the_end_of_phase': to_the_end_of_phase, 'days': days,
-            'current_phase': phase.current_phase}
+            'current_phase': phase.get_current_phase_display()}
 
 
 def _get_pronounce(val):

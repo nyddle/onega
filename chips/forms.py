@@ -99,8 +99,9 @@ class CodeForm(forms.ModelForm):
         promo = self.cleaned_data.get('code')
         if validate_code(promo):
             return promo
-        self.customer.add_wrong_code()
-        self.customer.block_user()
+        if not self.customer.should_be_blocked():
+            if not self.customer.block_user():
+                self.customer.add_wrong_code()
         raise forms.ValidationError("Неправильный промокод!")
 
     def save(self, commit=True):

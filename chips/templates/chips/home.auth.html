@@ -12,14 +12,14 @@
                 <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
                     {% if not request.user.is_authenticated %}
                         {{ forms.reg.promo }}
-                    {% elif request.user.is_user_blocked  %}
+                    {% elif request.user.should_be_blocked  %}
                         Вы ввели пять неверных кодов за последние сутки и пока что не можете указывать новые.
                     {% else %}
                         {{ form.code }}
                     {% endif %}
                     <!--- for setting red background add class "fill-field--w630--red-field"-->
                 </div>
-                {% if not request.user.is_user_blocked %}
+                {% if not request.user.should_be_blocked %}
                     {% if user.is_authenticated %}
                         <button class="button enter-promo__button" type="submit">Добавить промо-код</button>
                     {% else %}

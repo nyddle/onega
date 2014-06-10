@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import time
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.mail import send_mail
@@ -99,31 +101,33 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     get_codes.short_description = u'Промокоды'
     get_codes.allow_tags = True
 
-    def is_user_blocked(self):
+    def should_be_blocked(self):
         if not self.is_active:
             return True
-        codes = self.wrongcode_set.all().values_list(u'date', flat=True)[5:]
-
-        if len(codes) > 4 and (codes[len(codes)-1] - codes[0]).days < 1:
-            return True
+        codes = self.wrongcode_set.all().order_by('-date').values_list(u'date',
+                                                                       flat=True)[:5]
+        if len(codes) > 4:
+            if (codes[len(codes)-1] - codes[0]).days < 1:
+                return True
         return False
 
     def add_wrong_code(self):
-        WrongCode.objects.create(customer=self)
+        self.wrongcode_set.create(customer=self)
 
     def block_user(self):
-        if self.is_user_blocked():
+        if self.should_be_blocked():
             self.blocks_count = self.blocks_count + 1
             if self.blocks_count > 2:
                 self.is_active = False
             self.save()
+            return True
+        return False
 
     class Meta:
         verbose_name = u'пользователь'
         verbose_name_plural = u'пользователи'
 
 
-# todo: add initial data for settings
 class SiteSettings(models.Model):
     """
     Keep site settings like photo gallery enabling/disabling
@@ -202,6 +206,9 @@ class WrongCode(models.Model):
     class Meta:
         verbose_name = u'ввод неверного кода'
         verbose_name_plural = u'вводы неверного кода'
+
+    def __unicode__(self):
+        return str(self.date.strftime("%b %d %Y %H:%M:%S"))
 
 
 class DiscreditedIP(models.Model):

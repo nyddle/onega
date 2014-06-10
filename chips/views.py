@@ -42,7 +42,7 @@ class HomeView(View):
             form = AuthenticationForm(request, request.POST)
             if form.is_valid():
                 user = form.get_user()
-                if not user.is_user_blocked():
+                if not user.should_be_blocked():
                     auth_login(request, form.get_user())
                     return redirect(reverse('home'))
                 return self._render_stuff(method, True)

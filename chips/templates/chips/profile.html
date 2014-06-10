@@ -20,7 +20,7 @@
             <h3 class="block-title">Введите найденный вами промо-код</h3>
 
             <div class="enter-promo">
-                {% if request.user.is_user_blocked %}
+                {% if request.user.should_be_blocked %}
                     Вы ввели пять неверных кодов за последние сутки и пока что не можете указывать новые.
                 {% else %}
                     <form method="post">
