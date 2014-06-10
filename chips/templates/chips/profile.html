@@ -5,7 +5,7 @@
             <a href="{% url 'home' %}" class="logo logo--inner-page"><!----></a>
             {% if to_the_end_of_phase != None %}
             <div class="inner-head__steps-info">
-                <span class="inner-head__steps-info__title">До конца 1-ого этапа:</span>
+                <span class="inner-head__steps-info__title">До конца {{ current_phase }}-ого этапа:</span>
                 <span class="inner-head__steps-info__days">{{ to_the_end_of_phase }} {{ days }}</span>
             </div>
             {% endif %}

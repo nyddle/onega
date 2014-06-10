@@ -24,7 +24,7 @@ def get_remaining_time(request):
     else:
         try:
             now = datetime.utcnow().replace(tzinfo=timezone.get_default_timezone()).now()
-            to_the_end_of_phase = (datetime.combine(phase.date, datetime.min.time()) - now).days
+            to_the_end_of_phase = (datetime.combine(phase.date, datetime.min.time()) - now).days + 1
             if to_the_end_of_phase < 0:
                 to_the_end_of_phase = None
         except:
@@ -34,7 +34,8 @@ def get_remaining_time(request):
         days = _get_pronounce(to_the_end_of_phase)
     else:
         days = None
-    return {'to_the_end_of_phase': to_the_end_of_phase, 'days': days}
+    return {'to_the_end_of_phase': to_the_end_of_phase, 'days': days,
+            'current_phase': phase.current_phase}
 
 
 def _get_pronounce(val):
@@ -45,5 +46,5 @@ def _get_pronounce(val):
             return u'день'
         elif last in (u'2', u'3', u'4'):
             return u'дня'
-    else:
-        return u'дней'
+
+    return u'дней'
