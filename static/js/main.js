@@ -1,6 +1,13 @@
 $(document).ready(function(){
 
-    if (window.location.hash && window.location.hash == '#rules') {
+    if (window.location.hash && window.location.hash == '#rules') {        
+        var width = $('.rules-popup').width();
+        var pos = ($(document).width() - width) / 2;
+        $('.rules-popup').show();
+        $('.popup-wrapper').show();
+        $(window).scrollTop(0);
+        $(".custom-scroll").mCustomScrollbar({});
+
         $('.rules-popup').show();
     }
 
