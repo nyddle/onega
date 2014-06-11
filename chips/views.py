@@ -46,7 +46,7 @@ class HomeView(View):
                 if not user.should_be_blocked():
                     auth_login(request, form.get_user())
                     return redirect(reverse('home'))
-                return self._render_stuff(method, True)
+                # return self._render_stuff(method, True)
         elif method == 'reg':
             form = RegistrationForm(request.POST)
             if form.is_valid():
@@ -88,7 +88,8 @@ class HomeView(View):
             if self.request.POST:
                 if method == 'login':
                     template_data['forms'] = {'reg': RegistrationForm(),
-                                              'login': AuthenticationForm(self.request.POST or None)}
+                                              'login': AuthenticationForm(self.request,
+                                                                          self.request.POST)}
                 else:
                     template_data['forms'] = {'reg': RegistrationForm(self.request.POST or None),
                                               'login': AuthenticationForm()}

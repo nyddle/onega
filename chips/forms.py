@@ -121,13 +121,15 @@ class LoginForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
-        print(self.errors)
         if self.errors:
+            print([e for e in self.errors])
             for f_name in self.fields:
+                print(f_name)
                 if f_name in self.errors:
                     classes = self.fields[f_name].widget.attrs.get('class', '')
                     classes += ' red'
                     self.fields[f_name].widget.attrs['class'] = classes
+                    print(self.fields[f_name].widget.attrs['class'])
 
     username = forms.CharField(
         max_length=254, widget=forms.EmailInput(attrs={'class':
@@ -144,13 +146,18 @@ class LoginForm(AuthenticationForm):
             username = username.lower()
             self.user_cache = authenticate(username=username,
                                            password=password)
+            print(self.errors)
             if self.user_cache is None:
+                self._errors['username'] = 'invalid_login'
+                self._errors['password'] = 'invalid_login'
                 raise forms.ValidationError(
                     self.error_messages['invalid_login'],
                     code='invalid_login',
                     params={'username': self.username_field.verbose_name},
                 )
             elif not self.user_cache.is_active:
+                self._errors['username'] = 'inactive'
+                self._errors['password'] = 'inactive'
                 raise forms.ValidationError(
                     self.error_messages['inactive'],
                     code='inactive',
