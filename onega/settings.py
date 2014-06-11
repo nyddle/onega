@@ -45,7 +45,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'import_export',
     'django.contrib.admin',
     'chips',
@@ -139,7 +138,7 @@ EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_HOST_USER = 'postmaster@igra.onega.by'
 EMAIL_HOST_PASSWORD = '03usq8r9yxu0'
 EMAIL_PORT = 587
-EMAIL_FROM = u'Онега'
+EMAIL_FROM = 'Onega'
 
 try:
     from .local_settings import *

@@ -6,6 +6,7 @@ from django.views.generic import View, FormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.contrib import messages
 
 from .models import ImageGallery, DiscreditedIP, WrongIPByCode
 from .forms import RegistrationForm, CodeForm, LoginForm as AuthenticationForm
@@ -51,6 +52,11 @@ class HomeView(View):
             if form.is_valid():
                 form.save()
                 request.session['registered'] = True
+                messages.info(request,
+                              u'Ваш логин и пароль отправлены на email, '
+                              u'указанный при регистрации.',
+                              extra_tags=u'Спасибо за регистрацию!')
+
                 return redirect(reverse('home'))
             else:
                 if form.is_promo_failed():

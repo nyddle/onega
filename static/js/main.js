@@ -48,7 +48,7 @@ $(document).ready(function(){
             $('.user-actions').addClass('user-actions--small-border');
         } else {
             $('.user-actions').removeClass('user-actions--small-border');
-        };
+        }
 
         $('#auth-form').attr('action', $(this).attr('data-url'));
     });
@@ -65,14 +65,6 @@ $(document).ready(function(){
         $(window).scrollTop(0);
         $(".custom-scroll").mCustomScrollbar({});
     });
-    $(document).on('click', '.registration-buttons-panel__button', function(){
-        var width = $('.thank-popup').width();
-        var pos = ($(document).width() - width) / 2;
-        $('.thank-popup').show();
-        $('.popup-wrapper').show();
-        $(window).scrollTop(0);
-    });
-
 
     $(document).on('click touchstart', '.close-button, .popup-wrapper', function(){
         $('.popup-wrapper, .rules-popup, .thank-popup').hide();
