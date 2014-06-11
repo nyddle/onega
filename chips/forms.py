@@ -136,6 +136,27 @@ class LoginForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'class':
                                               'fill-field fill-field--w261 fill-field--w261--type1'}))
 
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username and password:
+            username = username.lower()
+            self.user_cache = authenticate(username=username,
+                                           password=password)
+            if self.user_cache is None:
+                raise forms.ValidationError(
+                    self.error_messages['invalid_login'],
+                    code='invalid_login',
+                    params={'username': self.username_field.verbose_name},
+                )
+            elif not self.user_cache.is_active:
+                raise forms.ValidationError(
+                    self.error_messages['inactive'],
+                    code='inactive',
+                )
+        return self.cleaned_data
+
 
 class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -197,6 +218,12 @@ class RegistrationForm(forms.ModelForm):
             "phone": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 562px;'}),
             "email": forms.EmailInput(attrs={'class': 'fill-field', 'style': 'width: 562px;'}),
         }
+
+    def clean_email(self):
+        username = self.cleaned_data.get('email')
+        if username:
+            username = username.lower()
+        return username
 
     def clean_promo(self):
         promo = self.cleaned_data.get('promo', '')

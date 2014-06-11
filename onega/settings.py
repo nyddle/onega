@@ -135,8 +135,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_HOST_USER = 'postmaster@app26061228.mailgun.org'
-EMAIL_HOST_PASSWORD = '0j8v3jioz5n4'
+EMAIL_HOST_USER = 'postmaster@igra.onega.by'
+EMAIL_HOST_PASSWORD = '03usq8r9yxu0'
 EMAIL_PORT = 587
 EMAIL_FROM = 'igra@onega.by'
 
