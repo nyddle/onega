@@ -258,7 +258,9 @@ class RegistrationForm(forms.ModelForm):
                                        'first_name': customer.first_name,
                                        'id': customer.pk})
 
-            msg = EmailMultiAlternatives(u'Регистрация завершена', tmpl, settings.EMAIL_FROM, to=[self.cleaned_data['email']])
+            msg = EmailMultiAlternatives(u'Регистрация участия в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
+                                         tmpl, settings.EMAIL_FROM,
+                                         to=[self.cleaned_data['email']])
             msg.attach_alternative(tmpl_html, "text/html")
             msg.send()
 
