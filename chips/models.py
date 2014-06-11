@@ -190,6 +190,11 @@ class PromoCode(models.Model):
     on_phase = models.ForeignKey(Phase, null=True, blank=True, verbose_name=u'Фаза')
     prise_name = models.ForeignKey(PriseType, null=True, blank=True, verbose_name=u'Приз')
 
+    def user_id(self):
+        return self.customer.pk
+
+    user_id.short_description = u'ID пользователя'
+
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
         return urlresolvers.reverse(u"admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
