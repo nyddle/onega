@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for onega project.
 
@@ -138,7 +139,7 @@ EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_HOST_USER = 'postmaster@igra.onega.by'
 EMAIL_HOST_PASSWORD = '03usq8r9yxu0'
 EMAIL_PORT = 587
-EMAIL_FROM = 'igra@onega.by'
+EMAIL_FROM = u'Онега'
 
 try:
     from .local_settings import *
