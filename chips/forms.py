@@ -35,7 +35,7 @@ class ThemedPasswordResetForm(PasswordResetForm):
         """
         from django.core.mail import send_mail
         UserModel = get_user_model()
-        email = self.cleaned_data["email"]
+        email = self.cleaned_data["email"].lower()
         active_users = UserModel._default_manager.filter(
             email__iexact=email, is_active=True)
         for user in active_users:
@@ -242,6 +242,7 @@ class RegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         customer = super(RegistrationForm, self).save(commit=False)
         password = Customer.objects.make_random_password()
+        customer.email = customer.email.lower()
         customer.set_password(password)
         if commit:
             customer.save()
