@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
+from django.shortcuts import HttpResponse
 
 from chips.forms import ThemedPasswordResetForm, ThemedSetPasswordForm
 
@@ -29,6 +30,12 @@ urlpatterns = patterns('',
         'set_password_form': ThemedSetPasswordForm}),
     (r'^password/done/$', 'django.contrib.auth.views.password_reset_complete',
      {'template_name': 'registration/password_reset_complete.html'}),
+)
+
+urlpatterns += patterns('',
+    url(r'^robots\.txt$',
+        lambda r: HttpResponse("User-agent: *\nDisallow: /\nAllow: /home/",
+                               mimetype="text/plain"))
 )
 
 if settings.DEBUG:
