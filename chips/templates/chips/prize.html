@@ -24,12 +24,14 @@
                         <a href="{% url 'logout' %}" class="inner-head__user-status__logout">ВЫЙТИ</a>
                         </div>
                     {% else %}
+                        <div class="user-actions-panel">
                         <div class="authorization-panel">
                             <a class="authorization-button" href="#authorization" id="login-auth-button"><strong>ВОЙТИ</strong></a>
                             <span class="user-actions-panel__small-text"> или</span>
                             <a class="authorization-button" href="#authorization" id="reg-auth-button">
                                 <strong>ЗАРЕГИСТРИРОВАТЬСЯ</strong>
                             </a>
+                        </div>
                         </div>
                     {% endif %}
 
