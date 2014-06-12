@@ -680,17 +680,21 @@
     </div>
 </div>
 
-{% if messages %}
+
     <div class="thank-popup">
         <span class="close-button"><!----></span>
-        {% for message in messages %}
+
             <div class="popup-content">
+                {% if messages %}
+        {% for message in messages %}
                 <p>{{ message.tags }}</p>
                 {{ message }}
+                {% endfor %}
+    {% endif %}
             </div>
-        {% endfor %}
+
     </div>
-{% endif %}
+
 <div class="img-popup">
     <img src="{% static 'img/big-img.jpg' %}"/>
 

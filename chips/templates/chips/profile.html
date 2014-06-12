@@ -75,3 +75,16 @@
         </div>
     </div>
 {% endblock %}
+{% block js %}
+    <script>
+        $(window).load(function() {
+            var width = $('.thank-popup').width();
+            var pos = ($(document).width() - width) / 2;
+            $('.thank-popup').find('.popup-content').html(
+                    '<p>Внимание!</p>В связи с техническими работами добавление кодов временно отключено. Через пару часов возможность добавления новых кодов будет включена!');
+            $('.thank-popup').show();
+            $('.popup-wrapper').show();
+            $(window).scrollTop(0);
+        });
+    </script>
+{% endblock %}
