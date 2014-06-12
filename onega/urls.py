@@ -34,8 +34,9 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('',
     url(r'^robots\.txt$',
-        lambda r: HttpResponse("User-agent: *\nDisallow: /\nAllow: /home/",
-                               mimetype="text/plain"))
+        lambda r: HttpResponse(
+            "User-agent: *\nDisallow: /admin\nDisallow: /profile",
+            mimetype="text/plain"))
 )
 
 if settings.DEBUG:
