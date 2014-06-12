@@ -726,7 +726,6 @@ a:active {
 .header-menu__item {
   display: inline-block;
   font-size: 20px;
-  padding: 0 50px;
   line-height: 20px;
 }
 /* line 10, ../sass/_mixins.scss */
@@ -776,6 +775,7 @@ a:active {
   width: 150px;
   height: 72px;
   background: url("../img/logo.png") left bottom no-repeat;
+  z-index: 5;
 }
 /* line 10, ../sass/_mixins.scss */
 .logo--main-page {
