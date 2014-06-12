@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div class="c-align">
+                <div class="inner-head">
+                    <a href="#" class="logo logo--inner-page"><!----></a>
+                    <div class="inner-head__steps-info">
+                        Гарантированные призы
+                    </div>
+                    <div class="inner-head__user-status">
+                        <span class="inner-head__user-status__title">Вы вошли на сайт как:</span>
+                        <span class="inner-head__user-status__name">Добронравов Алексей</span>
+                        <a href="#" class="inner-head__user-status__logout">ВЫЙТИ</a>
+                    </div>
+                </div>
+
+                <div class="description_wrap">
+                    <div class="description">
+                        <div>
+                            <p>В торговых точках  при покупке определенного количества акционной продукции Онега вы получаете гарантированные призы. Подробности у промоутеров Онега, перечень торговых точек (как в Минске, так и в региональных городах) постоянно обновляется. Следите за новостями в группе Онега Вконтакте <a href="#" class="blue_link">https://vk.com/onega_by</a></p>
+                        </div>
+                        <div class="prize_conteiner">
+                            <h3>Гарантированные призы:</h3>
+                            <ul>
+                                <li>Доски магнитные в форме "облака мыслей" -- 5 000 штук</li>
+                                <li>Мелки цветные фирменные Онега (6 шт) -- 15 000 штук</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="img_wrap">
+                        <img src="{% static 'img/prizes.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="description_wrap">
+                    <p>Купить пачки чипсов Онега может любой желающий, призы выдают промоутеры компании Онега </p>
+<p>Для получения гарантированного приза достаточно купить с 19 июня по 20 июля (по средам, четвергам и пятницам) в торговых точках по всей стране определенное количество акционных упаковок.</p>
+<p>Следите за обновлениями и новостями в группе Онега Вконтакте <a href="#" class="blue_link">https://vk.com/onega_by</a></p>
+                </div>
+
+            </div>
+
+            <div class="dark-bg-block dark-bg-block--inner-page">
+
+                <div class="footer">
+                    <div class="c-align">
+                        <a href="#" class="footer__logo"><!-----></a>
+                        <p class="footer__text">
+                            Рекламная игра проводится на территории Республики Беларусь. Организатор – ПОДО «Онега», УНН 600124575. Свидетельство о государственной регистрации рекламной игры №2364 от 15 мая 2014 г. Выдано Министерством торговли Республики Беларусь. Срок рекламной игры: 09.06.2014 –01.08.2014
+                        </p>
+                        <ul class="footer__social social">
+                            <li class="social__item"><a target="_blank" href="https://www.facebook.com/onega.by" class="social__link social__link--fb"><!----></a></li>
+                            <li class="social__item"><a target="_blank" href="http://vk.com/onega_by" class="social__link social__link--vk"><!----></a></li>
+                            <li class="social__item"><a target="_blank" href="https://twitter.com/by_onega" class="social__link social__link--tw"><!----></a></li>
+                            <li class="social__item"><a target="_blank" href="https://www.youtube.com/Onega2012" class="social__link social__link--yt"><!----></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

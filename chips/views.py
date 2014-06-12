@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseNotFound
-from django.views.generic import View, FormView
+from django.views.generic import View, FormView, TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login, logout as auth_logout
@@ -136,3 +136,7 @@ class LogoutView(View):
         auth_logout(request)
         request.session.flush()
         return redirect('home')
+
+
+class Prize(TemplateView):
+    template_name = 'chips/prize.html'
