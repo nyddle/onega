@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% block reg_code_menu %}
+    <a class="header-menu__link"
+       href="{% url 'another_home' %}#reg-code">Регистрация кода</a>
+{% endblock %}
 {% block content %}
     <div class="c-align">
                 <div class="inner-head">

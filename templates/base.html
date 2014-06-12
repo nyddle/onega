@@ -38,11 +38,13 @@
 
             <li class="header-menu__item"><a class="header-menu__link read-more-rules-button" href="#" contId="rules">Правила
                 игры</a></li>
+
             <li class="header-menu__item">
-
-                <a class="header-menu__link" href="#reg-code" contId="reg-code">Регистрация кода</a>
-
+                {% block reg_code_menu %}
+                    <a class="header-menu__link" href="#reg-code" contId="reg-code">Регистрация кода</a>
+                {% endblock %}
             </li>
+
             {% if is_video_enabled %}
                 <li class="header-menu__item">
                     <a class="header-menu__link" href="{% url 'home' %}#video" contId="video">Видео-ролик</a>
