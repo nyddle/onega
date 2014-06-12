@@ -12,10 +12,26 @@
                         Гарантированные призы
                     </div>
                     <div class="inner-head__user-status">
+                    {% if request.user.is_authenticated %}
                         <span class="inner-head__user-status__title">Вы вошли на сайт как:</span>
-                        <span class="inner-head__user-status__name">Добронравов Алексей</span>
-                        <a href="#" class="inner-head__user-status__logout">ВЫЙТИ</a>
+                        <span class="inner-head__user-status__name">
+                            <a href="{% url 'profile' %}">
+                                {{ request.user.get_full_name }}
+                            </a>
+                        </span>
+
+                        <a href="{% url 'logout' %}" class="inner-head__user-status__logout">ВЫЙТИ</a>
+
+                    {% else %}
+                        
+                        <a class="authorization-button" href="#authorization" id="login-auth-button"><strong>ВОЙТИ</strong></a>
+                        <span class="user-actions-panel__small-text"> или</span>
+                        <a class="authorization-button" href="#authorization" id="reg-auth-button">
+                            <strong>ЗАРЕГИСТРИРОВАТЬСЯ</strong>
+                        </a>
+                    {% endif %}
                     </div>
+
                 </div>
 
                 <div class="description_wrap">
