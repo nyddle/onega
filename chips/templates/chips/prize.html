@@ -11,8 +11,9 @@
                     <div class="inner-head__steps-info">
                         Гарантированные призы
                     </div>
-                    <div class="inner-head__user-status">
+
                     {% if request.user.is_authenticated %}
+                        <div class="inner-head__user-status">
                         <span class="inner-head__user-status__title">Вы вошли на сайт как:</span>
                         <span class="inner-head__user-status__name">
                             <a href="{% url 'profile' %}">
@@ -21,16 +22,17 @@
                         </span>
 
                         <a href="{% url 'logout' %}" class="inner-head__user-status__logout">ВЫЙТИ</a>
-
+                        </div>
                     {% else %}
-                        
-                        <a class="authorization-button" href="#authorization" id="login-auth-button"><strong>ВОЙТИ</strong></a>
-                        <span class="user-actions-panel__small-text"> или</span>
-                        <a class="authorization-button" href="#authorization" id="reg-auth-button">
-                            <strong>ЗАРЕГИСТРИРОВАТЬСЯ</strong>
-                        </a>
+                        <div class="authorization-panel">
+                            <a class="authorization-button" href="#authorization" id="login-auth-button"><strong>ВОЙТИ</strong></a>
+                            <span class="user-actions-panel__small-text"> или</span>
+                            <a class="authorization-button" href="#authorization" id="reg-auth-button">
+                                <strong>ЗАРЕГИСТРИРОВАТЬСЯ</strong>
+                            </a>
+                        </div>
                     {% endif %}
-                    </div>
+
 
                 </div>
 
