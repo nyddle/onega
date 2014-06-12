@@ -35,7 +35,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('',
     url(r'^robots\.txt$',
         lambda r: HttpResponse(
-            "User-agent: *\nDisallow: /admin\nDisallow: /profile",
+            "User-agent: *\nDisallow: /admin\nDisallow: /profile\nUser-agent: Yandex\nHost: www.igra.onega.by",
             mimetype="text/plain"))
 )
 
