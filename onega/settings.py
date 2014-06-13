@@ -47,9 +47,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'import_export',
     'django.contrib.admin',
+    'django.contrib.sites',
     'chips',
     'easy_thumbnails',
     'captcha',
+    'hostname_redirects'
 )
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
@@ -66,6 +68,8 @@ THUMBNAIL_ALIASES = {
         'gallery': {'size': (50, 50)},
     },
 }
+
+SITE_ID = 1
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'), )
 
