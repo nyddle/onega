@@ -71,7 +71,13 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     codes_amount.short_description = u'Количество кодов'
 
     def __unicode__(self):
-        return u'№{}({})'.format(self.pk, self.email)
+        return u'№{}({})'.format(self.get_ugly_ID(), self.email)
+
+    def get_ugly_ID(self):
+        str_id = str(self.pk)
+        while len(str_id) < 7:
+            str_id = '0{}'.format(str_id)
+        return str_id
 
     def get_full_name(self):
         """
@@ -191,7 +197,7 @@ class PromoCode(models.Model):
     prise_name = models.ForeignKey(PriseType, null=True, blank=True, verbose_name=u'Приз')
 
     def user_id(self):
-        return self.customer.pk
+        return self.customer.get_ugly_ID()
 
     user_id.short_description = u'ID пользователя'
 

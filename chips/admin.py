@@ -51,9 +51,8 @@ class ImageGalleryAdmin(admin.ModelAdmin):
 
 
 class PromoCodeAdmin(ImportExportModelAdmin):
-    list_display = ('code', 'user_id', 'customer', 'added', 'winner', 'on_phase',
+    list_display = ('code', 'pk', 'customer', 'added', 'winner', 'on_phase',
                     'prise_name', )
-    readonly_fields = ('user_id', )
     list_editable = ('winner', 'on_phase', 'prise_name')
     list_filter = ('winner', 'on_phase', 'prise_name')
 
