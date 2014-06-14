@@ -44,3 +44,7 @@ def load_template_data(template, context):
     c = Context(context)
     rendered = t.render(c)
     return rendered
+
+
+def get_winners_code():
+    pass

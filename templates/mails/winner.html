@@ -1,0 +1,66 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" text="#ffffff" style="text-transform: uppercase; font-family: Open Sans Condensed, sans-serif; font-size: 25px;">
+    <table cellpadding="10" cellspacing="0" border="0" width="835"
+           height="202" background="http://igra.onega.by{% static 'img/mail/letter_bg_top.png' %}">
+        <tr align="center" valign="top">
+            <td width="160" height="124" style="padding-top: 20px;">
+                <a target="_blank" href="#">
+                    <img src="http://igra.onega.by{% static 'img/mail/logo.png' %}"
+                         alt="" width="116" height="56">
+                </a>
+            </td>
+            <td  height="124" style="padding-top: 20px;" >
+                <img src="http://igra.onega.by{% static 'img/mail/name.png' %}"
+                     alt="" width="249" height="164"></td>
+            <td width="160" height="124"></td>
+        </tr>
+    </table>
+    <table cellpadding="10" cellspacing="0" border="0" width="835"
+           height="598" background="http://igra.onega.by{% static 'img/mail/letter_bg_bottom.png' %}" style="color: #ffffff;">
+        <tr align="center">
+            <td width="100">&nbsp;</td>
+            <td cellpadding="20">
+                <p style="line-height: 110%; margin: 0 0 20px;">
+                    Уважаемый (-ая)
+                    <strong style="display:block;">{{ customer.surname }} {{ customer.first_name }} {{ customer.last_name }}</strong>
+                </p>
+            </td>
+            <td width="100">&nbsp;</td>
+        </tr>
+        <tr align="center">
+            <td width="100">&nbsp;</td>
+            <td cellpadding="20" width="600">
+                <p style="line-height: 120%; margin: 0 0 20px;">
+                    <strong style="display:block;">Поздравляем!</strong> Вы выиграли
+                <strong>{{ prize }}</strong> в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни!»</p>
+            </td>
+            <td width="100">&nbsp;</td>
+        </tr>
+        <tr align="center">
+            <td width="100">&nbsp;</td>
+            <td cellpadding="20">
+                <p style="line-height: 120%; margin: 0 0 20px;">
+                    Ваш номер  участника: <strong>1234gh5678</strong>
+                </p>
+            </td>
+            <td width="100">&nbsp;</td>
+        </tr>
+        <tr align="center">
+            <td width="100"></td>
+            <td cellpadding="20">
+                <p style="line-height: 120%; margin: 0 0 20px;">Для получения приза вам необходимо связаться с нами по телефону горячей линии <strong>+375 29 70 100 20</strong>
+или по электронной почте: igra@onega.by.</p>
+            </td>
+            <td width="100">&nbsp;</td>
+        </tr>
+        <tr width="100%" height="140"><td colspan="3">&nbsp;</td></tr>
+    </table>
+</body>
+</html>

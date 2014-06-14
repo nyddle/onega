@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.core.mail import send_mail
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
@@ -15,9 +14,7 @@ from .models import Customer, PromoCode
 from .utils import validate_code
 from .utils import load_template_data
 
-from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.template import Context
-from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
 
 
 class ThemedPasswordResetForm(PasswordResetForm):
@@ -146,7 +143,7 @@ class LoginForm(AuthenticationForm):
             username = username.lower()
             self.user_cache = authenticate(username=username,
                                            password=password)
-            print(self.errors)
+
             if self.user_cache is None:
                 self._errors['username'] = 'invalid_login'
                 self._errors['password'] = 'invalid_login'
@@ -271,7 +268,6 @@ class RegistrationForm(forms.ModelForm):
             msg.attach_alternative(tmpl_html, "text/html")
             msg.send()
 
-            # todo: add to user
             if len(self.cleaned_data.get('promo', '')) > 0:
                 PromoCode.objects.create(customer=customer, code=self.cleaned_data['promo'])
         return customer

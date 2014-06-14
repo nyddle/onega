@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-import time
-
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
+    PermissionsMixin
 from django.core.mail import send_mail
 from django.contrib.contenttypes.models import ContentType
 from django.core import urlresolvers
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
 
 from easy_thumbnails.fields import ThumbnailerImageField
 
@@ -184,17 +185,19 @@ class PriseType(models.Model):
         verbose_name_plural = u'призы'
 
     def __str__(self):
-        return str(self.name)
+        return self.name.encode('utf-8')
 
 
 class PromoCode(models.Model):
     customer = models.ForeignKey(Customer, verbose_name=u'Пользователь')
-    # todo: what is maxlength here?
     code = models.CharField(max_length=255, unique=True, verbose_name=u'Код')
     added = models.DateTimeField(auto_now=True, verbose_name=u'Добавлен')
-    winner = models.BooleanField(default=False, blank=True, verbose_name=u'Выигрышный код')
-    on_phase = models.ForeignKey(Phase, null=True, blank=True, verbose_name=u'Фаза')
-    prise_name = models.ForeignKey(PriseType, null=True, blank=True, verbose_name=u'Приз')
+    winner = models.BooleanField(default=False, blank=True,
+                                 verbose_name=u'Выигрышный код')
+    on_phase = models.ForeignKey(Phase, null=True, blank=True,
+                                 verbose_name=u'Фаза')
+    prise_name = models.ForeignKey(PriseType, null=True, blank=True,
+                                   verbose_name=u'Приз')
 
     def user_id(self):
         return self.customer.get_ugly_ID()
@@ -204,6 +207,24 @@ class PromoCode(models.Model):
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
         return urlresolvers.reverse(u"admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
+
+    def save(self, *args, **kwargs):
+        if self.winner:
+            self._send_win_message()
+        super(PromoCode, self).save(*args, **kwargs)
+
+    def _send_win_message(self):
+        from .utils import load_template_data
+        tmpl_html = load_template_data('mails/winner.html', {
+            'customer': self.customer,
+            'prize': self.prise_name
+        })
+
+        msg = EmailMultiAlternatives(u'Победа в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
+                                     tmpl_html, settings.EMAIL_FROM,
+                                     to=[self.customer.email])
+        msg.attach_alternative(tmpl_html, "text/html")
+        msg.send()
 
     class Meta:
         verbose_name = u'пользовательский код'
