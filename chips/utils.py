@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.template import loader, Context
+from django.core.paginator import Paginator
 
 from .models import SiteSettings, ValidCode, PromoCode
 
@@ -46,5 +47,9 @@ def load_template_data(template, context):
     return rendered
 
 
-def get_winners_code():
-    pass
+def get_winners_code(page_num=1, email=None):
+    promocodes = PromoCode.objects.select_related().filter(winner=True)
+    if email:
+        promocodes = promocodes.filter(customer__email=email)
+    paginator = Paginator(promocodes, 2)
+    return paginator.page(page_num)

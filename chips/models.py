@@ -196,6 +196,9 @@ class PromoCode(models.Model):
                                  verbose_name=u'Выигрышный код')
     on_phase = models.ForeignKey(Phase, null=True, blank=True,
                                  verbose_name=u'Фаза')
+    phase = models.IntegerField(null=True, blank=True, verbose_name=u'Фаза')
+    win_date = models.IntegerField(null=True, blank=True,
+                                   verbose_name=u'Дата розыгрыша')
     prise_name = models.ForeignKey(PriseType, null=True, blank=True,
                                    verbose_name=u'Приз')
 

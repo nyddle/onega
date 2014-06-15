@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, redirect
+import json
+
+from django.shortcuts import render, redirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseNotFound
 from django.views.generic import View, FormView, TemplateView
@@ -10,7 +12,7 @@ from django.contrib import messages
 
 from .models import ImageGallery, DiscreditedIP, WrongIPByCode
 from .forms import RegistrationForm, CodeForm, LoginForm as AuthenticationForm
-from .utils import get_client_ip
+from .utils import get_client_ip, get_winners_code
 
 
 class HomeView(View):
@@ -98,7 +100,13 @@ class HomeView(View):
 
         else:
             template_data['form'] = CodeForm(customer=self.request.user)
-
+        try:
+            page = int(self.request.GET.get('page', 1))
+        except:
+            page = 1
+        email = self.request.GET.get('email')
+        codes = get_winners_code(page, email)
+        template_data['codes'] = codes
         return render(self.request, 'chips/home.html', template_data)
 
 
@@ -140,3 +148,14 @@ class LogoutView(View):
 
 class Prize(TemplateView):
     template_name = 'chips/prize.html'
+
+
+class WinnersView(View):
+    def get(self, request):
+        try:
+            page = int(request.GET.get('page', 1))
+        except:
+            page = 1
+        email = request.GET.get('email')
+        codes = get_winners_code(page, email)
+        return HttpResponse(json.dumps(codes), content_type="application/json")
