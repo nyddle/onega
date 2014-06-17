@@ -119,9 +119,7 @@ class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
         if self.errors:
-            print([e for e in self.errors])
             for f_name in self.fields:
-                print(f_name)
                 if f_name in self.errors:
                     classes = self.fields[f_name].widget.attrs.get('class', '')
                     classes += ' red'

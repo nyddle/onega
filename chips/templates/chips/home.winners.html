@@ -20,27 +20,27 @@
         </div>
     </div>
     <div class="winners__body">
-        {% for code in codes %}
-        <div class="winners__row">
-            <div class="winners__col winners__col--1">
-                &nbsp;
+{#        {% for code in codes %}#}
+{#        <div class="winners__row">#}
+{#            <div class="winners__col winners__col--1">#}
+{#                &nbsp;#}
 {#                <img src="img/star.png"/>#}
-            </div>
-            <div class="winners__col winners__col--2">
-                {{ code.on_phase.current_phase }}-Й
-            </div>
-            <div class="winners__col winners__col--3">
-                {{ code.on_phase.date|date:'d M' }}
-            </div>
-            <div class="winners__col winners__col--4">{{ code.customer.surname }}
-                {{ code.customer.first_name }}
-                {{ code.customer.last_name }}
-            </div>
-            <div class="winners__col winners__col--5">{{ code.code }}</div>
-            <div class="winners__col winners__col--6">{{ code.prise_name.name }}
-            </div>
-        </div>
-        {% endfor %}
+{#            </div>#}
+{#            <div class="winners__col winners__col--2">#}
+{#                {{ code.on_phase.current_phase }}-Й#}
+{#            </div>#}
+{#            <div class="winners__col winners__col--3">#}
+{#                {{ code.on_phase.date|date:'d M' }}#}
+{#            </div>#}
+{#            <div class="winners__col winners__col--4">{{ code.customer.surname }}#}
+{#                {{ code.customer.first_name }}#}
+{#                {{ code.customer.last_name }}#}
+{#            </div>#}
+{#            <div class="winners__col winners__col--5">{{ code.code }}</div>#}
+{#            <div class="winners__col winners__col--6">{{ code.prise_name.name }}#}
+{#            </div>#}
+{#        </div>#}
+{#        {% endfor %}#}
     </div>
 </div>
 

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
@@ -115,7 +118,11 @@ class Customer(AbstractBaseUser, PermissionsMixin):
                                                                        flat=True)[:5]
         if len(codes) > 4:
             if (codes[len(codes)-1] - codes[0]).days < 1:
-                return True
+                now = datetime.utcnow().replace(
+                    tzinfo=timezone.get_default_timezone()).now()
+                if (now - datetime.combine(codes[0],
+                                           datetime.min.time())).days < 1:
+                    return True
         return False
 
     def add_wrong_code(self):
