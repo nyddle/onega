@@ -68,7 +68,7 @@ class HomeView(View):
                     ip.failed += 1
                     ip.save()
 
-                    attempts = ip.wrongipbycode_set.all()[5:]
+                    attempts = ip.wrongipbycode_set.all().order_by('-date')[5:]
                     if len(attempts) > 4 and (attempts[len(attempts)-1].date - attempts[0].date).days < 1:
                         request.session['ip_blocked'] = True
                         ip.blocked += 1
@@ -104,9 +104,10 @@ class HomeView(View):
             page = int(self.request.GET.get('page', 1))
         except:
             page = 1
-        email = self.request.GET.get('email')
+        email = self.request.GET.get('user_creds')
         codes = get_winners_code(page, email)
         template_data['codes'] = codes
+        template_data['winners'] = {'page': page, 'email': email}
         return render(self.request, 'chips/home.html', template_data)
 
 
@@ -148,14 +149,3 @@ class LogoutView(View):
 
 class Prize(TemplateView):
     template_name = 'chips/prize.html'
-
-
-class WinnersView(View):
-    def get(self, request):
-        try:
-            page = int(request.GET.get('page', 1))
-        except:
-            page = 1
-        email = request.GET.get('email')
-        codes = get_winners_code(page, email)
-        return HttpResponse(json.dumps(codes), content_type="application/json")

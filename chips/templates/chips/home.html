@@ -171,18 +171,18 @@
                     <h3 class="block-title">розыгрыши и победители</h3>
 
                     <div class="enter-promo winners-block__search">
-                        <form method="post" action="{% url 'winners' %}" id="search-winner-form">
+                        <form method="get" action="{% url 'home' %}#winners"
+                              id="search-winner-form">
                             <div class="fill-field-wrap enter-promo__field">
                                 <input class="fill-field fill-field--w630"
-                                       type="text" placeholder="Поиск победителя">
+                                       name="user_creds" type="text" placeholder="Поиск победителя">
                                 <!--- for setting red background add class "fill-field--w630--red-field"-->
                             </div>
                             <input class="button enter-promo__button"
                                    value="Найти победителя" type="submit">
                         </form>
                     </div>
-                        {% include 'chips/home.winners.html' %}
-
+                    {% include 'chips/home.winners.html' %}
                 </div>
             </div>
         </div>

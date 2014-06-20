@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.template import loader, Context
 from django.core.paginator import Paginator
+from django.db.models import Q
 
-from .models import SiteSettings, ValidCode, PromoCode
+from .models import SiteSettings, ValidCode, PromoCode, Customer
 
 
 def get_site_settings():
@@ -50,6 +51,12 @@ def load_template_data(template, context):
 def get_winners_code(page_num=1, email=None):
     promocodes = PromoCode.objects.select_related().filter(winner=True)
     if email:
-        promocodes = promocodes.filter(customer__email=email)
+        data = email.split()
+        query = Q(email=email)
+        for entry in data:
+            query = query | Q(first_name=entry) | \
+                    Q(last_name=entry) | Q(surname=entry)
+        print(query)
+        promocodes = promocodes.filter(customer__in=Customer.objects.filter(query))
     paginator = Paginator(promocodes, 2)
     return paginator.page(page_num)

@@ -12,9 +12,11 @@ def get_settings(request):
     if request.settings.get('gallery'):
         gallery = True
     if request.settings.get('video') is not None:
-
         video = True
-    return {'is_video_enabled': video, 'is_gallery_enabled': gallery}
+    prize = request.settings.get('super_prize', 0)
+
+    return {'is_video_enabled': video, 'is_gallery_enabled': gallery,
+            'super_prize': prize}
 
 
 def get_remaining_time(request):

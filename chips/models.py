@@ -117,12 +117,17 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         codes = self.wrongcode_set.all().order_by('-date').values_list(u'date',
                                                                        flat=True)[:5]
         if len(codes) > 4:
-            if (codes[len(codes)-1] - codes[0]).days < 1:
+            if (codes[0] - codes[len(codes)-1]).days < 1:
                 now = datetime.utcnow().replace(
                     tzinfo=timezone.get_default_timezone()).now()
-                if (now - datetime.combine(codes[0],
+                if (now - datetime.combine(codes[len(codes)-1],
                                            datetime.min.time())).days < 1:
                     return True
+                else:
+                    for code in codes:
+                        if (now - datetime.combine(
+                                code, datetime.min.time())).days > 1:
+                            code.delete()
         return False
 
     def add_wrong_code(self):
@@ -201,8 +206,8 @@ class PromoCode(models.Model):
     added = models.DateTimeField(auto_now=True, verbose_name=u'Добавлен')
     winner = models.BooleanField(default=False, blank=True,
                                  verbose_name=u'Выигрышный код')
-    on_phase = models.ForeignKey(Phase, null=True, blank=True,
-                                 verbose_name=u'Фаза')
+    # on_phase = models.ForeignKey(Phase, null=True, blank=True,
+    #                              verbose_name=u'Фаза')
     phase = models.IntegerField(null=True, blank=True, verbose_name=u'Фаза')
     win_date = models.IntegerField(null=True, blank=True,
                                    verbose_name=u'Дата розыгрыша')

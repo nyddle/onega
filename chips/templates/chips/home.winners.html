@@ -1,3 +1,5 @@
+{% load static %}
+{% if codes %}
 <div class="winners">
     <div class="winners__row winners__row--head">
         <div class="winners__col winners__col--1">
@@ -20,41 +22,51 @@
         </div>
     </div>
     <div class="winners__body">
-{#        {% for code in codes %}#}
-{#        <div class="winners__row">#}
-{#            <div class="winners__col winners__col--1">#}
-{#                &nbsp;#}
-{#                <img src="img/star.png"/>#}
-{#            </div>#}
-{#            <div class="winners__col winners__col--2">#}
-{#                {{ code.on_phase.current_phase }}-Й#}
-{#            </div>#}
-{#            <div class="winners__col winners__col--3">#}
-{#                {{ code.on_phase.date|date:'d M' }}#}
-{#            </div>#}
-{#            <div class="winners__col winners__col--4">{{ code.customer.surname }}#}
-{#                {{ code.customer.first_name }}#}
-{#                {{ code.customer.last_name }}#}
-{#            </div>#}
-{#            <div class="winners__col winners__col--5">{{ code.code }}</div>#}
-{#            <div class="winners__col winners__col--6">{{ code.prise_name.name }}#}
-{#            </div>#}
-{#        </div>#}
-{#        {% endfor %}#}
+        {% for code in codes %}
+        <div class="winners__row">
+            <div class="winners__col winners__col--1">
+                {% if super_prize == code.prise_name.prise_name %}
+                    <img src="{% static 'img/star.png' %}"/>
+                {% else %}
+                    &nbsp;
+                {% endif %}
+            </div>
+            <div class="winners__col winners__col--2">
+                {{ code.phase }}-Й
+            </div>
+            <div class="winners__col winners__col--3">
+                {{ code.on_phase.date|date:'d M' }}
+            </div>
+            <div class="winners__col winners__col--4">{{ code.customer.surname }}
+                {{ code.customer.first_name }}
+                {{ code.customer.last_name }}
+            </div>
+            <div class="winners__col winners__col--5">{{ code.code }}</div>
+            <div class="winners__col winners__col--6">{{ code.prise_name.name }}
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 
-<div class="nav nav--fix">
-    {% if codes.has_previous %}
-        <a class="nav__arrow nav__arrow--left" href="#"><!----></a>
-        <a class="nav__buttons nav__buttons--prev" href="#">Предыдущая</a>
-    {% endif %}
-    {% for page in codes.paginator.page_range %}
-        <a class="nav__numbers nav__numbers--fix
-        {% if page == codes.pageinator.current %}nav__numbers--current{% endif %}" href="#">{{ page }}</a>
-    {% endfor %}
-    {% if codes.has_next %}
-        <a class="nav__buttons nav__buttons--next" href="#">Следующая</a>
-        <a class="nav__arrow nav__arrow--right" href="#"><!----></a>
-    {% endif %}
-</div>
+{% if codes.paginator.num_pages > 1 %}
+    <div class="nav nav--fix">
+        {% if codes.has_previous %}
+            <a class="nav__arrow nav__arrow--left" href="#"><!----></a>
+            <a class="nav__buttons nav__buttons--prev" href="#">Предыдущая</a>
+        {% endif %}
+        {% for page in codes.paginator.page_range %}
+            <a class="nav__numbers nav__numbers--fix
+            {% if page == codes.pageinator.current %}nav__numbers--current{% endif %}"
+               href="{% url 'home' %}?page={{ page }}#winners">{{ page }}</a>
+        {% endfor %}
+        {% if codes.has_next %}
+            <a class="nav__buttons nav__buttons--next" href="#">Следующая</a>
+            <a class="nav__arrow nav__arrow--right" href="#"><!----></a>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% else %}
+
+{% endif %}
