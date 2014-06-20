@@ -124,9 +124,9 @@ class Customer(AbstractBaseUser, PermissionsMixin):
                                            datetime.min.time())).days < 1:
                     return True
                 else:
-                    for code in codes:
+                    for code in self.wrongcode_set.all().order_by('-date'):
                         if (now - datetime.combine(
-                                code, datetime.min.time())).days > 1:
+                                code.date, datetime.min.time())).days > 1:
                             code.delete()
         return False
 
