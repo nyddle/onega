@@ -21,6 +21,7 @@ class HomeView(View):
     """
 
     def dispatch(self, request, *args, **kwargs):
+        print(111)
         ip_addr = get_client_ip(request)
 
         ip, created = DiscreditedIP.objects.get_or_create(ip=ip_addr)
