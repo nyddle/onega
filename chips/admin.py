@@ -51,7 +51,7 @@ class ImageGalleryAdmin(admin.ModelAdmin):
 
 
 class PromoCodeAdmin(ImportExportModelAdmin):
-    list_display = ('code', 'pk', 'customer', 'added', 'winner', 'phase',
+    list_display = ('code', 'customer', 'added', 'winner', 'phase',
                     'prise_name', )
     list_editable = ('winner', 'phase', 'prise_name')
     list_filter = ('winner', 'phase', 'prise_name')

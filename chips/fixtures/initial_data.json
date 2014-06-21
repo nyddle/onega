@@ -21,8 +21,8 @@
     "pk": 1,
     "model": "chips.phase",
     "fields": {
-        "current_phase": 1,
-        "date": "2014-06-01"
+        "current_phase": 0,
+        "date": "2014-06-22"
     }
 }
 ]

@@ -42,7 +42,12 @@
                 {{ code.customer.last_name }}
             </div>
             <div class="winners__col winners__col--5">{{ code.code }}</div>
-            <div class="winners__col winners__col--6">{{ code.prise_name.name }}
+            <div class="winners__col winners__col--6">
+                {% if code.prise_name.name %}
+                    {{ code.prise_name.name }}
+                {% else %}
+                    Не указан
+                {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -58,7 +63,7 @@
         {% for page in codes.paginator.page_range %}
             <a class="nav__numbers nav__numbers--fix
             {% if page == codes.pageinator.current %}nav__numbers--current{% endif %}"
-               href="{% url 'home' %}?page={{ page }}#winners">{{ page }}</a>
+               href="{% url 'home' %}?page={{ page }}{% if winners.email %}&email={{ winners.email }}{% endif %}#winners">{{ page }}</a>
         {% endfor %}
         {% if codes.has_next %}
             <a class="nav__buttons nav__buttons--next" href="#">Следующая</a>
