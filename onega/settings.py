@@ -149,6 +149,11 @@ EMAIL_USE_TLS = True
 # EMAIL_PORT = 587
 EMAIL_FROM = 'Onega'
 
+SENDGRID_USERNAME='app26164357@heroku.com'
+PYTHONUNBUFFERED=True
+SENDGRID_PASSWORD='rgqmurii'
+
+
 try:
     from .local_settings import *
 except ImportError:

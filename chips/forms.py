@@ -12,9 +12,7 @@ from captcha.fields import CaptchaField, CaptchaTextInput
 
 from .models import Customer, PromoCode
 from .utils import validate_code
-from .utils import load_template_data
-
-from django.core.mail import EmailMultiAlternatives
+from .utils import load_template_data, send_mail
 
 
 class ThemedPasswordResetForm(PasswordResetForm):
@@ -57,11 +55,12 @@ class ThemedPasswordResetForm(PasswordResetForm):
             }
 
             tmpl_html = load_template_data('registration/password_reset_email.html', c)
-            msg = EmailMultiAlternatives(u'Сброс пароля', tmpl_html,
+            # msg = EmailMultiAlternatives()
+            # msg.attach_alternative(tmpl_html, "text/html")
+            # msg.send()
+            send_mail(u'Сброс пароля', tmpl_html,
                                          settings.EMAIL_FROM,
-                                         to=[self.cleaned_data['email']])
-            msg.attach_alternative(tmpl_html, "text/html")
-            msg.send()
+                                         [self.cleaned_data['email']])
 
 
 class ThemedSetPasswordForm(SetPasswordForm):
@@ -221,11 +220,6 @@ class RegistrationForm(forms.ModelForm):
             "email": forms.EmailInput(attrs={'class': 'fill-field', 'style': 'width: 562px;'}),
         }
 
-    def clean_email(self):
-        username = self.cleaned_data.get('email')
-        if username:
-            username = username.lower()
-        return username
 
     def clean_promo(self):
         promo = self.cleaned_data.get('promo', '')
@@ -260,11 +254,9 @@ class RegistrationForm(forms.ModelForm):
                                        'first_name': customer.first_name,
                                        'id': customer.pk})
 
-            msg = EmailMultiAlternatives(u'Регистрация участия в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
-                                         tmpl, settings.EMAIL_FROM,
-                                         to=[self.cleaned_data['email']])
-            msg.attach_alternative(tmpl_html, "text/html")
-            msg.send()
+            send_mail(u'Регистрация участия в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
+                                         tmpl_html, settings.EMAIL_FROM,
+                                         [self.cleaned_data['email']], text=tmpl)
 
             if len(self.cleaned_data.get('promo', '')) > 0:
                 PromoCode.objects.create(customer=customer, code=self.cleaned_data['promo'])
@@ -273,7 +265,10 @@ class RegistrationForm(forms.ModelForm):
     def clean_email(self):
         # Since User.username is unique, this check is redundant,
         # but it sets a nicer error message than the ORM. See #13147.
-        email = self.cleaned_data["email"]
+        username = self.cleaned_data.get('email')
+        if username:
+            username = username.lower()
+        email = username
         try:
             Customer.objects.get(email=email)
         except Customer.DoesNotExist:

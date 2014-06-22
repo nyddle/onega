@@ -2,6 +2,7 @@
 from django.template import loader, Context
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.conf import settings
 
 from .models import SiteSettings, ValidCode, PromoCode, Customer
 
@@ -60,3 +61,16 @@ def get_winners_code(page_num=1, email=None):
         promocodes = promocodes.filter(customer__in=Customer.objects.filter(query))
     paginator = Paginator(promocodes, 2)
     return paginator.page(page_num)
+
+
+def send_mail(theme, html, from_, to, text=None):
+    import sendgrid
+    sg = sendgrid.SendGridClient(settings.SENDGRID_USERNAME, settings.SENDGRID_PASSWORD)
+    message = sendgrid.Mail()
+    message.add_to(to[0])
+    message.set_subject(theme)
+    if text:
+        message.set_text(text)
+    message.set_html(html)
+    message.set_from(from_)
+    status, msg = sg.send(message)

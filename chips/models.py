@@ -12,6 +12,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
 from easy_thumbnails.fields import ThumbnailerImageField
+from utils import send_mail
 
 
 class CustomerManager(BaseUserManager):
@@ -234,12 +235,8 @@ class PromoCode(models.Model):
             'customer': self.customer,
             'prize': self.prise_name
         })
-
-        msg = EmailMultiAlternatives(u'Победа в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
-                                     tmpl_html, settings.EMAIL_FROM,
-                                     to=[self.customer.email])
-        msg.attach_alternative(tmpl_html, "text/html")
-        msg.send()
+        send_mail(u'Победа в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
+                  tmpl_html, settings.EMAIL_FROM, [self.customer.email])
 
     class Meta:
         verbose_name = u'пользовательский код'
