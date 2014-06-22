@@ -12,3 +12,4 @@ dj_static
 psycopg2
 https://bitbucket.org/izi/django-admin-tools/downloads/django-admin-tools-0.5.1.tar.gz
 django-postmark==0.1.6
+sendgrid==0.5.1
