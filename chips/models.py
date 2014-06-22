@@ -201,13 +201,15 @@ class PriseType(models.Model):
 
 
 class PromoCode(models.Model):
+    PHASES = ((0, u'1'), (1, u'2'), (2, u'3'), (3, u'Игра окончена'))
     customer = models.ForeignKey(Customer, verbose_name=u'Пользователь')
     code = models.CharField(max_length=255, unique=True, verbose_name=u'Код')
     added = models.DateTimeField(auto_now=True, verbose_name=u'Добавлен')
     winner = models.BooleanField(default=False, blank=True,
                                  verbose_name=u'Выигрышный код')
 
-    phase = models.IntegerField(null=True, blank=True, verbose_name=u'Фаза')
+    phase = models.IntegerField(null=True, blank=True, verbose_name=u'Фаза',
+                                choices=PHASES, default=0)
     win_date = models.IntegerField(null=True, blank=True,
                                    verbose_name=u'Дата розыгрыша')
     prise_name = models.ForeignKey(PriseType, null=True, blank=True,
