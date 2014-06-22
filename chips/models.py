@@ -206,8 +206,7 @@ class PromoCode(models.Model):
     added = models.DateTimeField(auto_now=True, verbose_name=u'Добавлен')
     winner = models.BooleanField(default=False, blank=True,
                                  verbose_name=u'Выигрышный код')
-    # on_phase = models.ForeignKey(Phase, null=True, blank=True,
-    #                              verbose_name=u'Фаза')
+
     phase = models.IntegerField(null=True, blank=True, verbose_name=u'Фаза')
     win_date = models.IntegerField(null=True, blank=True,
                                    verbose_name=u'Дата розыгрыша')
@@ -226,6 +225,11 @@ class PromoCode(models.Model):
     def save(self, *args, **kwargs):
         if self.winner:
             self._send_win_message()
+        try:
+            phase = Phase.objects.first().current_phase
+            self.phase = phase
+        except:
+            pass
         super(PromoCode, self).save(*args, **kwargs)
 
     def _send_win_message(self):
