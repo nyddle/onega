@@ -139,9 +139,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # }
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_HOST_USER = 'postmaster@app26164357.mailgun.org'
-EMAIL_HOST_PASSWORD = '5h53es29a-x0'
+EMAIL_HOST = 'smtp.postmarkapp.com'
+EMAIL_HOST_USER = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_FROM = 'Onega'
 
