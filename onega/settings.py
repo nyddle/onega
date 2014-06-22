@@ -52,7 +52,8 @@ INSTALLED_APPS = (
     'south',
     'easy_thumbnails',
     'captcha',
-    'hostname_redirects'
+    'hostname_redirects',
+    'postmark'
 )
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
@@ -138,11 +139,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 #     }
 # }
 
+
+EMAIL_BACKEND = "postmark.backends.PostmarkBackend"
+POSTMARK_API_KEY = '8eeb0e67-44e1-4929-8d61-7ab0213ba0e2'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.postmarkapp.com'
-EMAIL_HOST_USER = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = 587
+# EMAIL_HOST = 'smtp.postmarkapp.com'
+# EMAIL_HOST_USER = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_PORT = 587
 EMAIL_FROM = 'Onega'
 
 try:
