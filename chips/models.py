@@ -12,7 +12,6 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
 from easy_thumbnails.fields import ThumbnailerImageField
-from utils import send_mail
 
 
 class CustomerManager(BaseUserManager):
@@ -230,7 +229,7 @@ class PromoCode(models.Model):
         super(PromoCode, self).save(*args, **kwargs)
 
     def _send_win_message(self):
-        from .utils import load_template_data
+        from .utils import load_template_data, send_mail
         tmpl_html = load_template_data('mails/winner.html', {
             'customer': self.customer,
             'prize': self.prise_name
