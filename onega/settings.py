@@ -147,7 +147,7 @@ EMAIL_USE_TLS = True
 # EMAIL_HOST_USER = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
 # EMAIL_HOST_PASSWORD = ''
 # EMAIL_PORT = 587
-EMAIL_FROM = 'igra@onega.by'
+EMAIL_FROM = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
 
 SENDGRID_USERNAME='app26164357@heroku.com'
 PYTHONUNBUFFERED=True
