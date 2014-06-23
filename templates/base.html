@@ -727,6 +727,37 @@
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+
+
+<script>
+    $('form').on('submit', function (e) {
+        if($(this).attr('id') === 'reset_password_form') {
+            e.preventDefault();
+            var width = $('.thank-popup').width();
+            var pos = ($(document).width() - width) / 2;
+            $('.thank-popup').find('.popup-content').html(
+                    '<p>Внимание!</p>В связи с техническими работами восстановление паролей временно отключено. Через пару часов возможность добавления новых кодов будет включена!');
+            $('.thank-popup').show();
+            $('.popup-wrapper').show();
+            $(window).scrollTop(0);
+        }
+
+        if ($(this).attr('id') === 'auth-form') {
+            if ($(this).find('#tab1').css('display') === 'block') {
+                e.preventDefault();
+                var width = $('.thank-popup').width();
+                var pos = ($(document).width() - width) / 2;
+                $('.thank-popup').find('.popup-content').html(
+                        '<p>Внимание!</p>В связи с техническими работами регистрация временно отключена. Через пару часов возможность добавления новых кодов будет включена!');
+                $('.thank-popup').show();
+                $('.popup-wrapper').show();
+                $(window).scrollTop(0);
+            }
+        }
+    })
+</script>
+
+
 <script src="{% static 'js/vendor/jquery.parallax.min.js' %}"></script>
 <script src="{% static 'js/vendor/jquery.scrollTo.min.js' %}"></script>
 <script src="{% static 'js/vendor/jquery.mcustomscrollbar.concat.min.js' %}"></script>

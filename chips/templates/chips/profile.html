@@ -23,7 +23,7 @@
                 {% if request.user.should_be_blocked %}
                     Вы ввели пять неверных кодов за последние сутки и пока что не можете указывать новые.
                 {% else %}
-                    <form method="post">
+                    <form method="post" id="send_code_form">
                         {% csrf_token %}
                         <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
                             {{ form.code }}
