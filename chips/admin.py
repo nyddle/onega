@@ -51,11 +51,11 @@ class ImageGalleryAdmin(admin.ModelAdmin):
 
 
 class PromoCodeAdmin(ImportExportModelAdmin):
-    list_display = ('pk', 'code', 'customer', 'added', 'winner', 'phase',
+    list_display = ('id', 'code', 'customer', 'added', 'winner', 'phase',
                     'prise_name', )
     list_editable = ('winner', 'prise_name')
     list_filter = ('winner', 'phase', 'prise_name', 'added')
-    search_fields = ('pk', )
+    search_fields = ('id', )
 
 
 class ValidCodeAdmin(ImportExportModelAdmin):
