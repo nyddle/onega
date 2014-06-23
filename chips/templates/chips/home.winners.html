@@ -32,7 +32,7 @@
                 {% endif %}
             </div>
             <div class="winners__col winners__col--2">
-                {{ code.phase }}-Й
+                {{ code.get_phase_display }}-Й
             </div>
             <div class="winners__col winners__col--3">
                 {{ code.on_phase.date|date:'d M' }}
