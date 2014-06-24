@@ -63,9 +63,11 @@
                 </li>
             {% endif %}
             {% if request.phase > 0 %}
+                {% block prizes_menu %}
                 <li class="header-menu__item"><a class="header-menu__link" href="#"
                                                                             contId="winners">Розыгрыши и победители</a>
                 </li>
+                {% endblock %}
             {% endif %}
         </ul>
     </div>

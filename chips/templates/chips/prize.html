@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% block prizes_menu %}
+    <li class="header-menu__item">
+        <a class="header-menu__link" href="{% url 'another_home' %}#winners"
+        contId="winners">Розыгрыши и победители</a>
+    </li>
+{% endblock %}
+
 {% block reg_code_menu %}
     <a class="header-menu__link"
        href="{% url 'another_home' %}#reg-code">Регистрация кода</a>
 {% endblock %}
+
 {% block content %}
     <div class="c-align">
         <div class="inner-head">
