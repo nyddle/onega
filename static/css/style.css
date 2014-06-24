@@ -746,6 +746,7 @@ a:active {
   background-position: top center, top left;
   background-repeat: no-repeat, repeat;
   margin-bottom: 100px;
+  min-height: 650px;
 }
 
 /* line 56, ../sass/style.scss */
