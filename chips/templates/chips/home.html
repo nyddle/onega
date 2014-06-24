@@ -164,47 +164,32 @@
         </div>
     </div>
     {% endif %}
-    {% if request.phase > 0 %}
-        <div class="red-bg-block">
-            <div class="c-align">
-                <div class="winners-block" id="winners">
-                    <h3 class="block-title">розыгрыши и победители</h3>
 
-                    <div class="enter-promo winners-block__search">
-                        <form method="get" action="{% url 'home' %}#winners"
-                              id="search-winner-form">
-                            <div class="fill-field-wrap enter-promo__field">
-                                <input class="fill-field fill-field--w630"
-                                       name="user_creds" type="text" placeholder="Поиск победителя">
-                                <!--- for setting red background add class "fill-field--w630--red-field"-->
-                            </div>
-                            <input class="button enter-promo__button"
-                                   value="Найти победителя" type="submit">
-                        </form>
-                    </div>
-                    {% include 'chips/home.winners.html' %}
+
+</div>
+{% if request.phase > 0 %}
+    <div class="red-bg-block">
+        <div class="c-align">
+            <div class="winners-block" id="winners">
+                <h3 class="block-title">розыгрыши и победители</h3>
+
+                <div class="enter-promo winners-block__search">
+                    <form method="get" action="{% url 'home' %}#winners"
+                          id="search-winner-form">
+                        <div class="fill-field-wrap enter-promo__field">
+                            <input class="fill-field fill-field--w630"
+                                   name="user_creds" type="text" placeholder="Поиск победителя">
+                            <!--- for setting red background add class "fill-field--w630--red-field"-->
+                        </div>
+                        <input class="button enter-promo__button"
+                               value="Найти победителя" type="submit">
+                    </form>
                 </div>
+                {% include 'chips/home.winners.html' %}
             </div>
         </div>
-    {% endif %}
-    <div class="footer">
-        <div class="c-align">
-            <a href="#" class="footer__logo"><!-----></a>
-
-            <p class="footer__text">
-                Рекламная игра проводится на территории Республики Беларусь. Организатор – ПОДО «Онега», УНН 600124575.
-                Свидетельство о государственной регистрации рекламной игры №2364 от 15 мая 2014 г. Выдано Министерством
-                торговли Республики Беларусь. Срок рекламной игры: 09.06.2014 –01.08.2014
-            </p>
-            <ul class="footer__social social">
-                <li class="social__item"><a target="_blank" href="http://vk.com/onega_by"
-                                            class="social__link social__link--vk"><!----></a></li>
-                <li class="social__item"><a target="_blank" href="https://twitter.com/hashtag/igraonega"
-                                            class="social__link social__link--tw"><!----></a></li>
-            </ul>
-        </div>
     </div>
-</div>
+{% endif %}
 
 {% endblock %}
 {% block js %}
