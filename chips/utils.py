@@ -58,9 +58,9 @@ def get_winners_code(page_num=1, email=None):
             query = query | Q(first_name__icontains=entry) | \
                     Q(last_name__icontains=entry) | Q(surname__icontains=entry)
 
-        promocodes = promocodes.filter(customer__in=Customer.objects.filter(query))
-        if len(promocodes) == 0:
-            promocodes = promocodes.filter(code__icontains=email)
+        promocodes = promocodes.filter(Q(customer__in=Customer.objects.filter(query)) | Q(code__icontains=email))
+        # if len(promocodes) == 0:
+        #     promocodes = promocodes.filter(code__icontains=email)
     paginator = Paginator(promocodes, 40)
     return paginator.page(page_num)
 
