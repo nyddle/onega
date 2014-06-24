@@ -745,8 +745,7 @@ a:active {
   background-image: url(../img/shadow.gif);
   background-position: top center, top left;
   background-repeat: no-repeat, repeat;
-  height: auto !important;
-  min-height: 100%;
+  margin-bottom: 100px;
 }
 
 /* line 56, ../sass/style.scss */
@@ -1682,9 +1681,9 @@ a:active {
     background: url("../img/footer-bg-top.png") no-repeat scroll center top rgba(0, 0, 0, 0);
     content: " ";
     display: block;
-    height: 148px;
+    height: 145px;
     position: absolute;
-    top: -147px;
+    top: -145px;
     width: 100%;
 }
 /* line 3, ../sass/_mixins.scss */
