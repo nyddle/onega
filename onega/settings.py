@@ -139,19 +139,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 #     }
 # }
 
-
-EMAIL_BACKEND = "postmark.backends.PostmarkBackend"
-POSTMARK_API_KEY = '8eeb0e67-44e1-4929-8d61-7ab0213ba0e2'
 EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.postmarkapp.com'
-# EMAIL_HOST_USER = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
-# EMAIL_HOST_PASSWORD = ''
-# EMAIL_PORT = 587
-EMAIL_FROM = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
+EMAIL_HOST = 'smtp.postmarkapp.com'
+EMAIL_HOST_USER = 'postmaster@app26061228.mailgun.org'
+EMAIL_HOST_PASSWORD = '0j8v3jioz5n4'
+EMAIL_PORT = 587
+EMAIL_FROM = 'Onega'
 
-SENDGRID_USERNAME='app26164357@heroku.com'
-PYTHONUNBUFFERED=True
-SENDGRID_PASSWORD='rgqmurii'
 
 
 try:
