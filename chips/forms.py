@@ -29,7 +29,6 @@ class ThemedPasswordResetForm(PasswordResetForm):
         Generates a one-use only link for resetting password and sends to the
         user.
         """
-        from django.core.mail import send_mail
         UserModel = get_user_model()
         email = self.cleaned_data["email"].lower()
         active_users = UserModel._default_manager.filter(
@@ -47,7 +46,7 @@ class ThemedPasswordResetForm(PasswordResetForm):
                 site_name = domain = domain_override
             c = {
                 'email': user.email,
-                'domain': domain,
+                'domain': 'igra.onega.by',
                 'site_name': site_name,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'user': user,
