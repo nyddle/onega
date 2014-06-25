@@ -226,7 +226,10 @@ class PromoCode(models.Model):
 
     def save(self, *args, **kwargs):
         if self.winner:
-            self._send_win_message()
+            try:
+                self._send_win_message()
+            except:
+                pass
         try:
             phase = Phase.objects.first().current_phase
             self.phase = phase
