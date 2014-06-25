@@ -21,7 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'oy%)bah1r)xx7a2@m*bacn+^q42rt$p=fle%$kpdf6okcr1$+n'
 
-# todo: switch in to False on production
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -140,7 +139,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_HOST_USER = 'postmaster@igra.onega.by'
-EMAIL_HOST_PASSWORD = '0j8v3jioz5n4'
+EMAIL_HOST_PASSWORD = '03usq8r9yxu0'
 EMAIL_PORT = 587
 EMAIL_FROM = 'Onega'
 

@@ -229,11 +229,11 @@ class PromoCode(models.Model):
         return urlresolvers.reverse(u"admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
 
     def save(self, *args, **kwargs):
-        # if self.winner:
-        #     try:
-        #         self._send_win_message()
-        #     except:
-        #         pass
+        if self.winner:
+            try:
+                self._send_win_message()
+            except:
+                pass
         try:
             phase = Phase.objects.first().current_phase
             self.phase = phase

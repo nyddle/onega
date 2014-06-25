@@ -79,4 +79,4 @@ def send_mail(theme, html, from_, to, text=None):
     # message.set_from(from_)
     # status, msg = sg.send(message)
     msg.attach_alternative(html, "text/html")
-    msg.send()
+    print(msg.send())
