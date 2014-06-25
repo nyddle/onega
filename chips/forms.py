@@ -259,10 +259,12 @@ class RegistrationForm(UserCreationForm):
                                        'email': customer.email,
                                        'first_name': customer.first_name,
                                        'id': customer.pk})
-
-            send_mail(u'Регистрация участия в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
+            try:
+                send_mail(u'Регистрация участия в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
                                          tmpl_html, settings.EMAIL_FROM,
                                          [self.cleaned_data['email']], text=tmpl)
+            except:
+                pass
 
             if len(self.cleaned_data.get('promo', '')) > 0:
                 PromoCode.objects.create(customer=customer, code=self.cleaned_data['promo'])
