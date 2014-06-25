@@ -179,8 +179,11 @@ class RegistrationForm(UserCreationForm):
         widget=forms.CheckboxInput(attrs={'id': 'agreeCheck',
                                           'class': 'check-block__check'}))
 
-    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput )
+    password1 = forms.CharField(label="Password",
+        widget=forms.PasswordInput(attrs={'class': 'fill-field'}))
+    password2 = forms.CharField(label="Password confirmation",
+        widget=forms.PasswordInput(attrs={'class': 'fill-field'}),
+        help_text="Enter the same password as above, for verification.")
 
     promocode_failed = False
 
@@ -220,8 +223,8 @@ class RegistrationForm(UserCreationForm):
             "building": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
             "corpus": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
             "apartment": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
-            "phone": forms.TextInput,
-            "email": forms.EmailInput,
+            "phone": forms.TextInput(attrs={'class': 'fill-field'}),
+            "email": forms.EmailInput(attrs={'class': 'fill-field'}),
         }
 
     def clean_promo(self):
