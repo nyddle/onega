@@ -160,7 +160,7 @@ class LoginForm(AuthenticationForm):
         return self.cleaned_data
 
 
-class RegistrationForm(UserCreationForm):
+class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         if self.errors:
