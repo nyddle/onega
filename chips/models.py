@@ -218,7 +218,11 @@ class PromoCode(models.Model):
     def user_id(self):
         return self.customer.get_ugly_ID()
 
+    def get_full_name(self):
+        return self.customer.get_full_name()
+
     user_id.short_description = u'ID пользователя'
+    get_full_name.short_description = u'Полное имя'
 
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
