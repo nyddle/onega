@@ -1211,6 +1211,14 @@ a:active {
   text-justify: newspaper;
   margin-bottom: 24px;
 }
+.fields-row.col-2{
+  width: 575px;
+}
+.fields-row.col-2 dl input,
+.fields-row.col-3 dl input{
+  width: 275px;
+}
+
 /* line 42, ../sass/_mixins.scss */
 .fields-row:after {
   content: '';
@@ -1502,15 +1510,16 @@ a:active {
 }
 /* line 10, ../sass/_mixins.scss */
 .nav--fix {
-  margin-left: 209px;
+  margin: 0 170px;
+  text-align: center;
 }
 /* line 3, ../sass/_mixins.scss */
 .nav__arrow {
-  display: block;
+  display: inline-block;
+  vertical-align: middle;
   width: 18px;
   height: 27px;
-  margin-top: 2px;
-  float: left;
+  margin-bottom: 2px;
   background: url("../img/arrows-sprite.png") 0 0 no-repeat;
 }
 /* line 10, ../sass/_mixins.scss */
@@ -1549,9 +1558,9 @@ a:active {
 }
 /* line 3, ../sass/_mixins.scss */
 .nav__numbers {
-  display: block;
-  float: left;
-  margin: 0 21px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 21px 2px 0;
   color: #737373;
   font-size: 18px;
   text-align: center;
@@ -1574,8 +1583,9 @@ a:active {
 }
 /* line 3, ../sass/_mixins.scss */
 .nav__buttons {
-  display: block;
-  float: left;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 2px;
 }
 /* line 10, ../sass/_mixins.scss */
 .nav__buttons--dark {
@@ -2059,7 +2069,7 @@ bottom: 95px;
 position: relative;
 } 
 #id_captcha_1{
-  width: 210px;
+  width: 227px;
 }
 .promo-imgs{
   /*position: relative;*/

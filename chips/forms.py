@@ -6,7 +6,8 @@ from django.contrib.sites.models import get_current_site
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.conf import settings
-from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, \
+    SetPasswordForm, UserCreationForm
 
 from captcha.fields import CaptchaField, CaptchaTextInput
 
@@ -159,7 +160,7 @@ class LoginForm(AuthenticationForm):
         return self.cleaned_data
 
 
-class RegistrationForm(forms.ModelForm):
+class RegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         if self.errors:
@@ -177,6 +178,9 @@ class RegistrationForm(forms.ModelForm):
         label=u'С условиями игры ознакомлен',
         widget=forms.CheckboxInput(attrs={'id': 'agreeCheck',
                                           'class': 'check-block__check'}))
+
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput )
 
     promocode_failed = False
 
@@ -216,10 +220,9 @@ class RegistrationForm(forms.ModelForm):
             "building": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
             "corpus": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
             "apartment": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
-            "phone": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 562px;'}),
-            "email": forms.EmailInput(attrs={'class': 'fill-field', 'style': 'width: 562px;'}),
+            "phone": forms.TextInput,
+            "email": forms.EmailInput,
         }
-
 
     def clean_promo(self):
         promo = self.cleaned_data.get('promo', '')
@@ -237,9 +240,9 @@ class RegistrationForm(forms.ModelForm):
 
     def save(self, commit=True):
         customer = super(RegistrationForm, self).save(commit=False)
-        password = Customer.objects.make_random_password()
-        customer.email = customer.email.lower()
+        password = self.cleaned_data["password1"]
         customer.set_password(password)
+        customer.email = customer.email.lower()
         if commit:
             customer.save()
             tmpl = load_template_data('mails/reg_confirm_text.html',
