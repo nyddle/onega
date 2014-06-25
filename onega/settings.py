@@ -23,11 +23,11 @@ SECRET_KEY = 'oy%)bah1r)xx7a2@m*bacn+^q42rt$p=fle%$kpdf6okcr1$+n'
 
 # todo: switch in to False on production
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['onega.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -115,9 +115,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
