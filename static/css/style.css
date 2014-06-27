@@ -9,6 +9,7 @@
  */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic&subset=latin,cyrillic-ext,cyrillic);
 /* line 106, C:\Ruby200-x64\lib\ruby\gems\2.0.0\gems\compass-core-1.0.0.alpha.19\stylesheets\compass\typography\_vertical_rhythm.scss */
+
 html {
   font-size: 100%;
   line-height: 1.5em;
@@ -1076,13 +1077,13 @@ a:active {
   background: url("../img/lable.png") no-repeat;
   content: '';
   -moz-transform: rotate(-18deg);
-  /* Ğ”Ğ»Ñ Firefox */
+  /* „«ï Firefox */
   -ms-transform: rotate(-18deg);
-  /* Ğ”Ğ»Ñ IE */
+  /* „«ï IE */
   -webkit-transform: rotate(-18deg);
-  /* Ğ”Ğ»Ñ Safari, Chrome, iOS */
+  /* „«ï Safari, Chrome, iOS */
   -o-transform: rotate(-18deg);
-  /* Ğ”Ğ»Ñ Opera */
+  /* „«ï Opera */
   transform: rotate(-18deg);
 }
 
