@@ -9,7 +9,6 @@
  */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic&subset=latin,cyrillic-ext,cyrillic);
 /* line 106, C:\Ruby200-x64\lib\ruby\gems\2.0.0\gems\compass-core-1.0.0.alpha.19\stylesheets\compass\typography\_vertical_rhythm.scss */
-
 html {
   font-size: 100%;
   line-height: 1.5em;
@@ -1077,13 +1076,13 @@ a:active {
   background: url("../img/lable.png") no-repeat;
   content: '';
   -moz-transform: rotate(-18deg);
-  /* Ñ´Ô Firefox */
+  /* –î–ª—è Firefox */
   -ms-transform: rotate(-18deg);
-  /* Ñ´Ô IE */
+  /* –î–ª—è IE */
   -webkit-transform: rotate(-18deg);
-  /* Ñ´Ô Safari, Chrome, iOS */
+  /* –î–ª—è Safari, Chrome, iOS */
   -o-transform: rotate(-18deg);
-  /* Ñ´Ô Opera */
+  /* –î–ª—è Opera */
   transform: rotate(-18deg);
 }
 
@@ -1213,11 +1212,11 @@ a:active {
   margin-bottom: 24px;
 }
 .fields-row.col-2{
-  width: 565px;
+  width: 575px;
 }
 .fields-row.col-2 dl input,
 .fields-row.col-3 dl input{
-  width: 277px;
+  width: 275px;
 }
 
 /* line 42, ../sass/_mixins.scss */
@@ -1595,7 +1594,7 @@ a:active {
 }
 /* line 10, ../sass/_mixins.scss */
 .nav__buttons--prev {
-  margin: 0 28px 0 20px;
+  margin: 0 51px 0 20px;
 }
 /* line 10, ../sass/_mixins.scss */
 .nav__buttons--prev--dark {
@@ -2143,8 +2142,4 @@ position: relative;
 }
 .blue_link{
   color: #1688bc;
-}
-.fields-row *{
-  font-size: 18px;
-  line-height: 20px;
 }
