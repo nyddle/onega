@@ -210,6 +210,7 @@ class PromoCode(models.Model):
 
     phase = models.IntegerField(null=True, blank=True, verbose_name=u'Фаза',
                                 choices=PHASES, default=0)
+    raffle_date = models.DateField(null=True, blank=True)
     win_date = models.IntegerField(null=True, blank=True,
                                    verbose_name=u'Дата розыгрыша')
     prise_name = models.ForeignKey(PriseType, null=True, blank=True,
@@ -230,6 +231,7 @@ class PromoCode(models.Model):
 
     def save(self, *args, **kwargs):
         if self.winner:
+            self.raffle = Raffle.objects.get()
             try:
                 self._send_win_message()
             except:
@@ -275,6 +277,11 @@ class DiscreditedIP(models.Model):
     class Meta:
         verbose_name = u'дискредетированный IP'
         verbose_name_plural = u'дискредетированные IP'
+
+
+class Raffle(models.Model):
+    date = models.DateField()
+    number = models.CharField(max_length=2)
 
 
 class WrongIPByCode(models.Model):
