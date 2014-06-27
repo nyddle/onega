@@ -5,7 +5,9 @@ from django.shortcuts import HttpResponse
 from django.conf.urls.static import static
 
 from chips.forms import ThemedPasswordResetForm, ThemedSetPasswordForm
+from djrill import DjrillAdminSite
 
+admin.site = DjrillAdminSite()
 admin.autodiscover()
 
 urlpatterns = patterns('',

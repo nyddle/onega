@@ -69,4 +69,8 @@ def get_winners_code(page_num=1, email=None):
 def send_mail(theme, html, from_, to, text=None):
     msg = EmailMultiAlternatives(theme, body=html, from_email=from_, to=to)
     msg.attach_alternative(html, "text/html")
-    print(msg.send())
+    try:
+        r = msg.send()
+        print r
+    except Exception as exc:
+        print(exc)

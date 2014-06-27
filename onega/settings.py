@@ -52,8 +52,12 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'captcha',
     'hostname_redirects',
-    'postmark'
+    "djrill"
 )
+
+EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
+
+MANDRILL_API_KEY = "_nH9xX_jxBGpxHpgYMAvPg"
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'dashboard.CustomAppIndexDashboard'
@@ -135,14 +139,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 #         'LOCATION': '127.0.0.1:11211',
 #     }
 # }
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_HOST_USER = 'postmaster@igra.onega.by'
-EMAIL_HOST_PASSWORD = '03usq8r9yxu0'
-EMAIL_PORT = 587
-EMAIL_FROM = 'Onega'
-
+#
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.mandrillapp.com'
+# EMAIL_HOST_USER = 'nyddle@yandex.ru'
+# EMAIL_HOST_PASSWORD = '_nH9xX_jxBGpxHpgYMAvPg'
+# EMAIL_PORT = 587
+EMAIL_FROM = 'igra@onega.by'
 
 
 try:
