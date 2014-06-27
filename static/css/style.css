@@ -1212,11 +1212,11 @@ a:active {
   margin-bottom: 24px;
 }
 .fields-row.col-2{
-  width: 575px;
+  width: 565px;
 }
 .fields-row.col-2 dl input,
 .fields-row.col-3 dl input{
-  width: 275px;
+  width: 277px;
 }
 
 /* line 42, ../sass/_mixins.scss */
@@ -1594,7 +1594,7 @@ a:active {
 }
 /* line 10, ../sass/_mixins.scss */
 .nav__buttons--prev {
-  margin: 0 51px 0 20px;
+  margin: 0 28px 0 20px;
 }
 /* line 10, ../sass/_mixins.scss */
 .nav__buttons--prev--dark {
