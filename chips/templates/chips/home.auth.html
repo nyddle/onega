@@ -144,7 +144,7 @@
                     </dd>
                 </dl>
             </div>
-            <div class="fields-row">
+            <div class="fields-row col-2">
                 <dl class="field-col">
                     <dt class="field-col__title">
                         Адрес электронной почты
@@ -160,8 +160,6 @@
                     <dd class="field-col__field field-col__field--capcha">
                     </dd>
                 </dl>
-            </div>
-            <div class="fields-row">
                 <dl class="field-col">
                     <dt class="field-col__title">
                         Телефон
@@ -170,6 +168,26 @@
                         {{ forms.reg.phone }}
                     </dd>
                 </dl>
+            </div>
+            <div class="fields-row col-3">
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Пароль
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.password1 }}
+                    </dd>
+                </dl>
+
+                <dl class="field-col">
+                    <dt class="field-col__title">
+                        Подтвердите пароль
+                    </dt>
+                    <dd class="field-col__field">
+                        {{ forms.reg.password2 }}
+                    </dd>
+                </dl>
+
                 <dl class="field-col">
                     <dt class="field-col__title captcha_title">
                         Код на картинке

@@ -51,11 +51,12 @@ class ImageGalleryAdmin(admin.ModelAdmin):
 
 
 class PromoCodeAdmin(ImportExportModelAdmin):
-    list_display = ('code', 'customer', 'added', 'winner', 'phase',
-                    'prise_name', )
+    list_display = ('id', 'code', 'customer', 'get_full_name', 'added',
+                    'winner', 'phase', 'prise_name')
     list_editable = ('winner', 'prise_name')
     list_filter = ('winner', 'phase', 'prise_name', 'added')
-    search_fields = ('pk', )
+    readonly_fields = ('get_full_name', )
+    search_fields = ('id', )
 
 
 class ValidCodeAdmin(ImportExportModelAdmin):
@@ -69,8 +70,9 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 class CustomerAdmin(ImportExportModelAdmin):
     list_display = ('pk', 'email', 'first_name', 'last_name', 'surname',
-                    'post_index', 'region', 'district', 'city', 'street', 'codes_amount',
-                    'building', 'corpus', 'apartment', 'phone', 'get_codes', 'banks', 'is_active')
+                    'post_index', 'region', 'district', 'city', 'street',
+                    'codes_amount', 'building', 'corpus', 'apartment',
+                    'phone', 'get_codes', 'banks', 'is_active')
 
     search_fields = ['email', 'first_name', 'last_name', 'surname',
                     'post_index', 'region', 'district', 'city', 'street',

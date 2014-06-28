@@ -62,10 +62,12 @@
                     </a>
                 </li>
             {% endif %}
-            {% if request.phase > 1 %}
-                <li class="header-menu__item header-menu__item--current"><a class="header-menu__link" href="#"
+            {% if request.phase > 0 %}
+                {% block prizes_menu %}
+                <li class="header-menu__item"><a class="header-menu__link" href="#"
                                                                             contId="winners">Розыгрыши и победители</a>
                 </li>
+                {% endblock %}
             {% endif %}
         </ul>
     </div>
@@ -91,6 +93,25 @@
     </div>
     {% block content %}{% endblock %}
 </div>
+{% block footer %}
+<div class="footer">
+    <div class="c-align">
+        <a href="#" class="footer__logo"><!-----></a>
+
+        <p class="footer__text">
+            Рекламная игра проводится на территории Республики Беларусь. Организатор – ПОДО «Онега», УНН 600124575.
+            Свидетельство о государственной регистрации рекламной игры №2364 от 15 мая 2014 г. Выдано Министерством
+            торговли Республики Беларусь. Срок рекламной игры: 09.06.2014 –01.08.2014
+        </p>
+        <ul class="footer__social social">
+            <li class="social__item"><a target="_blank" href="http://vk.com/onega_by"
+                                        class="social__link social__link--vk"><!----></a></li>
+            <li class="social__item"><a target="_blank" href="https://twitter.com/hashtag/igraonega"
+                                        class="social__link social__link--tw"><!----></a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
 
 <div class="popup-wrapper"><!----></div>
 <div class="rules-popup">
@@ -728,7 +749,7 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 
-
+<!--
 <script>
     $('form').on('submit', function (e) {
         if($(this).attr('id') === 'reset_password_form') {
@@ -756,7 +777,7 @@
         }
     })
 </script>
-
+--!>
 
 <script src="{% static 'js/vendor/jquery.parallax.min.js' %}"></script>
 <script src="{% static 'js/vendor/jquery.scrollTo.min.js' %}"></script>

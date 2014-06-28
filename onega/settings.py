@@ -21,13 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'oy%)bah1r)xx7a2@m*bacn+^q42rt$p=fle%$kpdf6okcr1$+n'
 
-# todo: switch in to False on production
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['onega.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -53,8 +52,12 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'captcha',
     'hostname_redirects',
-    'postmark'
+    "djrill"
 )
+
+EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
+
+MANDRILL_API_KEY = "_nH9xX_jxBGpxHpgYMAvPg"
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'dashboard.CustomAppIndexDashboard'
@@ -115,9 +118,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
@@ -138,20 +139,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 #         'LOCATION': '127.0.0.1:11211',
 #     }
 # }
-
-
-EMAIL_BACKEND = "postmark.backends.PostmarkBackend"
-POSTMARK_API_KEY = '8eeb0e67-44e1-4929-8d61-7ab0213ba0e2'
-EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.postmarkapp.com'
-# EMAIL_HOST_USER = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
-# EMAIL_HOST_PASSWORD = ''
+#
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.mandrillapp.com'
+# EMAIL_HOST_USER = 'nyddle@yandex.ru'
+# EMAIL_HOST_PASSWORD = '_nH9xX_jxBGpxHpgYMAvPg'
 # EMAIL_PORT = 587
-EMAIL_FROM = '3ba92786f1b07c2010d565cd00abac6d@inbound.postmarkapp.com'
-
-SENDGRID_USERNAME='app26164357@heroku.com'
-PYTHONUNBUFFERED=True
-SENDGRID_PASSWORD='rgqmurii'
+EMAIL_FROM = 'igra@onega.by'
 
 
 try:

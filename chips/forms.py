@@ -6,7 +6,8 @@ from django.contrib.sites.models import get_current_site
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.conf import settings
-from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, \
+    SetPasswordForm, UserCreationForm
 
 from captcha.fields import CaptchaField, CaptchaTextInput
 
@@ -28,7 +29,6 @@ class ThemedPasswordResetForm(PasswordResetForm):
         Generates a one-use only link for resetting password and sends to the
         user.
         """
-        from django.core.mail import send_mail
         UserModel = get_user_model()
         email = self.cleaned_data["email"].lower()
         active_users = UserModel._default_manager.filter(
@@ -46,7 +46,7 @@ class ThemedPasswordResetForm(PasswordResetForm):
                 site_name = domain = domain_override
             c = {
                 'email': user.email,
-                'domain': domain,
+                'domain': 'igra.onega.by',
                 'site_name': site_name,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'user': user,
@@ -178,6 +178,12 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.CheckboxInput(attrs={'id': 'agreeCheck',
                                           'class': 'check-block__check'}))
 
+    password1 = forms.CharField(label="Password",
+        widget=forms.PasswordInput(attrs={'class': 'fill-field'}))
+    password2 = forms.CharField(label="Password confirmation",
+        widget=forms.PasswordInput(attrs={'class': 'fill-field'}),
+        help_text="Enter the same password as above, for verification.")
+
     promocode_failed = False
 
     class Meta:
@@ -216,10 +222,9 @@ class RegistrationForm(forms.ModelForm):
             "building": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
             "corpus": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
             "apartment": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 71px;'}),
-            "phone": forms.TextInput(attrs={'class': 'fill-field', 'style': 'width: 562px;'}),
-            "email": forms.EmailInput(attrs={'class': 'fill-field', 'style': 'width: 562px;'}),
+            "phone": forms.TextInput(attrs={'class': 'fill-field'}),
+            "email": forms.EmailInput(attrs={'class': 'fill-field'}),
         }
-
 
     def clean_promo(self):
         promo = self.cleaned_data.get('promo', '')
@@ -237,9 +242,9 @@ class RegistrationForm(forms.ModelForm):
 
     def save(self, commit=True):
         customer = super(RegistrationForm, self).save(commit=False)
-        password = Customer.objects.make_random_password()
-        customer.email = customer.email.lower()
+        password = self.cleaned_data["password1"]
         customer.set_password(password)
+        customer.email = customer.email.lower()
         if commit:
             customer.save()
             tmpl = load_template_data('mails/reg_confirm_text.html',
@@ -253,10 +258,12 @@ class RegistrationForm(forms.ModelForm):
                                        'email': customer.email,
                                        'first_name': customer.first_name,
                                        'id': customer.pk})
-
-            send_mail(u'Регистрация участия в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
+            try:
+                send_mail(u'Регистрация участия в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
                                          tmpl_html, settings.EMAIL_FROM,
                                          [self.cleaned_data['email']], text=tmpl)
+            except:
+                pass
 
             if len(self.cleaned_data.get('promo', '')) > 0:
                 PromoCode.objects.create(customer=customer, code=self.cleaned_data['promo'])

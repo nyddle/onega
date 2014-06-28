@@ -21,6 +21,7 @@ html {
  */
 /* line 101, ../sass/_normalize.scss */
 html {
+  height: 100%;
   font-family: sans-serif;
   /* 1 */
   -ms-text-size-adjust: 100%;
@@ -35,6 +36,8 @@ html {
 /* line 113, ../sass/_normalize.scss */
 body {
   margin: 0;
+  background: #fff url("../img/noize-gray.gif") 0 0 repeat; 
+  height: 100%;  
 }
 
 /* HTML5 display definitions
@@ -739,9 +742,11 @@ a:active {
 
 /* line 50, ../sass/style.scss */
 .main-page-content-wrap {
-  background-image: url(../img/shadow.gif), url(../img/noize-gray.gif);
+  background-image: url(../img/shadow.gif);
   background-position: top center, top left;
   background-repeat: no-repeat, repeat;
+  margin-bottom: 100px;
+  min-height: 650px;
 }
 
 /* line 56, ../sass/style.scss */
@@ -1206,6 +1211,14 @@ a:active {
   text-justify: newspaper;
   margin-bottom: 24px;
 }
+.fields-row.col-2{
+  width: 565px;
+}
+.fields-row.col-2 dl input,
+.fields-row.col-3 dl input{
+  width: 277px;
+}
+
 /* line 42, ../sass/_mixins.scss */
 .fields-row:after {
   content: '';
@@ -1428,10 +1441,27 @@ a:active {
 
 /* line 831, ../sass/style.scss */
 .dark-bg-block {
-  margin-top: -76px;
-  padding-top: 141px;
-  padding-bottom: 38px;
-  background: url("../img/page-divider.gif") center top no-repeat #0f0f12;
+  background: #0f0f12;
+  margin-top: 148px;
+  margin-bottom: 150px;
+  position: relative;
+  background: url("../img/dark_bg.png") repeat;
+}
+.dark-bg-block:before,
+.dark-bg-block:after{
+  background: url("../img/dark-bg-top.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+    content: " ";
+    display: block;
+    height: 148px;
+    position: absolute;
+    top: -135px;
+    width: 100%;
+}
+.dark-bg-block:after{
+  background: url("../img/dark-bg-bottom.png") no-repeat scroll center bottom rgba(0, 0, 0, 0);
+  bottom: -150px;
+  height: 150px;
+  top: auto;
 }
 /* line 10, ../sass/_mixins.scss */
 .dark-bg-block--inner-page {
@@ -1480,15 +1510,16 @@ a:active {
 }
 /* line 10, ../sass/_mixins.scss */
 .nav--fix {
-  margin-left: 209px;
+  margin: 0 170px;
+  text-align: center;
 }
 /* line 3, ../sass/_mixins.scss */
 .nav__arrow {
-  display: block;
+  display: inline-block;
+  vertical-align: middle;
   width: 18px;
   height: 27px;
-  margin-top: 2px;
-  float: left;
+  margin-bottom: 2px;
   background: url("../img/arrows-sprite.png") 0 0 no-repeat;
 }
 /* line 10, ../sass/_mixins.scss */
@@ -1527,9 +1558,9 @@ a:active {
 }
 /* line 3, ../sass/_mixins.scss */
 .nav__numbers {
-  display: block;
-  float: left;
-  margin: 0 21px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 21px 2px 0;
   color: #737373;
   font-size: 18px;
   text-align: center;
@@ -1552,8 +1583,9 @@ a:active {
 }
 /* line 3, ../sass/_mixins.scss */
 .nav__buttons {
-  display: block;
-  float: left;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 2px;
 }
 /* line 10, ../sass/_mixins.scss */
 .nav__buttons--dark {
@@ -1562,7 +1594,7 @@ a:active {
 }
 /* line 10, ../sass/_mixins.scss */
 .nav__buttons--prev {
-  margin: 0 51px 0 20px;
+  margin: 0 28px 0 20px;
 }
 /* line 10, ../sass/_mixins.scss */
 .nav__buttons--prev--dark {
@@ -1579,10 +1611,26 @@ a:active {
 
 /* line 967, ../sass/style.scss */
 .red-bg-block {
-  background: url("../img/red.png") center top repeat;
-  margin-top: -23px;
-  padding-top: 137px;
-  padding-bottom: 115px;
+  background: url("../img/red.png") repeat scroll center top rgba(0, 0, 0, 0);
+  margin-bottom: 140px;
+  margin-top: 135px;
+  position: relative;
+}
+.red-bg-block:before, 
+.red-bg-block:after {
+    background: url("../img/red-bg-top.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+    content: " ";
+    display: block;
+    height: 578px;
+    position: absolute;
+    top: -150px;
+    width: 100%;
+}
+.red-bg-block:after {
+  background: url("../img/red-bg-bottom.png") no-repeat scroll center bottom rgba(0, 0, 0, 0);
+  bottom: -140px;
+  height: 140px;
+  top: auto;
 }
 
 /* line 974, ../sass/style.scss */
@@ -1635,9 +1683,19 @@ a:active {
 
 /* line 1023, ../sass/style.scss */
 .footer {
-  margin-top: -3px;
   padding-bottom: 25px;
-  background: url("../img/divider-line.png") bottom center no-repeat;
+  position: relative;
+  height: 100px;
+  background: url("../img/dark_bg.png") repeat scroll center top rgba(0, 0, 0, 0);
+}
+.footer:before{
+    background: url("../img/footer-bg-top.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+    content: " ";
+    display: block;
+    height: 145px;
+    position: absolute;
+    top: -145px;
+    width: 100%;
 }
 /* line 3, ../sass/_mixins.scss */
 .footer__logo {
@@ -2011,7 +2069,7 @@ bottom: 95px;
 position: relative;
 } 
 #id_captcha_1{
-  width: 210px;
+  width: 227px;
 }
 .promo-imgs{
   /*position: relative;*/

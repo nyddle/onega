@@ -32,7 +32,7 @@
                 {% endif %}
             </div>
             <div class="winners__col winners__col--2">
-                {{ code.get_phase_display }}-Й
+                {{ 1 }}-Й
             </div>
             <div class="winners__col winners__col--3">
                 {{ code.on_phase.date|date:'d M' }}
@@ -57,8 +57,8 @@
 {% if codes.paginator.num_pages > 1 %}
     <div class="nav nav--fix">
         {% if codes.has_previous %}
-            <a class="nav__arrow nav__arrow--left" href="#"><!----></a>
-            <a class="nav__buttons nav__buttons--prev" href="#">Предыдущая</a>
+            <a class="nav__arrow nav__arrow--left" href="{% url 'home' %}?page={{ codes.previous_page_number }}{% if winners.email %}&email={{ winners.email }}{% endif %}#winners"><!----></a>
+            <a class="nav__buttons nav__buttons--prev" href="{% url 'home' %}?page={{ codes.previous_page_number }}{% if winners.email %}&email={{ winners.email }}{% endif %}#winners">Предыдущая</a>
         {% endif %}
         {% for page in codes.paginator.page_range %}
             <a class="nav__numbers nav__numbers--fix
@@ -66,8 +66,8 @@
                href="{% url 'home' %}?page={{ page }}{% if winners.email %}&email={{ winners.email }}{% endif %}#winners">{{ page }}</a>
         {% endfor %}
         {% if codes.has_next %}
-            <a class="nav__buttons nav__buttons--next" href="#">Следующая</a>
-            <a class="nav__arrow nav__arrow--right" href="#"><!----></a>
+            <a class="nav__buttons nav__buttons--next" href="{% url 'home' %}?page={{ codes.next_page_number }}{% if winners.email %}&email={{ winners.email }}{% endif %}#winners">Следующая</a>
+            <a class="nav__arrow nav__arrow--right" href="{% url 'home' %}?page={{ codes.next_page_number }}{% if winners.email %}&email={{ winners.email }}{% endif %}#winners"><!----></a>
         {% endif %}
     </div>
 {% endif %}

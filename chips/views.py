@@ -21,7 +21,6 @@ class HomeView(View):
     """
 
     def dispatch(self, request, *args, **kwargs):
-        print(111)
         ip_addr = get_client_ip(request)
 
         ip, created = DiscreditedIP.objects.get_or_create(ip=ip_addr)
@@ -96,6 +95,7 @@ class HomeView(View):
                 else:
                     template_data['forms'] = {'reg': RegistrationForm(self.request.POST or None),
                                               'login': AuthenticationForm()}
+                    print(template_data['forms']['reg'].errors)
             else:
                 template_data['forms'] = {'reg': RegistrationForm(), 'login': AuthenticationForm()}
 

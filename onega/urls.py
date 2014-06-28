@@ -2,9 +2,12 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import HttpResponse
+from django.conf.urls.static import static
 
 from chips.forms import ThemedPasswordResetForm, ThemedSetPasswordForm
+from djrill import DjrillAdminSite
 
+admin.site = DjrillAdminSite()
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -32,6 +35,8 @@ urlpatterns = patterns('',
      {'template_name': 'registration/password_reset_complete.html'}),
 )
 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 urlpatterns += patterns('',
     url(r'^robots\.txt$',
         lambda r: HttpResponse(
@@ -39,7 +44,6 @@ urlpatterns += patterns('',
             mimetype="text/plain"))
 )
 
-if settings.DEBUG:
-    # static files (images, css, javascript, etc.)
-    urlpatterns += patterns('',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))
+# static files (images, css, javascript, etc.)
+urlpatterns += patterns('',
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))
