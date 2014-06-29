@@ -160,6 +160,8 @@ class LoginForm(AuthenticationForm):
 
 
 class RegistrationForm(forms.ModelForm):
+    duplicate_email = False
+
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         if self.errors:
@@ -280,4 +282,5 @@ class RegistrationForm(forms.ModelForm):
             Customer.objects.get(email=email)
         except Customer.DoesNotExist:
             return email
+        self.duplicate_email = True
         raise forms.ValidationError(u"Этот адрес уже занят")

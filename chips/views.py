@@ -49,6 +49,8 @@ class HomeView(View):
                     auth_login(request, form.get_user())
                     return redirect(reverse('home'))
                 # return self._render_stuff(method, True)
+            else:
+                pass
         elif method == 'reg':
             form = RegistrationForm(request.POST)
             if form.is_valid():
@@ -95,7 +97,11 @@ class HomeView(View):
                 else:
                     template_data['forms'] = {'reg': RegistrationForm(self.request.POST or None),
                                               'login': AuthenticationForm()}
-                    print(template_data['forms']['reg'].errors)
+                    if template_data['forms']['reg'].duplicate_email:
+                        messages.info(self.request, u'Такой почтовый адрес уже занят. '
+                                                    u'Попробуйте <a href="{}">'
+                                                    u'восстановить пароль</a>'.format(reverse('password_reset')))
+                        # template_data['popups'] = {'duplicate_email': True}
             else:
                 template_data['forms'] = {'reg': RegistrationForm(), 'login': AuthenticationForm()}
 
