@@ -98,7 +98,7 @@ class HomeView(View):
                     template_data['forms'] = {'reg': RegistrationForm(self.request.POST or None),
                                               'login': AuthenticationForm()}
                     if template_data['forms']['reg'].duplicate_email:
-                        messages.info(self.request, u'Такой почтовый адрес уже занят. '
+                        messages.info(self.request, u'Этот почтовый адрес уже занят. '
                                                     u'Попробуйте <a href="{}">'
                                                     u'восстановить пароль</a>'.format(reverse('password_reset')))
                         # template_data['popups'] = {'duplicate_email': True}
