@@ -2143,3 +2143,12 @@ position: relative;
 .blue_link{
   color: #1688bc;
 }
+.fields-row *{
+  font-size: 18px;
+  line-height: 20px;
+}
+.text-info{
+  font-size: 18px;
+  margin-top: 10px;
+  text-align: center;
+}
