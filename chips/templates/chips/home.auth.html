@@ -28,6 +28,9 @@
                 {% endif %}
         </div>
     </div>
+    {% if not request.user.should_be_blocked %}
+        <p class="text-info">Обязательно сохраняйте пачку с кодом до конца рекламной игры!</p>
+    {% endif %}
 
 {% if not user.is_authenticated %}
     <div class="user-actions {% if not forms.reg %}user-actions--small-border{% endif %}" id="authorization">

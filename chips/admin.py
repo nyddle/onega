@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 from .models import ImageGallery, SiteSettings, ValidCode, PromoCode, Customer, PriseType, Phase, WrongCode, \
-    DiscreditedIP
+    DiscreditedIP, Raffle
 
 from import_export import resources
 from import_export import fields
@@ -52,8 +52,8 @@ class ImageGalleryAdmin(admin.ModelAdmin):
 
 class PromoCodeAdmin(ImportExportModelAdmin):
     list_display = ('id', 'code', 'customer', 'get_full_name', 'added',
-                    'winner', 'phase', 'prise_name')
-    list_editable = ('winner', 'prise_name')
+                    'winner', 'phase', 'prise_name', 'raffle')
+    list_editable = ('winner', 'prise_name', 'raffle')
     list_filter = ('winner', 'phase', 'prise_name', 'added')
     readonly_fields = ('get_full_name', )
     search_fields = ('id', )
@@ -66,6 +66,10 @@ class ValidCodeAdmin(ImportExportModelAdmin):
 
 class SiteSettingsAdmin(admin.ModelAdmin):
     list_display = ('key', 'enabled', 'additional_data')
+
+
+class RaffleAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'date')
 
 
 class CustomerAdmin(ImportExportModelAdmin):
@@ -91,6 +95,7 @@ admin.site.register(PromoCode, PromoCodeAdmin)
 admin.site.register(ValidCode, ValidCodeAdmin)
 admin.site.register(PriseType, PriseTypeAdmin)
 admin.site.register(Phase, PhaseAdmin)
+admin.site.register(Raffle, RaffleAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(WrongCode, WrongCodeAdmin)
 admin.site.register(DiscreditedIP, DiscreditedIPAdmin)
