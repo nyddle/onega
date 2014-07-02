@@ -13,7 +13,9 @@ html {
   font-size: 100%;
   line-height: 1.5em;
 }
-
+#authorization .field-col {
+    margin: 0;
+}
 /**
  * 1. Set default font family to sans-serif.
  * 2. Prevent iOS text size adjust after orientation change, without disabling
@@ -1076,13 +1078,13 @@ a:active {
   background: url("../img/lable.png") no-repeat;
   content: '';
   -moz-transform: rotate(-18deg);
-  /* –î–ª—è Firefox */
+  /* Ñ´Ô Firefox */
   -ms-transform: rotate(-18deg);
-  /* –î–ª—è IE */
+  /* Ñ´Ô IE */
   -webkit-transform: rotate(-18deg);
-  /* –î–ª—è Safari, Chrome, iOS */
+  /* Ñ´Ô Safari, Chrome, iOS */
   -o-transform: rotate(-18deg);
-  /* –î–ª—è Opera */
+  /* Ñ´Ô Opera */
   transform: rotate(-18deg);
 }
 
@@ -2142,4 +2144,13 @@ position: relative;
 }
 .blue_link{
   color: #1688bc;
+}
+.fields-row *{
+  font-size: 18px;
+  line-height: 20px;
+}
+.text-info{
+  font-size: 18px;
+  margin-top: 10px;
+  text-align: center;
 }

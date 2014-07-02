@@ -23,6 +23,7 @@
                 {% if request.user.should_be_blocked %}
                     Вы ввели пять неверных кодов за последние сутки и пока что не можете указывать новые.
                 {% else %}
+                    <p class="text-info">Обязательно сохраняйте пачку с кодом до конца рекламной игры!</p>
                     <form method="post" id="send_code_form">
                         {% csrf_token %}
                         <div class="fill-field-wrap fill-field-wrap--with-arrow enter-promo__field">
@@ -49,7 +50,6 @@
                 {% endfor %}
             </div>
         </div>
-
         <div class="alert">
             Обратите внимание (выдержка из правил):<br>
             "В случае если при регистрации Участник вводит 5 (пять) неверных Уникальных кодов в течение суток в поле

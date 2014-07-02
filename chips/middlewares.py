@@ -8,4 +8,7 @@ class SettingsMiddleware(object):
     def process_request(self, request):
         request.settings = get_site_settings()
         phase = Phase.objects.filter().first()
-        request.phase = phase.current_phase
+        try:
+            request.phase = phase.current_phase
+        except:
+            request.phase = 1
