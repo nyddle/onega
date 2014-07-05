@@ -7,9 +7,9 @@
     <ul>
         {% for thumb in photos %}
         <li>
-            <a class="example-image-link" href="{{ MEDIA_URL }}/{{ thumb.photo }}" data-lightbox="example-set"
+            <a class="example-image-link" href="{{ thumb.photo.url }}" data-lightbox="example-set"
                data-title="Click the right half of the image to move forward.">
-                <img class="example-image" src="{{ MEDIA_URL }}/{{ thumb.photo }}" alt=""/>
+                <img class="example-image" src="{{ thumb.photo.url }}" alt=""/>
             </a>
             {% if thumb.link %}
                 <a href="#" class="gallery_link">
