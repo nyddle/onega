@@ -32,10 +32,10 @@
                 {% endif %}
             </div>
             <div class="winners__col winners__col--2">
-                {{ 1 }}-Й
+                {{ code.raffle.number }}-Й
             </div>
             <div class="winners__col winners__col--3">
-                {{ code.on_phase.date|date:'d M' }}
+                {{ code.raffle.date|date:'d M' }}
             </div>
             <div class="winners__col winners__col--4">{{ code.customer.surname }}
                 {{ code.customer.first_name }}

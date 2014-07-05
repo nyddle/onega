@@ -201,7 +201,25 @@ class PriseType(models.Model):
         return self.name.encode('utf-8')
 
 
+class Raffle(models.Model):
+    date = models.DateField(verbose_name=u'Дата розыгрыша')
+    number = models.IntegerField()
+
+    @classmethod
+    def get_current_raffle(self):
+        now = datetime.utcnow().replace(
+                tzinfo=timezone.get_default_timezone()).now()
+        return self.objects.filter(date__gte=now).order_by('date').first()
+
+    def __str__(self):
+        return str(self.number)
+
+
 class PromoCode(models.Model):
+    def __init__(self, *args, **kwargs):
+        self._meta.get_field('raffle').default = Raffle.get_current_raffle()
+        super(PromoCode, self).__init__(*args, **kwargs)
+
     PHASES = ((0, u'1'), (1, u'2'), (2, u'3'), (3, u'Игра окончена'))
     customer = models.ForeignKey(Customer, verbose_name=u'Пользователь')
     code = models.CharField(max_length=255, unique=True, verbose_name=u'Код')
@@ -211,8 +229,8 @@ class PromoCode(models.Model):
 
     phase = models.IntegerField(null=True, blank=True, verbose_name=u'Фаза',
                                 choices=PHASES, default=0)
-    win_date = models.IntegerField(null=True, blank=True,
-                                   verbose_name=u'Дата розыгрыша')
+
+    raffle = models.ForeignKey(Raffle, null=True)
     prise_name = models.ForeignKey(PriseType, null=True, blank=True,
                                    verbose_name=u'Приз')
 
@@ -231,6 +249,7 @@ class PromoCode(models.Model):
 
     def save(self, *args, **kwargs):
         if self.winner:
+            self.raffle = Raffle().get_current_raffle()
             try:
                 self._send_win_message()
             except:
@@ -248,7 +267,8 @@ class PromoCode(models.Model):
             'customer': self.customer,
             'prize': self.prise_name
         })
-        send_mail(u'Победа в рекламной игре «Онега. Вкусно перекуси – с удовольствием отдохни»',
+        send_mail(u'Победа в рекламной игре «Онега. '
+                  u'Вкусно перекуси – с удовольствием отдохни»',
                   tmpl_html, settings.EMAIL_FROM, [self.customer.email])
 
     class Meta:
@@ -271,7 +291,8 @@ class WrongCode(models.Model):
 class DiscreditedIP(models.Model):
     ip = models.CharField(max_length=100, unique=True)
     failed = models.IntegerField(default=0, verbose_name=u'Количество ошибок')
-    blocked = models.IntegerField(default=0, verbose_name=u'Количество блокировок')
+    blocked = models.IntegerField(default=0,
+                                  verbose_name=u'Количество блокировок')
 
     class Meta:
         verbose_name = u'дискредетированный IP'

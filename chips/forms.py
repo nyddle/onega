@@ -83,7 +83,8 @@ class CodeForm(forms.ModelForm):
                     self.fields[f_name].widget.attrs['class'] = classes
 
     class Meta:
-        exclude = ('customer', 'added', 'winner', 'prise_name', 'on_phase')
+        exclude = ('customer', 'added', 'winner', 'prise_name', 'on_phase',
+                   'raffle')
         model = PromoCode
         widgets = {
             'code': forms.TextInput(
