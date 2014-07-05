@@ -17,6 +17,7 @@ def get_site_settings():
     for settings in site_settings:
         if settings.enabled:
             result[settings.key] = settings.additional_data
+    print(result)
     return result
 
 

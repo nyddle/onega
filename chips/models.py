@@ -170,6 +170,7 @@ class ValidCode(models.Model):
 
 class ImageGallery(models.Model):
     photo = ThumbnailerImageField(upload_to=u'images')
+    link = models.CharField(max_length=100, null=True)
 
     class Meta:
         verbose_name = u'изображение'

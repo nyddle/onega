@@ -138,30 +138,7 @@
 <div class="dark-bg-block">
     {% if photos %}
     <div class="c-align">
-        <div class="gallery" id="photo">
-            <h3 class="block-title">Фотогалерея</h3>
-            <ul class="photo-list">
-                <li class="photo-list__item"><img src="img/photo.gif"/></li>
-                <li class="photo-list__item"><img src="img/photo.gif"/></li>
-                <li class="photo-list__item"><img src="img/photo.gif"/></li>
-                <li class="photo-list__item"><img src="img/photo.gif"/></li>
-                <li class="photo-list__item"><img src="img/photo.gif"/></li>
-                <li class="photo-list__item"><img src="img/photo.gif"/></li>
-            </ul>
-            <div class="nav">
-                <a class="nav__arrow nav__arrow--left" href="#"><!----></a>
-                <a class="nav__buttons nav__buttons--prev" href="#">Предыдущая</a>
-                <a class="nav__numbers nav__numbers--current" href="#">1</a>
-                <a class="nav__numbers" href="#">2</a>
-                <a class="nav__numbers" href="#">3</a>
-                <a class="nav__numbers" href="#">4</a>
-                <a class="nav__numbers" href="#">5</a>
-                <a class="nav__numbers" href="#">6</a>
-                <a class="nav__numbers" href="#">7</a>
-                <a class="nav__buttons nav__buttons--next" href="#">Следующая</a>
-                <a class="nav__arrow nav__arrow--right" href="#"><!----></a>
-            </div>
-        </div>
+        {% include 'chips/home.gallery.html' %}
     </div>
     {% endif %}
 

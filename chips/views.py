@@ -83,8 +83,9 @@ class HomeView(View):
     # todo: hide registration if phase > 3
     def _render_stuff(self, method, blocked=False):
         template_data = {'method': method, 'blocked': blocked}
-        if self.request.settings.get('gallery'):
+        if 'gallery' in self.request.settings:
             template_data['photos'] = ImageGallery.objects.all()
+            print(template_data['photos'])
 
         if self.request.settings.get('video'):
             template_data['video'] = self.request.settings['video']

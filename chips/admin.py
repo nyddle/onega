@@ -47,7 +47,7 @@ class PromoCodeResource(resources.ModelResource):
 
 
 class ImageGalleryAdmin(admin.ModelAdmin):
-    list_display = ('photo', )
+    list_display = ('photo', 'link', )
 
 
 class PromoCodeAdmin(ImportExportModelAdmin):

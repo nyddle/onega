@@ -18,6 +18,7 @@
     <meta property="og:description" content="Наступило лето - пришло время для отдыха! Онега предлагает вкусно перекусить и с удовольствием отдохнуть в Европе! 24 путевки в Европу и 3000 других призов!" />
     <meta property="og:url" content="http://igra.onega.by/" />
     <link rel="stylesheet" href="{% static 'css/custom-scroll.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="shortcut icon" href="http://www.onega.by/public/i/favicon.ico">
     <style>
@@ -790,6 +791,13 @@
 <script src="{% static 'js/vendor/jquery.scrollTo.min.js' %}"></script>
 <script src="{% static 'js/vendor/jquery.mcustomscrollbar.concat.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/lightbox.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".lb-next").html("<span>Следующая<b></b></span>");
+        $(".lb-prev").html("<span><b></b>Предыдущая</span>");
+    });
+</script>
 {% if messages %}
     <script>
         $(window).load(function() {
