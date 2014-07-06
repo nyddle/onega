@@ -12,7 +12,7 @@
                 <img class="example-image" src="{{ thumb.photo.url }}" alt=""/>
             </a>
             {% if thumb.link %}
-                <a href="#" class="gallery_link">
+                <a href="{{ thumb.link }}" class="gallery_link">
                     {{ thumb.link }}
                 </a>
             {% endif %}
