@@ -1492,6 +1492,7 @@ a:active {
 .image-set li{
   display: inline-block;
   width: 285px;
+  height: 150px;
   margin-bottom: 27px;
   text-align: center;
   vertical-align: top;  
