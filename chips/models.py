@@ -170,7 +170,7 @@ class ValidCode(models.Model):
 
 
 class ImageGallery(models.Model):
-    photo = CloudinaryField(upload_to=u'images')
+    photo = CloudinaryField(u'image')
     link = models.CharField(max_length=100, null=True)
 
     class Meta:
