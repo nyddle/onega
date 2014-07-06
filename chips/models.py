@@ -10,6 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core import urlresolvers
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 
 from easy_thumbnails.fields import ThumbnailerImageField
 
@@ -169,7 +170,7 @@ class ValidCode(models.Model):
 
 
 class ImageGallery(models.Model):
-    photo = ThumbnailerImageField(upload_to=u'images')
+    photo = CloudinaryField(upload_to=u'images')
     link = models.CharField(max_length=100, null=True)
 
     class Meta:

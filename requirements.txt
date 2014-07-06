@@ -14,3 +14,4 @@ https://bitbucket.org/izi/django-admin-tools/downloads/django-admin-tools-0.5.1.
 django-postmark==0.1.6
 sendgrid==0.5.1
 djrill==1.1.1
+cloudinary==1.0.17

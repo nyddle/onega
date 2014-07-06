@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'chips',
     'south',
+    'cloudinary',
     'easy_thumbnails',
     'captcha',
     'hostname_redirects',
