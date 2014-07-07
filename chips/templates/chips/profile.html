@@ -3,10 +3,10 @@
     <div class="c-align">
         <div class="inner-head">
             <a href="{% url 'home' %}" class="logo logo--inner-page"><!----></a>
-            {% if to_the_end_of_phase != None %}
+            {% if to_the_end_of_raffle != None %}
             <div class="inner-head__steps-info">
-                <span class="inner-head__steps-info__title">До конца {{ current_phase }}-ого этапа:</span>
-                <span class="inner-head__steps-info__days">{{ to_the_end_of_phase }} {{ days }}</span>
+                <span class="inner-head__steps-info__title">До конца {{ current_raffle }}-ого этапа:</span>
+                <span class="inner-head__steps-info__days">{{ to_the_end_of_raffle }} {{ days }}</span>
             </div>
             {% endif %}
             <div class="inner-head__user-status">
