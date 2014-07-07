@@ -48,7 +48,9 @@ $(document).ready(function(){
             $('.user-actions').addClass('user-actions--small-border');
         } else {
             $('.user-actions').removeClass('user-actions--small-border');
-        };
+        }
+
+        $('#auth-form').attr('action', $(this).attr('data-url'));
     });
 
     $(document).on("click touchstart", ".authorization-button", function(){
