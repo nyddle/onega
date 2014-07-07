@@ -215,6 +215,10 @@ class Raffle(models.Model):
     def __str__(self):
         return str(self.number)
 
+    class Meta:
+        verbose_name = u'розыгрыш'
+        verbose_name_plural = u'розыгрыши'
+
 
 class PromoCode(models.Model):
     def __init__(self, *args, **kwargs):
