@@ -57,8 +57,8 @@ class HomeView(View):
                 form.save()
                 request.session['registered'] = True
                 messages.info(request,
-                              u'Ваш логин и пароль отправлены на email, '
-                              u'указанный при регистрации.',
+                              u'Чтобы зайти на сайт, используйте свой логин '
+                              u'(e-mail адрес) и пароль',
                               extra_tags=u'Спасибо за регистрацию!')
 
                 return redirect(reverse('home'))
