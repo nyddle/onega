@@ -20,7 +20,7 @@ def get_settings(request):
 
 
 def get_remaining_time(request):
-    raffle = Raffle.objects.all().first()
+    raffle = Raffle.objects.all().last()
     if not raffle:
         to_the_end_of_raffle = None
     else:
@@ -36,6 +36,7 @@ def get_remaining_time(request):
         days = _get_pronounce(to_the_end_of_raffle)
     else:
         days = None
+    print to_the_end_of_raffle
     if raffle:
         return {'to_the_end_of_raffle': to_the_end_of_raffle, 'days': days,
             'current_raffle': raffle.number}
