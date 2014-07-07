@@ -56,7 +56,7 @@ class PromoCodeAdmin(ImportExportModelAdmin):
     list_editable = ('winner', 'prise_name', 'raffle')
     list_filter = ('winner', 'phase', 'prise_name', 'added', 'raffle')
     readonly_fields = ('get_full_name', )
-    search_fields = ('id', )
+    search_fields = ('id', 'code')
 
 
 class ValidCodeAdmin(ImportExportModelAdmin):
