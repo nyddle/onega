@@ -1,7 +1,26 @@
 $(document).ready(function(){
 
+    if (window.location.hash && window.location.hash == '#rules') {
+        var width = $('.rules-popup').width();
+        var pos = ($(document).width() - width) / 2;
+        $('.rules-popup').show();
+        $('.popup-wrapper').show();
+        $(window).scrollTop(0);
+        $(".custom-scroll").mCustomScrollbar({});
+
+        $('.rules-popup').show();
+    }
+
     $(document).on('click', '.drop-panel__button, .drop-arrow', function(){
         $(this).parents('.drop-panel').find('.drop-panel__panel').show();
+    });
+
+    $(document).on('click', '#login-auth-button', function(){
+        $('#span-tab-title-login').click();
+    });
+
+    $(document).on('click', '#reg-auth-button', function(){
+        $('#span-tab-title-reg').click();
     });
 
     $('html').click(function(){
